@@ -21,7 +21,7 @@
     | EMAIL_PASS | 发件人邮箱密码(SMTP密码) |
     | EMAIL_TO | 订阅人邮箱地址(收件人). 如需多人订阅使用 `, ` 分割, 例如: `a@163.com, b@qq.com` |
 
-3. 当前仓库 -> Actions, 检查Workflows并启用工作流。
+3. 仓库 -> Actions, 检查Workflows并启用。
 
 ## 许可
 

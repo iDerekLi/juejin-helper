@@ -3,6 +3,7 @@ name: AutoCheckIn
 on:
   schedule:
     - cron: "30 8 * * *"
+  workflow_dispatch:
 jobs:
   checkin:
     runs-on: ubuntu-latest

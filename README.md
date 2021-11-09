@@ -1,5 +1,5 @@
 <section align="center">
-  <a href="https://juejin.cn/" target="_blank">
+  <a href="https://github.com/iDerekLi/juejin-helper" target="_blank">
     <img src="./resources/logo.svg" alt="稀土掘金" width="260" />
   </a>
 </section>

@@ -1,0 +1,20 @@
+name: AutoCheckIn
+
+on:
+  schedule:
+    - cron: "* 30 8 * * * *"
+jobs:
+  checkin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - name: Run Project
+        env:
+          COOKIE: ${{ secrets.COOKIE }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: |
+          yarn
+          yarn checkin

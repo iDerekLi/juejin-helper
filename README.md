@@ -1,2 +1,5 @@
-# juejin-helper
-稀土掘金助手包含自动签到、梭哈抽奖
+![juejin](./resources/logo.svg);
+
+# JueinHelper-稀土掘金助手
+
+签到、抽奖

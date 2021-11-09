@@ -1,5 +1,7 @@
 <section align="center">
+  <a href="https://juejin.cn/" target="_blank">
     <img src="./resources/logo.svg" alt="稀土掘金" width="260" />
+  </a>
 </section>
 
 <h1 align="center">JuejinHelper-稀土掘金助手</h1>

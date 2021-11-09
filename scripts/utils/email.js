@@ -15,7 +15,7 @@ async function main({ subject, text, html }) {
   });
 
   await transporter.sendMail({
-    from: `稀土掘金助手 👻 <${auth.user}>`, // sender address（'"Fred Foo 👻" <foo@example.com>'）
+    from: `稀土掘金助手 <${auth.user}>`, // sender address（'"Fred Foo 👻" <foo@example.com>'）
     to: env.EMAIL_TO, // list of receivers
     subject, // Subject line
     text, // plain text body

@@ -2,7 +2,7 @@ name: AutoCheckIn
 
 on:
   schedule:
-    - cron: "30 0 * * *" # 北京时间上午8点30分。
+    - cron: "0 1 * * *" # 北京时间上午9点。
   workflow_dispatch:
 jobs:
   checkin:

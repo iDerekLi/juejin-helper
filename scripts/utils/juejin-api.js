@@ -14,10 +14,11 @@ const headers = {
 };
 
 module.exports = {
-  async fetch({path, method}) {
-    return fetch(path, {
+  async fetch({ path, method, data }) {
+    return fetch(`https://api.juejin.cn/growth_api/v1${path}`, {
       headers: headers,
       method: method,
+      body: JSON.stringify(data),
       credentials: "include"
     })
       .then(res => res.json())
@@ -28,28 +29,36 @@ module.exports = {
         return res.data;
       });
   },
-  async getCurrentPoint() {
-    return this.fetch({
-      path: "https://api.juejin.cn/growth_api/v1/get_cur_point",
-      method: "GET"
-    });
+  async get(path) {
+    return this.fetch({ path, method: "GET" });
   },
-  async drawLottery() {
-    return this.fetch({
-      path: "https://api.juejin.cn/growth_api/v1/lottery/draw",
-      method: "POST"
-    });
+  async post(path, data) {
+    return this.fetch({ path, method: "POST", data });
   },
   async getLotteryConfig() {
-    return this.fetch({
-      path: "https://api.juejin.cn/growth_api/v1/lottery_config/get",
-      method: "GET"
-    });
+    return this.get("/lottery_config/get");
+  },
+  async getCurrentPoint() {
+    return this.get("/get_cur_point");
+  },
+  async drawLottery() {
+    return this.post("/lottery/draw");
   },
   async checkIn() {
-    return this.fetch({
-      path: "https://api.juejin.cn/growth_api/v1/check_in",
-      method: "POST"
+    return this.post("/check_in");
+  },
+  async getLotteriesLuckyUsers() {
+    return this.post("/lottery_history/global_big", {
+      page_no: 1,
+      page_size: 5
     });
+  },
+  async dipLucky(lottery_history_id) {
+    return this.post("/lottery_lucky/dip_lucky", {
+      lottery_history_id
+    });
+  },
+  async getMyLucky() {
+    return this.post("/lottery_lucky/my_lucky");
   }
 }

@@ -58,7 +58,6 @@ async function run(args) {
   state.pointCost = lotteryConfig.point_cost;
   state.freeCount = lotteryConfig.free_count;
   state.sumPoint += state.freeCount * state.pointCost;
-  console.log(`免费抽奖次数: ${state.freeCount}`);
 
   const getProbabilityOfWinning = sumPoint => {
     const pointCost = state.pointCost;
@@ -71,9 +70,9 @@ async function run(args) {
     const luckyValue = (sumPoint + supplyPoint) / pointCost * luckyValueCost + state.luckyValue;
     return luckyValue / 6000;
   }
-
   console.log(`预测您梭哈必中奖幸运概率: ${(getProbabilityOfWinning(state.sumPoint) * 100).toFixed(2) + "%"}`);
 
+  console.log(`免费抽奖次数: ${state.freeCount}`);
   console.log(`准备免费抽奖！`);
 
   console.logGroupStart("奖品实况");

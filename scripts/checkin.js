@@ -129,7 +129,7 @@ async function run(args) {
   recordInfo.push("+++++++++++++++++++");
   recordInfo.push(`幸运值: ${state.luckyValue}/6000`);
   recordInfo.push("===================");
-  console.log(recordInfo.join("\n"));
+  console.log(recordInfo.join("\n  "));
 
   email({
     subject: "掘金每日签到",

@@ -1,5 +1,5 @@
 const api = require("./utils/juejin-api");
-const console = require("./utils/console");
+const console = require("./utils/logger");
 const utils = require("./utils/utils");
 const email = require("./utils/email");
 

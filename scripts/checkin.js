@@ -1,5 +1,5 @@
 const api = require("./utils/juejin-api");
-const console = require("./utils/console");
+const console = require("./utils/logger");
 const utils = require("./utils/utils");
 const email = require("./utils/email");
 
@@ -59,6 +59,20 @@ async function run(args) {
   state.freeCount = lotteryConfig.free_count;
   state.sumPoint += state.freeCount * state.pointCost;
   console.log(`免费抽奖次数: ${state.freeCount}`);
+
+  const getProbabilityOfWinning = sumPoint => {
+    const pointCost = state.pointCost;
+    const luckyValueCost = 10;
+    const totalDrawsNumber = sumPoint / pointCost;
+    let supplyPoint = 0;
+    for(let i = 0, length = Math.floor(totalDrawsNumber * 0.65); i < length; i++) {
+      supplyPoint += Math.ceil(Math.random() * 100)
+    }
+    const luckyValue = (sumPoint + supplyPoint) / pointCost * luckyValueCost + state.luckyValue;
+    return luckyValue / 6000;
+  }
+
+  console.log(`预测您梭哈必中奖幸运概率: ${(getProbabilityOfWinning(state.sumPoint) * 100).toFixed(2) + "%"}`);
 
   console.log(`准备免费抽奖！`);
 

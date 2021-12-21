@@ -56,6 +56,21 @@
     state.sumPoint += state.freeCount * state.pointCost;
     console.log(`免费抽奖次数: ${state.freeCount}`);
 
+    const getProbabilityOfWinning = sumPoint => {
+      const pointCost = 200;
+      const luckyValueCost = 10;
+      const totalDrawsNumber = sumPoint / pointCost;
+      const perhapsSupplyNumber = Math.floor(totalDrawsNumber * (2 / 3));
+      let supplyPoint = 0;
+      for(let i = 0; i < perhapsSupplyNumber; i++) {
+        supplyPoint += Math.ceil(Math.random() * 100)
+      }
+      const luckyValue = (sumPoint + supplyPoint) / pointCost * luckyValueCost + state.luckyValue;
+      return luckyValue / 6000;
+    }
+
+    console.log(`预测您必中奖幸运概率: ${(getProbabilityOfWinning(state.sumPoint) * 100).toFixed(2) + "%"}`);
+
     console.log(`准备梭哈！`);
 
     console.logGroupStart("奖品实况");
@@ -91,10 +106,10 @@
       await utils.wait(state.simulateSpeed);
     }
 
-    while (state.sumPoint >= state.pointCost) {
-      await lottery();
-      await utils.wait(state.simulateSpeed);
-    }
+    // while (state.sumPoint >= state.pointCost) {
+    //   await lottery();
+    //   await utils.wait(state.simulateSpeed);
+    // }
 
     console.logGroupEnd("奖品实况");
 

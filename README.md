@@ -19,12 +19,21 @@
 
     | Name | Value |
     | --- | --- |
-    | COOKIE | 掘金网站Cookie, 打开浏览器，登录 [掘金](https://juejin.cn/), 控制台DevTools -> Network，复制 cookie, **掘金Cookie有效期约1个月需定期更新.** |
+    | COOKIE | 掘金网站Cookie, 打开浏览器，登录 [掘金](https://juejin.cn/), 打开控制台DevTools -> Network，复制 cookie, **掘金Cookie有效期约1个月需定期更新.** |
     | EMAIL_USER | 发件人邮箱地址(需要开启 SMTP) |
     | EMAIL_PASS | 发件人邮箱密码(SMTP密码) |
     | EMAIL_TO | 订阅人邮箱地址(收件人). 如需多人订阅使用 `, ` 分割, 例如: `a@163.com, b@qq.com` |
 
 3. 仓库 -> Actions, 检查Workflows并启用。
+
+## 问题
+
+### 如何获取Cookie
+
+掘金网站Cookie, 打开浏览器，登录 [掘金](https://juejin.cn/), 打开控制台DevTools(快捷键F12) -> Network，复制 cookie, **掘金Cookie有效期约1个月需定期更新.**
+
+DevTools截图:
+<img width="1156" alt="getcookie" src="https://user-images.githubusercontent.com/24502299/149668687-4df74764-f5c4-4afa-a105-2de5b4d14937.png">
 
 ## 许可
 

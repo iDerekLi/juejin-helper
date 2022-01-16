@@ -21,7 +21,6 @@ async function run(args) {
 
   try {
     const checkInResult = await api.checkIn();
-    console.log(checkInResult);
     const incrPoint = checkInResult.incr_point;
     console.log(`签到成功 +${incrPoint} 矿石`);
 
@@ -110,8 +109,7 @@ async function run(args) {
 
   console.logGroupEnd("奖品实况");
 
-  console.log(`弹药不足，当前余额：${state.sumPoint} 矿石`);
-  console.log(`养精蓄锐来日再战！`);
+  console.log(`当前余额：${state.sumPoint} 矿石`);
 
   const recordInfo = [];
   recordInfo.push("=====[战绩详情]=====");

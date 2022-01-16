@@ -69,7 +69,7 @@ async function run(args) {
     const luckyValue = (sumPoint + supplyPoint) / pointCost * luckyValueCost + state.luckyValue;
     return luckyValue / 6000;
   }
-  console.log(`预测您梭哈必中奖幸运概率: ${(getProbabilityOfWinning(state.sumPoint) * 100).toFixed(2) + "%"}`);
+  console.log(`预测梭哈矿石累计幸运值比率: ${(getProbabilityOfWinning(state.sumPoint) * 100).toFixed(2) + "%"}`);
 
   console.log(`免费抽奖次数: ${state.freeCount}`);
   console.log(`准备免费抽奖！`);

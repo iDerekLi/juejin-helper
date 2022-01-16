@@ -6,7 +6,7 @@
 
 <h1 align="center">JuejinHelper-稀土掘金助手</h1>
 
-<p align="center">签到、抽奖、自动化工作流。</p>
+<p align="center">签到、抽奖、沾喜气、自动化工作流。</p>
 
 ## 使用
 

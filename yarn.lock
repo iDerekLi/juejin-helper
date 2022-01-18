@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+fast-astar@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npmmirror.com/fast-astar/download/fast-astar-1.0.6.tgz#e4cae258839bc6406c49df1eaa80077eda74723c"
+  integrity sha1-5MriWIObxkBsSd8eqoAHftp0cjw=
+
 node-fetch@^2.6.1:
   version "2.6.6"
   resolved "https://registry.npmmirror.com/node-fetch/download/node-fetch-2.6.6.tgz?cache=0&sync_timestamp=1636395469986&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fnode-fetch%2Fdownload%2Fnode-fetch-2.6.6.tgz#1751a7c01834e8e1697758732e9efb6eeadfaf89"

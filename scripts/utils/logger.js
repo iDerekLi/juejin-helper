@@ -11,9 +11,9 @@ class LogNode {
   }
 
   toString() {
-    const level = this.level - 2;
+    const level = this.level - 1;
     const isGroup = !this.leaf;
-    return `${' '.repeat(level * 3)}${isGroup ? '▼' : level > 0 ? '-' : ''} ${this.data}\n`;
+    return `${' '.repeat(level * 2)}${isGroup ? '▼ ' : level > 0 ? '- ' : ''}${this.data}\n`;
   }
 }
 

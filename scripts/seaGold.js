@@ -122,7 +122,7 @@ async function run(args) {
         gameDiamond: 0
       };
 
-      console.log("↓======游戏开始======↓");
+      console.log("╔══════游戏开始══════╗");
       console.log(`gameId: ${this.gameInfo.gameId}`);
       console.log(`curPos(${this.gameInfo.curPos.x},${this.gameInfo.curPos.y}): ${this.gameInfo.gameDiamond} 矿石`);
     }
@@ -134,7 +134,7 @@ async function run(args) {
       this.userInfo.todayLimitDiamond = gameOverInfo.todayLimitDiamond;
       // console.log("|==================|");
       console.log(`游戏清算: ${this.gameInfo.gameDiamond} 矿石`);
-      console.log("↑======游戏结束=====↑");
+      console.log("╚══════游戏结束══════╝");
       this.resetGame();
     }
 
@@ -357,7 +357,7 @@ async function run(args) {
   } else {
     console.log(`准备挖矿!`);
     console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond} 矿石`);
-    while (seaGold.userInfo.todayLimitDiamond > seaGold.userInfo.todayDiamond) {
+    while (seaGold.userInfo.todayDiamond < seaGold.userInfo.todayLimitDiamond) {
       await utils.wait(randomWaitTime(1000, 1500));
       await runOnceGame();
       console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond} 矿石`);

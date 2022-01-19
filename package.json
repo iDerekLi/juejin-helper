@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "checkin": "node ./scripts/checkin.js",
-    "lottery": "node ./scripts/lottery.js"
+    "lottery": "node ./scripts/lottery.js",
+    "seaGold": "node ./scripts/seaGold.js"
   },
   "dependencies": {
     "fast-astar": "^1.0.6",

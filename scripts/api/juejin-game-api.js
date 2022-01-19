@@ -100,22 +100,6 @@ class JuejinGameApi extends Api {
       }
     });
   }
-
-  getCommandToken() {
-    const privateKey = "-----BEGIN EC PARAMETERS-----\nBggqhkjOPQMBBw==\n-----END EC PARAMETERS-----\n-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIDB7KMVQd+eeKt7AwDMMUaT7DE3Sl0Mto3LEojnEkRiAoAoGCCqGSM49\nAwEHoUQDQgAEEkViJDU8lYJUenS6IxPlvFJtUCDNF0c/F/cX07KCweC4Q/nOKsoU\nnYJsb4O8lMqNXaI1j16OmXk9CkcQQXbzfg==\n-----END EC PRIVATE KEY-----\n";
-    const token = jwt.sign({
-      gameId: "2022-01-19 16:38:40 +08:00",
-      time: 1642583283697
-    }, privateKey, {
-      algorithm: "ES256",
-      expiresIn: 2592e3,
-      header: {
-        alg: "ES256",
-        typ: "JWT"
-      }
-    });
-    return token;
-  }
 }
 
 module.exports = new JuejinGameApi;

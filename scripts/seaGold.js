@@ -6,6 +6,8 @@ const console = require("./utils/logger");
 const email = require("./utils/email");
 
 async function run(args) {
+  console.clear();
+
   class SeaGold {
     static async init() {
       const user = await api.getUserInfo();
@@ -61,6 +63,11 @@ async function run(args) {
     }
 
     async init() {
+      const loginInfo = await juejinGameApi.gameLogin();
+      if (!loginInfo.isAuth) {
+        throw Error("游戏未授权, 请前往掘金授权!");
+      }
+      console.log(`游戏玩家: ${loginInfo.name}`);
       const info = await juejinGameApi.gameInfo();
       this.userInfo = {
         uid: info.userInfo.uid,
@@ -126,7 +133,7 @@ async function run(args) {
       this.userInfo.todayDiamond = gameOverInfo.todayDiamond;
       this.userInfo.todayLimitDiamond = gameOverInfo.todayLimitDiamond;
       // console.log("|==================|");
-      console.log(`当局清算: ${this.gameInfo.gameDiamond}`);
+      console.log(`游戏清算: ${this.gameInfo.gameDiamond} 矿石`);
       console.log("↑======游戏结束=====↑");
       this.resetGame();
     }
@@ -323,6 +330,10 @@ async function run(args) {
 
   const seaGold = await SeaGold.init();
 
+  function randomWaitTime(start = 500, end = 1000) {
+    return (Math.random() * (end - start) + start) >> 0;
+  }
+
   async function runOnceGame() {
     if (seaGold.isGaming) {
       await seaGold.gameOver();
@@ -331,7 +342,7 @@ async function run(args) {
     let run = true;
     while (run) {
       try {
-        await utils.wait(1250);
+        await utils.wait(randomWaitTime(1000, 1500));
         await seaGold.executeGameCommand();
       } catch (e) {
         run = false;
@@ -340,18 +351,22 @@ async function run(args) {
     }
     await seaGold.gameOver();
   }
+  console.log(`今日开采限制: ${seaGold.userInfo.todayLimitDiamond} 矿石`);
+  if (seaGold.userInfo.todayDiamond >= seaGold.userInfo.todayLimitDiamond) {
+    console.log(`今日开采已达上限!`);
+  } else {
+    console.log(`准备挖矿!`);
+    console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond} 矿石`);
+    while (seaGold.userInfo.todayLimitDiamond > seaGold.userInfo.todayDiamond) {
+      await utils.wait(randomWaitTime(1000, 1500));
+      await runOnceGame();
+      console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond} 矿石`);
+    }
 
-  console.log(`准备挖矿!`);
-  console.log(`今日限制开采: ${seaGold.userInfo.todayLimitDiamond}`);
-  console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond}`);
-
-  while (seaGold.userInfo.todayLimitDiamond > seaGold.userInfo.todayDiamond) {
-    await utils.wait(1250);
-    await runOnceGame();
-    console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond}`);
+    if (seaGold.userInfo.todayDiamond >= seaGold.userInfo.todayLimitDiamond) {
+      console.log(`今日开采已达上限!`);
+    }
   }
-
-  console.log(`今日已开采: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond}`);
 
   email({
     subject: "掘金海底挖矿",

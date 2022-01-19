@@ -35,6 +35,10 @@
 DevTools截图:
 <img width="1156" alt="getcookie" src="./resources/getcookie.png">
 
+## 赞赏
+### ☕️微信赞赏！鼓励升级！
+<img src="https://user-images.githubusercontent.com/24502299/150144723-863ad914-3849-40df-8857-5ec5cd60cacd.JPG" alt="微信赞赏" width="300" />
+
 ## 许可
 
 [MIT](./LICENSE)

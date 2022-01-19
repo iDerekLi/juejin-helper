@@ -349,7 +349,6 @@ async function run(args) {
     await utils.wait(1250);
     await runOnceGame();
     console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond}`);
-    index++;
   }
 
   console.log(`今日已开采: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond}`);

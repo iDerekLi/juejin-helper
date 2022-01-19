@@ -65,9 +65,9 @@ async function run(args) {
     async init() {
       const loginInfo = await juejinGameApi.gameLogin();
       if (!loginInfo.isAuth) {
-        throw Error("游戏未授权, 请前往掘金授权!");
+        throw Error("玩家未授权, 请前往掘金授权!");
       }
-      console.log(`游戏玩家: ${loginInfo.name}`);
+      console.log(`玩家: ${loginInfo.name}`);
       const info = await juejinGameApi.gameInfo();
       this.userInfo = {
         uid: info.userInfo.uid,

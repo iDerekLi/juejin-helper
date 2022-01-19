@@ -5,7 +5,7 @@ on:
     - cron: "30 22 * * *" # 北京时间上午06:30
   workflow_dispatch:
 jobs:
-  checkin:
+  CheckIn:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

@@ -26,6 +26,12 @@
 
 3. 仓库 -> Actions, 检查Workflows并启用。
 
+## 预览
+
+| 掘金每日签到 | 掘金海底挖矿 |
+|:-----------:| :-------------:|
+| ![掘金每日签到](https://user-images.githubusercontent.com/24502299/150481822-b488d30c-93b6-4d73-9e28-56c04a9413fb.png) | ![掘金海底挖矿](https://user-images.githubusercontent.com/24502299/150481871-5f9e74ac-2341-45c0-908b-195cceb9b640.png) |
+
 ## 问题
 
 ### 如何获取Cookie

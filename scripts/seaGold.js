@@ -207,11 +207,11 @@ async function run(args) {
 
       const astar = new Astar(maze);
       const path = astar.search(
-        [startPos.x, startPos.y], // start
-        [endPos.x, endPos.y], // end
-        {                        // option
-          rightAngle: true,    // default:false,Allow diagonal
-          optimalResult: true   // default:true,In a few cases, the speed is slightly slower
+        [startPos.x, startPos.y],
+        [endPos.x, endPos.y],
+        {
+          rightAngle: true,
+          optimalResult: true
         }
       );
 
@@ -330,10 +330,6 @@ async function run(args) {
 
   const seaGold = await SeaGold.init();
 
-  function randomWaitTime(start = 500, end = 1000) {
-    return (Math.random() * (end - start) + start) >> 0;
-  }
-
   async function runOnceGame() {
     if (seaGold.isGaming) {
       await seaGold.gameOver();
@@ -342,7 +338,7 @@ async function run(args) {
     let run = true;
     while (run) {
       try {
-        await utils.wait(randomWaitTime(1000, 1500));
+        await utils.wait(utils.randomRangeNumber(1000, 1500));
         await seaGold.executeGameCommand();
       } catch (e) {
         run = false;
@@ -358,7 +354,7 @@ async function run(args) {
     console.log(`准备挖矿!`);
     console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond} 矿石`);
     while (seaGold.userInfo.todayDiamond < seaGold.userInfo.todayLimitDiamond) {
-      await utils.wait(randomWaitTime(1000, 1500));
+      await utils.wait(utils.randomRangeNumber(1000, 1500));
       await runOnceGame();
       console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond} 矿石`);
     }

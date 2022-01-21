@@ -369,7 +369,7 @@ async function run(args) {
   }
 
   email({
-    subject: "掘金海底挖矿",
+    subject: "海底掘金游戏",
     text: console.toString()
   });
 }
@@ -377,7 +377,7 @@ async function run(args) {
 run(process.argv.splice(2)).catch(error => {
   console.log(error);
   email({
-    subject: "掘金海底挖矿",
+    subject: "海底掘金游戏",
     html: `<b>Error</b><div>${error.message}</div>`
   });
 });

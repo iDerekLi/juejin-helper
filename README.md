@@ -30,7 +30,7 @@
 
 | 掘金每日签到 | 海底掘金游戏 |
 |:-----------:| :-------------:|
-| ![掘金每日签到](https://user-images.githubusercontent.com/24502299/150481822-b488d30c-93b6-4d73-9e28-56c04a9413fb.png) | ![海底掘金游戏](https://user-images.githubusercontent.com/24502299/150623640-75e4b859-9f21-444e-aae2-c752b79e9763.png) |
+| ![掘金每日签到](https://user-images.githubusercontent.com/24502299/150481822-b488d30c-93b6-4d73-9e28-56c04a9413fb.png) | ![海底掘金游戏](https://user-images.githubusercontent.com/24502299/150625136-5649d2fe-b204-40aa-b8b5-7f54a44e018d.png) |
 
 ## 问题
 

@@ -41,6 +41,14 @@
 DevTools截图:
 <img width="1156" alt="getcookie" src="./resources/getcookie.png">
 
+### 如何授权海底掘金游戏
+
+运行自动化后通知订阅人 `玩家未授权, 请前往掘金授权!`, 说明您是新玩家从始至终未进行海底掘金游戏, 需要先进行游戏授权.
+
+授权步骤: 掘金 -> 每日签到 -> 海底掘金挑战赛(点击进入游戏, 点击授权, 最好再随意玩一局). 后续就可以由掘金助手自动处理.
+
+![海底掘金挑战赛](https://user-images.githubusercontent.com/24502299/151397151-0d69998a-2310-4a32-945f-c8e0035ed65d.png)
+
 ## 赞赏
 ### ☕️微信赞赏！鼓励升级！
 <img src="https://user-images.githubusercontent.com/24502299/150144723-863ad914-3849-40df-8857-5ec5cd60cacd.JPG" alt="微信赞赏" width="300" />

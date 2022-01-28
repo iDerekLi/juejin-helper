@@ -352,7 +352,8 @@ async function run(args) {
     }
   }
   console.log(`今日开采限制: ${seaGold.userInfo.todayLimitDiamond} 矿石`);
-  if (seaGold.userInfo.todayDiamond >= seaGold.userInfo.todayLimitDiamond && false) {
+  seaGold.userInfo.todayDiamond = 1000;
+  if (seaGold.userInfo.todayDiamond >= seaGold.userInfo.todayLimitDiamond) {
     console.log(`今日开采已达上限!`);
   } else {
     const maxZeroCount = 5;

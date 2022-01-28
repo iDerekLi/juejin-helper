@@ -358,12 +358,12 @@ async function run(args) {
     const maxZeroCount = 5;
     let zeroCount = 0;
     const runEndTime = new Date();
-    runEndTime.setMinutes(runEndTime.getMinutes() + 30);
+    // runEndTime.setMinutes(runEndTime.getMinutes() + 30);
     let runTime = new Date();
     console.log(`准备挖矿!`);
     console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond} 矿石`);
     while (seaGold.userInfo.todayDiamond < seaGold.userInfo.todayLimitDiamond) {
-      if (runTime > runEndTime) {
+      if (runTime >= runEndTime) {
         console.log("掘金游戏异常: 服务运行时间过长.");
         throw new Error(console.toString());
       }

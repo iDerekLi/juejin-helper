@@ -133,11 +133,9 @@ async function run(args) {
       this.userInfo.todayDiamond = gameOverInfo.todayDiamond;
       this.userInfo.todayLimitDiamond = gameOverInfo.todayLimitDiamond;
       // console.log("|==================|");
-      const gameDiamond = this.gameInfo.gameDiamond;
-      console.log(`游戏清算: ${gameDiamond} 矿石`);
+      console.log(`游戏清算: ${this.gameInfo.gameDiamond} 矿石`);
       console.log("╚══════游戏结束══════╝");
       this.resetGame();
-      return gameDiamond;
     }
 
     async executeGameCommand() {
@@ -345,9 +343,9 @@ async function run(args) {
         await utils.wait(utils.randomRangeNumber(1000, 1500));
         run = await seaGold.executeGameCommand();
       }
-      return await seaGold.gameOver();
+      await seaGold.gameOver();
     } catch (e) {
-      return await seaGold.gameOver();
+      await seaGold.gameOver();
       throw e;
     }
   }
@@ -355,10 +353,8 @@ async function run(args) {
   if (seaGold.userInfo.todayDiamond >= seaGold.userInfo.todayLimitDiamond) {
     console.log(`今日开采已达上限!`);
   } else {
-    const maxZeroCount = 5;
-    let zeroCount = 0;
     const runEndTime = new Date();
-    runEndTime.setMinutes(runEndTime.getMinutes() + 30);
+    runEndTime.setMinutes(runEndTime.getMinutes() + 30)
     let runTime = new Date();
     console.log(`准备挖矿!`);
     console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond} 矿石`);
@@ -368,14 +364,7 @@ async function run(args) {
         throw new Error(console.toString());
       }
       await utils.wait(utils.randomRangeNumber(1000, 1500));
-      const gameDiamond = await runOnceGame();
-      if (gameDiamond === 0) {
-        zeroCount++;
-      }
-      if (zeroCount > maxZeroCount) {
-        console.log("掘金游戏异常: 您 0 矿石游戏对局次数过多.");
-        throw new Error(console.toString());
-      }
+      await runOnceGame();
       console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond} 矿石`);
       runTime = new Date();
     }
@@ -395,6 +384,6 @@ run(process.argv.splice(2)).catch(error => {
   console.log(error);
   email({
     subject: "海底掘金游戏",
-    html: `<b>Error</b><pre>${error.message}</pre>`
+    html: `<b>Error</b><div>${error.message}</div>`
   });
 });

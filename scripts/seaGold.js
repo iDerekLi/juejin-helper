@@ -145,13 +145,15 @@ async function run(args) {
       const path = this.getRoutePath(bmmap, curNode, bestNode);
       const commands = this.getCommands(path);
       if (commands.length <= 0) {
-        throw new Error("当局游戏资源耗尽");
+        console.log("当局游戏资源耗尽");
+        return false;
       }
       const gameCommandInfo = await juejinGameApi.gameCommand(this.gameInfo.gameId, commands);
       this.gameInfo.curPos = gameCommandInfo.curPos;
       this.gameInfo.blockData = gameCommandInfo.blockData;
       this.gameInfo.gameDiamond = gameCommandInfo.gameDiamond;
       console.log(`curPos(${this.gameInfo.curPos.x},${this.gameInfo.curPos.y}): ${this.gameInfo.gameDiamond} 矿石`);
+      return true;
     }
 
     getCommand(start, end) {
@@ -331,21 +333,21 @@ async function run(args) {
   const seaGold = await SeaGold.init();
 
   async function runOnceGame() {
-    if (seaGold.isGaming) {
-      await seaGold.gameOver();
-    }
-    await seaGold.gameStart();
-    let run = true;
-    while (run) {
-      try {
-        await utils.wait(utils.randomRangeNumber(1000, 1500));
-        await seaGold.executeGameCommand();
-      } catch (e) {
-        run = false;
-        console.log(e.message);
+    try {
+      if (seaGold.isGaming) {
+        await seaGold.gameOver();
       }
+      await seaGold.gameStart();
+      let run = true;
+      while (run) {
+        await utils.wait(utils.randomRangeNumber(1000, 1500));
+        run = await seaGold.executeGameCommand();
+      }
+      await seaGold.gameOver();
+    } catch (e) {
+      await seaGold.gameOver();
+      throw e;
     }
-    await seaGold.gameOver();
   }
   console.log(`今日开采限制: ${seaGold.userInfo.todayLimitDiamond} 矿石`);
   if (seaGold.userInfo.todayDiamond >= seaGold.userInfo.todayLimitDiamond) {

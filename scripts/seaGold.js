@@ -352,7 +352,7 @@ async function run(args) {
     }
   }
   console.log(`今日开采限制: ${seaGold.userInfo.todayLimitDiamond} 矿石`);
-  if (seaGold.userInfo.todayDiamond >= seaGold.userInfo.todayLimitDiamond) {
+  if (seaGold.userInfo.todayDiamond >= seaGold.userInfo.todayLimitDiamond && false) {
     console.log(`今日开采已达上限!`);
   } else {
     const maxZeroCount = 5;
@@ -395,6 +395,6 @@ run(process.argv.splice(2)).catch(error => {
   console.log(error);
   email({
     subject: "海底掘金游戏",
-    html: `<b>Error</b><pre>${error.message}</pre>`
+    html: `<b>Error</b><pre>${error.message}</pre><div>如版本过低请前往升级: <a href="https://github.com/iDerekLi/juejin-helper">juejin-helper</a></div>`
   });
 });

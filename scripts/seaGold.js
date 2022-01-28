@@ -352,14 +352,13 @@ async function run(args) {
     }
   }
   console.log(`今日开采限制: ${seaGold.userInfo.todayLimitDiamond} 矿石`);
-  seaGold.userInfo.todayDiamond = 1000;
   if (seaGold.userInfo.todayDiamond >= seaGold.userInfo.todayLimitDiamond) {
     console.log(`今日开采已达上限!`);
   } else {
     const maxZeroCount = 5;
     let zeroCount = 0;
     const runEndTime = new Date();
-    // runEndTime.setMinutes(runEndTime.getMinutes() + 30);
+    runEndTime.setMinutes(runEndTime.getMinutes() + 30);
     let runTime = new Date();
     console.log(`准备挖矿!`);
     console.log(`当前进度: ${seaGold.userInfo.todayDiamond}/${seaGold.userInfo.todayLimitDiamond} 矿石`);

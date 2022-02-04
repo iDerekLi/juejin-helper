@@ -1,31 +1,36 @@
 {
   "name": "juejin-helper",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "稀土掘金助手：签到、抽奖、沾喜气、海底淘金、自动化工作流。",
   "author": "Derek Li",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "main": "dist/juejin-helper.cjs.js",
   "module": "dist/juejin-helper.esm.js",
   "browser": "dist/juejin-helper.umd.js",
+  "files": ["dist"],
+  "keywords": ["juejin", "helper"],
   "scripts": {
-    "checkin": "node ./scripts/checkin.js",
-    "lottery": "node ./scripts/lottery.js",
-    "seaGold": "node ./scripts/seaGold.js",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "test": "node test/test.js",
-    "pretest": "npm run build"
+    "pretest": "npm run build",
+    "prescript": "npm run build",
+    "checkin": "node ./scripts/checkin.js",
+    "seagold": "node ./scripts/seaGold.js"
   },
   "dependencies": {
-    "fast-astar": "^1.0.6",
     "jsonwebtoken": "^8.5.1",
-    "node-fetch": "^2.6.1",
-    "nodemailer": "^6.7.0"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/preset-env": "^7.16.11",
+    "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
-    "rollup": "^1.29.0"
+    "rollup": "^1.29.0",
+    "fast-astar": "^1.0.6",
+    "nodemailer": "^6.7.0"
   },
   "repository": {
     "type": "git",

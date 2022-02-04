@@ -7,7 +7,12 @@
   "main": "dist/juejin-helper.cjs.js",
   "module": "dist/juejin-helper.esm.js",
   "browser": "dist/juejin-helper.umd.js",
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ],
   "keywords": ["juejin", "helper"],
   "scripts": {
     "build": "rollup -c",

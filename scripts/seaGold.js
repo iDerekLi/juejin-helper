@@ -1,23 +1,25 @@
-const api = require("./api/juejin-api");
-const juejinGameApi = require("./api/juejin-game-api");
+const JuejinHelper = require("juejin-helper");
 const utils = require("./utils/utils");
 const { Grid, Astar } = require("fast-astar");
 const console = require("./utils/logger");
 const email = require("./utils/email");
+const env = require("./utils/env");
 
 async function run(args) {
   console.clear();
 
   class SeaGold {
     static async init() {
-      const user = await api.getUserInfo();
-      const token = await api.getToken();
-      juejinGameApi.setUser(user);
-      juejinGameApi.setToken(token);
+      const juejin = new JuejinHelper();
+      await juejin.login(env.COOKIE);
       const seaGold = new this();
+      const gameApi = juejin.seagold();
+      seaGold.gameApi = gameApi;
       await seaGold.init();
       return seaGold;
     }
+
+    gameApi = null;
 
     nodeRules = [
       { code: 0, hasBounty: false, isWall: false, name: "空地" },
@@ -63,12 +65,12 @@ async function run(args) {
     }
 
     async init() {
-      const loginInfo = await juejinGameApi.gameLogin();
+      const loginInfo = await this.gameApi.gameLogin();
       if (!loginInfo.isAuth) {
         throw Error("玩家未授权, 请前往掘金授权!");
       }
       console.log(`玩家: ${loginInfo.name}`);
-      const info = await juejinGameApi.gameInfo();
+      const info = await this.gameApi.gameInfo();
       this.userInfo = {
         uid: info.userInfo.uid,
         name: info.userInfo.name,
@@ -112,7 +114,7 @@ async function run(args) {
 
     async gameStart() {
       if (this.isGaming) return;
-      const gameInfo = await juejinGameApi.gameStart();
+      const gameInfo = await this.gameApi.gameStart();
 
       this.gameInfo = {
         gameId: gameInfo.gameId,
@@ -129,7 +131,7 @@ async function run(args) {
 
     async gameOver() {
       if (!this.isGaming) return;
-      const gameOverInfo = await juejinGameApi.gameOver();
+      const gameOverInfo = await this.gameApi.gameOver();
       this.userInfo.todayDiamond = gameOverInfo.todayDiamond;
       this.userInfo.todayLimitDiamond = gameOverInfo.todayLimitDiamond;
       // console.log("|==================|");
@@ -150,7 +152,7 @@ async function run(args) {
         console.log("当局游戏资源耗尽");
         return false;
       }
-      const gameCommandInfo = await juejinGameApi.gameCommand(this.gameInfo.gameId, commands);
+      const gameCommandInfo = await this.gameApi.gameCommand(this.gameInfo.gameId, commands);
       this.gameInfo.curPos = gameCommandInfo.curPos;
       this.gameInfo.blockData = gameCommandInfo.blockData;
       this.gameInfo.gameDiamond = gameCommandInfo.gameDiamond;

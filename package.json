@@ -19,9 +19,7 @@
     "dev": "rollup -c -w",
     "test": "node test/test.js",
     "pretest": "npm run build",
-    "prescript": "npm run build",
-    "checkin": "node ./scripts/checkin.js",
-    "seagold": "node ./scripts/seaGold.js"
+    "prescript": "npm run build"
   },
   "dependencies": {
     "jsonwebtoken": "^8.5.1",
@@ -33,9 +31,7 @@
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
-    "rollup": "^1.29.0",
-    "fast-astar": "^1.0.6",
-    "nodemailer": "^6.7.0"
+    "rollup": "^1.29.0"
   },
   "repository": {
     "type": "git",

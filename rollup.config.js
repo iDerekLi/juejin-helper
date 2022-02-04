@@ -12,6 +12,7 @@ export default [
 			file: pkg.browser,
 			format: 'umd'
 		},
+		external: ['node-fetch', 'jsonwebtoken'],
 		plugins: [
 			resolve(), // so Rollup can find `ms`
 			// babel({
@@ -29,7 +30,7 @@ export default [
 	// `file` and `format` for each target)
 	{
 		input: 'src/juejin-helper.js',
-		external: ['node-fetch', 'nodemailer', 'jsonwebtoken', 'fast-astar'],
+		external: ['node-fetch', 'jsonwebtoken'],
 		output: [
 			{ file: pkg.main, format: 'cjs' },
 			{ file: pkg.module, format: 'es' }

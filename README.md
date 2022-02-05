@@ -82,4 +82,4 @@ DevTools截图:
 
 ## 许可
 
-[MIT](./LICENSE)
+[Apache-2.0](./LICENSE)

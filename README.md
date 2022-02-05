@@ -67,6 +67,15 @@ async function run() {
 run();
 ```
 
+## 问题
+
+### 如何获取Cookie
+
+掘金网站Cookie, 打开浏览器，登录 [掘金](https://juejin.cn/), 打开控制台DevTools(快捷键F12) -> Network，复制 cookie, **掘金Cookie有效期约1个月需定期更新.**
+
+DevTools截图:
+<img width="1156" alt="getcookie" src="https://user-images.githubusercontent.com/24502299/152626917-26aca423-4e9c-48c9-be06-d228af5a492b.png">
+
 ## 赞赏
 ### ☕️微信赞赏！鼓励升级！
 <img src="https://user-images.githubusercontent.com/24502299/150144723-863ad914-3849-40df-8857-5ec5cd60cacd.JPG" alt="微信赞赏" width="300" />

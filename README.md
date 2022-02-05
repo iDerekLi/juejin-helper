@@ -8,48 +8,64 @@
 
 <p align="center">签到、抽奖、沾喜气、海底掘金游戏、自动化工作流。</p>
 
-## 使用
+## 示例
 
-自动化执行任务: 掘金每日签到, 沾喜气, 免费抽奖, 海底掘金游戏, 最后将结果报告邮件通知订阅人。\
-自动化运行时间: 北京时间上午06:30
+### 签到示例
+```javascript
+const JuejinHelper = require("juejin-helper");
 
-1. [Fork 仓库](https://github.com/iDerekLi/juejin-helper)
+async function run() {
+  const juejin = new JuejinHelper();
+  await juejin.login("你的掘金Cookie");
 
-2. 仓库 -> Settings -> Secrets -> New repository secret, 添加Secrets变量如下:
+  const growth = juejin.growth();
 
-    | Name | Value |
-    | --- | --- |
-    | COOKIE | 掘金网站Cookie, 打开浏览器，登录 [掘金](https://juejin.cn/), 打开控制台DevTools -> Network，复制 cookie, **掘金Cookie有效期约1个月需定期更新.** |
-    | EMAIL_USER | 发件人邮箱地址(需要开启 SMTP) |
-    | EMAIL_PASS | 发件人邮箱密码(SMTP密码) |
-    | EMAIL_TO | 订阅人邮箱地址(收件人). 如需多人订阅使用 `, ` 分割, 例如: `a@163.com, b@qq.com` |
+  await growth.checkIn(); // 签到
+  // await growth.getCurrentPoint(); // 获取当前矿石数
+  // await growth.getLotteryConfig(); // 获取抽奖配置
+  // await growth.drawLottery(); // 抽奖
+  // await growth.getLotteriesLuckyUsers(); // 获取抽奖幸运用户
+  // await growth.getMyLucky(); // 获取我的幸运值
+  // await growth.dipLucky(); // 沾喜气
 
-3. 仓库 -> Actions, 检查Workflows并启用。
+  await juejin.logout();
+}
 
-## 预览
+run();
+```
 
-| 掘金每日签到 | 海底掘金游戏 |
-|:-----------:| :-------------:|
-| ![掘金每日签到](https://user-images.githubusercontent.com/24502299/150481822-b488d30c-93b6-4d73-9e28-56c04a9413fb.png) | ![海底掘金游戏](https://user-images.githubusercontent.com/24502299/150625136-5649d2fe-b204-40aa-b8b5-7f54a44e018d.png) |
+### 海底掘金游戏示例
+```javascript
+const JuejinHelper = require("juejin-helper");
 
-## 问题
+async function run() {
+  const juejin = new JuejinHelper();
+  await juejin.login("你的掘金Cookie");
 
-### 如何获取Cookie
+  const seagold = juejin.seagold();
 
-掘金网站Cookie, 打开浏览器，登录 [掘金](https://juejin.cn/), 打开控制台DevTools(快捷键F12) -> Network，复制 cookie, **掘金Cookie有效期约1个月需定期更新.**
+  await seagold.gameLogin(); // 登陆游戏
+  
+  let gameInfo = null;
 
-DevTools截图:
-<img width="1156" alt="getcookie" src="./resources/getcookie.png">
+  const info = await seagold.gameInfo(); // 游戏状态
+  if (info.gameStatus === 1) {
+    gameInfo = info.gameInfo; // 继续游戏
+  } else {
+    gameInfo = await seagold.gameStart(); // 开始游戏
+  }
 
-### 如何授权海底掘金游戏
+  const command = ["U", "L"];
+  await seagold.gameCommand(gameInfo.gameId, command); // 执行命令
 
-运行自动化后通知订阅人 `玩家未授权, 请前往掘金授权!`, 说明您是新玩家从始至终未进行海底掘金游戏, 需要先进行游戏授权.
+  const result = await seagold.gameOver(); // 游戏结束
+  console.log(result); // => { ... }
 
-授权步骤: 登陆 [掘金](https://juejin.cn/) -> 每日签到 -> 海底掘金挑战赛(点击进入游戏, 点击授权, 最好再随意玩一局). 后续就可以由掘金助手自动处理.
+  await juejin.logout();
+}
 
-或点击👇这个海报帮您直达海底掘金挑战赛
-
-[![海底掘金挑战赛](https://user-images.githubusercontent.com/24502299/151397151-0d69998a-2310-4a32-945f-c8e0035ed65d.png)](https://juejin.cn/game/haidijuejin/)
+run();
+```
 
 ## 赞赏
 ### ☕️微信赞赏！鼓励升级！

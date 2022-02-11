@@ -51,9 +51,7 @@ DevTools截图:
 
 [![海底掘金挑战赛](https://user-images.githubusercontent.com/24502299/151397151-0d69998a-2310-4a32-945f-c8e0035ed65d.png)](https://juejin.cn/game/haidijuejin/)
 
-## 赞赏
-### ☕️微信赞赏！鼓励升级！
-<img src="https://user-images.githubusercontent.com/24502299/150144723-863ad914-3849-40df-8857-5ec5cd60cacd.JPG" alt="微信赞赏" width="300" />
+
 
 ## 许可
 

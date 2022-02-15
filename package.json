@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "fast-astar": "^1.0.6",
-    "juejin-helper": "^0.1.0",
+    "juejin-helper": "^0.1.2",
     "nodemailer": "^6.7.0"
   },
   "repository": {

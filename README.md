@@ -20,13 +20,26 @@ async function run() {
 
   const growth = juejin.growth();
 
-  await growth.checkIn(); // 签到
-  // await growth.getCurrentPoint(); // 获取当前矿石数
-  // await growth.getLotteryConfig(); // 获取抽奖配置
-  // await growth.drawLottery(); // 抽奖
-  // await growth.getLotteriesLuckyUsers(); // 获取抽奖幸运用户
-  // await growth.getMyLucky(); // 获取我的幸运值
-  // await growth.dipLucky(); // 沾喜气
+  // 签到
+  await growth.checkIn();
+
+  // 获取当前矿石数
+  // await growth.getCurrentPoint();
+
+  // 获取抽奖配置
+  // await growth.getLotteryConfig();
+
+  // 抽奖
+  // await growth.drawLottery();
+
+  // 获取抽奖幸运用户
+  // await growth.getLotteriesLuckyUsers({ page_no = 1, page_size = 5 }); // => { lotteries: [{ lottery_history_id }, ...] }
+
+  // 获取我的幸运值
+  // await growth.getMyLucky();
+
+  // 沾喜气
+  // await growth.dipLucky(lottery_history_id); // => { has_dip, dip_value, total_value, dip_action }
 
   await juejin.logout();
 }

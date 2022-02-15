@@ -39,15 +39,15 @@ class Seagold extends Api {
     return this.get("/sea-gold/home/info");
   }
 
-  async gameStart() {
+  async gameStart({ roleId = 3 } = {}) {
     return this.post("/sea-gold/game/start", {
       data: {
-        roleId: 3
+        roleId
       }
     });
   }
 
-  async gameOver() {
+  async gameOver({ isButton = 1 } = {}) {
     // const result = {
     //   activity: "",
     //   deep: 3,
@@ -61,7 +61,7 @@ class Seagold extends Api {
     // };
     return this.post("/sea-gold/game/over", {
       data: {
-        isButton: 1
+        isButton
       }
     });
   }

@@ -33,7 +33,7 @@ class Growth extends Api {
     return this.post("/growth_api/v1/check_in");
   }
 
-  async getLotteriesLuckyUsers({ page_no = 1, page_size = 5 }) {
+  async getLotteriesLuckyUsers({ page_no = 1, page_size = 5 } = {}) {
     return this.post("/growth_api/v1/lottery_history/global_big", {
       data: {
         page_no: page_no,

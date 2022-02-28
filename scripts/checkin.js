@@ -1,7 +1,8 @@
-const api = require("./api/juejin-api");
+const JuejinHelper = require("juejin-helper");
 const console = require("./utils/logger");
 const utils = require("./utils/utils");
 const email = require("./utils/email");
+const env = require("./utils/env");
 
 async function run(args) {
   const state = {
@@ -18,6 +19,10 @@ async function run(args) {
 
   await utils.wait(100);
   console.clear();
+
+  const juejin = new JuejinHelper();
+  await juejin.login(env.COOKIE);
+  const api = juejin.growth();
 
   try {
     const checkInResult = await api.checkIn();
@@ -106,6 +111,8 @@ async function run(args) {
     state.freeCount--;
     await utils.wait(state.simulateSpeed);
   }
+
+  await juejin.logout();
 
   console.logGroupEnd("奖品实况");
 

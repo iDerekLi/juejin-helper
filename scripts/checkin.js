@@ -140,11 +140,9 @@ async function run(args) {
 }
 
 run(process.argv.splice(2)).catch(error => {
-  console.error(error);
-
   email({
     subject: "掘金每日签到",
-    html: `<strong>Error</strong><div>${error.message}</div>`
+    html: `<strong>Error</strong><pre>${error.message}</pre>`
   });
 
   throw error;

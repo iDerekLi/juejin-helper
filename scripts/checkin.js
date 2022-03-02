@@ -95,8 +95,6 @@ class CheckIn {
 
     this.luckyValueProbability = getProbabilityOfWinning(this.sumPoint);
 
-    console.log(`预测梭哈矿石累计幸运值比率: ${(this.luckyValueProbability * 100).toFixed(2) + "%"}`);
-
     await juejin.logout();
   }
 

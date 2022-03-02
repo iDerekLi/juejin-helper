@@ -146,4 +146,6 @@ run(process.argv.splice(2)).catch(error => {
     subject: "掘金每日签到",
     html: `<strong>Error</strong><div>${error.message}</div>`
   });
+
+  throw error;
 });

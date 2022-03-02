@@ -1,6 +1,6 @@
 const JuejinHelper = require('..');
 
-const mockCookie = `juejin-cookie`;
+const mockCookie = `juejin-cookies`;
 
 async function run() {
   const juejin = new JuejinHelper();
@@ -8,6 +8,12 @@ async function run() {
   console.log(juejin.getUser().user_name);
 
   const growth = juejin.growth();
+
+  const status = await growth.getTodayStatus();
+  console.log(`签到状态: ${status}`);
+
+  const counts = await growth.getCounts();
+  console.log(`连续签到天数 ${counts.cont_count}, 累计签到天数${counts.sum_count}`);
 
   const luckyusersResult = await growth.getLotteriesLuckyUsers();
   if (luckyusersResult.count > 0) {

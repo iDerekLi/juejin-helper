@@ -26,6 +26,12 @@ async function run() {
   // 获取当前矿石数
   // await growth.getCurrentPoint();
 
+  // 获取统计签到天数
+  // await growth.getCounts();
+
+  // 获取今日签到状态
+  // await growth.getTodayStatus();
+
   // 获取抽奖配置
   // await growth.getLotteryConfig();
 

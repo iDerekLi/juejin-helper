@@ -304,6 +304,10 @@ class SeaGold {
   }
 
   async run() {
+    const juejin = new JuejinHelper();
+    await juejin.login(env.COOKIE);
+    this.gameApi = juejin.seagold();
+
     const loginInfo = await this.gameApi.gameLogin();
     if (!loginInfo.isAuth) {
       throw Error(`掘友 ${loginInfo.name} 未授权, 请前往掘金授权!`);
@@ -370,6 +374,8 @@ class SeaGold {
 
       runTime = new Date();
     }
+
+    await juejin.logout();
   }
 
   toString() {
@@ -386,11 +392,9 @@ ${this.history.length ? `\n游戏记录\n${gameLives}` : ""}
 }
 
 async function run(args) {
-  const juejin = new JuejinHelper();
-  await juejin.login(env.COOKIE);
-
   const seaGold = new SeaGold();
-  seaGold.gameApi = juejin.seagold();
+
+  await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
 
   await seaGold.run();
 

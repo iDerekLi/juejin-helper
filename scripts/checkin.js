@@ -108,7 +108,7 @@ class CheckIn {
     }).join("\n");
 
     return `
-用户: ${this.username}
+掘友: ${this.username}
 ${this.todayStatus === 1 ? `签到成功 +${this.incrPoint} 矿石` :
       this.todayStatus === 2 ? "今日已完成签到" : "签到失败"}
 ${this.dipStatus === 1 ? `沾喜气 +${this.dipValue} 幸运值` :

@@ -30,7 +30,7 @@ class Seagold extends Api {
     this.setToken(await this.juejin.makeToken());
     return this.post("/sea-gold/user/login", {
       data: {
-        name: this.juejin.user?.user_name
+        name: this.juejin.user.user_name
       }
     });
   }

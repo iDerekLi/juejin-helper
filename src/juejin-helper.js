@@ -1,6 +1,7 @@
 import Api from "./api";
 import Growth from "./growth";
 import SeaGold from "./seagold";
+import { parseCookieTokens } from "./utils/parse-cookietokens";
 
 class JuejinHelper extends Api {
   constructor() {
@@ -20,6 +21,7 @@ class JuejinHelper extends Api {
 
   async login(cookie) {
     this.headers.cookie = cookie;
+    this.cookieTokens = parseCookieTokens(cookie);
     this.user = await this.get("/user_api/v1/user/get");
   }
 
@@ -30,6 +32,10 @@ class JuejinHelper extends Api {
 
   getCookie() {
     return this.headers.cookie || "";
+  }
+
+  getCookieTokens() {
+    return this.cookieTokens;
   }
 
   getUser() {
@@ -48,6 +54,10 @@ class JuejinHelper extends Api {
 
   seagold() {
     return new SeaGold(this);
+  }
+
+  numpuzz() {
+    return new NumPuzz(this);
   }
 }
 

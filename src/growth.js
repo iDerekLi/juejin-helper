@@ -7,6 +7,10 @@ class Growth extends Api {
     this.headers.referer = "https://juejin.cn/";
     this.requestInterceptor = config => {
       config.headers.cookie = juejin.getCookie();
+      if (juejin.user) {
+        const tokens = juejin.getCookieTokens();
+        config.url += `${config.url.indexOf("?") === -1 ? "?" : "&"}aid=${tokens.aid}&uuid=${tokens.uuid}`;
+      }
       return config;
     };
     this.responseInterceptor = res => {

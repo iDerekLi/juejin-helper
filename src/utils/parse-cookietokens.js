@@ -1,9 +1,4 @@
-function parseCookieTokens(cookiestring) {
-  const cookie = new Map();
-  cookiestring.split("; ").map(string => string.split("=")).forEach(([key, value]) => {
-    cookie.set(key, value);
-  });
-
+function parseCookieTokens(cookie) {
   const cookieTokens = {
     aid: "",
     uuid: "",

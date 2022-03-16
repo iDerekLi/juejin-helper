@@ -2,6 +2,8 @@ import Api from "./api";
 import Growth from "./growth";
 import SeaGold from "./seagold";
 import { parseCookieTokens } from "./utils/parse-cookietokens";
+import Cookie from "./cookie";
+import Sdk from "./sdk";
 
 class JuejinHelper extends Api {
   constructor() {
@@ -16,16 +18,19 @@ class JuejinHelper extends Api {
       return res.data;
     }
 
+    this.cookie = new Cookie();
     this.user = null;
   }
 
   async login(cookie) {
-    this.headers.cookie = cookie;
-    this.cookieTokens = parseCookieTokens(cookie);
+    this.cookie.setCookieValue(cookie);
+    this.headers.cookie = this.cookie.toString();
+    this.cookieTokens = parseCookieTokens(this.cookie);
     this.user = await this.get("/user_api/v1/user/get");
   }
 
   async logout() {
+    this.cookie.clear();
     this.headers.cookie = "";
     this.user = null;
   }
@@ -46,6 +51,10 @@ class JuejinHelper extends Api {
     return this.get("/get/token", {
       baseURL: "https://juejin.cn"
     });
+  }
+
+  sdk() {
+    return new Sdk(this);
   }
 
   growth() {

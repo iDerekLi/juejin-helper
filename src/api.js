@@ -10,6 +10,7 @@ class Api {
       "accept-language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
       "sec-ch-ua": `"Chromium";v="88", "Google Chrome";v="88", ";Not A Brand";v="99"`,
       "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "Windows",
       accept: "*/*",
       credentials: "include"
     };

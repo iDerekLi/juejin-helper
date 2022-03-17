@@ -20,6 +20,10 @@ class CheckIn {
   lotteryCount = 0;
   luckyValueProbability = 0;
 
+  calledSdkSetting = false;
+  calledTrackGrowthEvent = false;
+  calledTrackOnloadEvent = false;
+
   async run() {
     const juejin = new JuejinHelper();
     try {
@@ -95,6 +99,44 @@ class CheckIn {
 
     this.luckyValueProbability = getProbabilityOfWinning(this.sumPoint);
 
+    // 调用埋点
+    const sdk = juejin.sdk();
+
+    try {
+      await sdk.slardarSDKSetting();
+      this.calledSdkSetting = true;
+    } catch {
+      this.calledSdkSetting = false;
+    }
+
+    try {
+      const result = await sdk.mockTrackGrowthEvent();
+      if (result && result.e === 0) {
+        this.calledTrackGrowthEvent = true;
+      } else {
+        throw result;
+      }
+    } catch {
+      this.calledTrackGrowthEvent = false;
+    }
+
+    try {
+      const result = await sdk.mockTrackOnloadEvent();
+      if (result && result.e === 0) {
+        this.calledTrackOnloadEvent = true;
+      } else {
+        throw result;
+      }
+    } catch {
+      this.calledTrackOnloadEvent = false;
+    }
+
+    console.log("------事件埋点追踪-------");
+    console.log(`SDK状态: ${this.calledSdkSetting ? "加载成功" : "加载失败"}`);
+    console.log(`成长API事件埋点: ${this.calledTrackGrowthEvent ? "调用成功" : "调用失败"}`);
+    console.log(`OnLoad事件埋点: ${this.calledTrackOnloadEvent ? "调用成功" : "调用失败"}`);
+    console.log("-------------------------");
+
     await juejin.logout();
   }
 
@@ -120,7 +162,7 @@ ${this.dipStatus === 1 ? `沾喜气 +${this.dipValue} 幸运值` :
 预测All In矿石累计幸运值比率 ${(this.luckyValueProbability * 100).toFixed(2) + "%"}
 抽奖总次数 ${this.lotteryCount}
 免费抽奖次数 ${this.freeCount}
-${this.lotteryCount > 0 ? "============\n" + drawLotteryHistory + "\n============" : ""}
+${this.lotteryCount > 0 ? "==============\n" + drawLotteryHistory + "\n==============" : ""}
     `.trim();
   }
 }

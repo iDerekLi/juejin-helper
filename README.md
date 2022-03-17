@@ -86,6 +86,24 @@ async function run() {
 run();
 ```
 
+### SDK示例
+
+```javascript
+const JuejinHelper = require("juejin-helper");
+
+async function run() {
+  const juejin = new JuejinHelper();
+  await juejin.login("你的掘金Cookie");
+
+  const sdk = juejin.sdk();
+
+  await sdk.slardarSDKSetting(); // SDK设置
+  await sdk.list(/* events */); // 埋点数据
+}
+
+run();
+```
+
 ## 问题
 
 ### 如何获取Cookie

@@ -1,7 +1,7 @@
 import Api from "./api";
 import Growth from "./growth";
 import SeaGold from "./seagold";
-import { parseCookieTokens } from "./utils/parse-cookietokens";
+import { parseCookieTokens, generateUUID } from "./utils/index";
 import Cookie from "./cookie";
 import Sdk from "./sdk";
 
@@ -51,6 +51,10 @@ class JuejinHelper extends Api {
     return this.get("/get/token", {
       baseURL: "https://juejin.cn"
     });
+  }
+
+  generateUUID() {
+    return generateUUID();
   }
 
   sdk() {

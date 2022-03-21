@@ -2,7 +2,7 @@ name: CheckIn
 
 on:
   schedule:
-    - cron: "40 22 * * *" # 北京时间上午06:40
+    - cron: "10 4 * * *" # 北京时间上午12:10
   workflow_dispatch:
 jobs:
   CheckIn:

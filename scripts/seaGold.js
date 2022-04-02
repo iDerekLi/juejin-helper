@@ -406,6 +406,7 @@ async function run(args) {
     subject: "海底掘金游戏",
     text: content
   });
+  utils.dingding(content);
 }
 
 run(process.argv.splice(2)).catch(error => {

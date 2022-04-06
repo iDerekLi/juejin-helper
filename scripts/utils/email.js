@@ -9,10 +9,20 @@ async function main({ subject, text, html }) {
     pass: env.EMAIL_PASS, // generated ethereal password
   };
 
+  if (!auth.user || !auth.pass) {
+    console.warn("邮箱功能不可用, 请先配置邮箱用户和密码");
+    return;
+  }
+
   const transporter = nodemailer.createTransport({
     host: "smtp." + auth.user.match(/@(.*)/)[1],
     secure: true,
-    auth
+    port: 465,
+    auth,
+    tls: {
+      // do not fail on invalid certs
+      rejectUnauthorized: false
+    }
   });
 
   const template = `

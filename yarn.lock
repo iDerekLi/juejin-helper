@@ -35,13 +35,14 @@ jsonwebtoken@^8.5.1:
     ms "^2.1.1"
     semver "^5.6.0"
 
-juejin-helper@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/juejin-helper/-/juejin-helper-0.1.0.tgz#92d42a41d6ce2e9049d69c627022cd2282a2ecfb"
-  integrity sha512-07+3aWYiTVcaQPyCFTFY6WIWg5wsWn6QvfZ2XuPIPD7337zcDaVVzrrgL4tivJJ4eyHlMBLkLifFZnFu6VpR7g==
+juejin-helper@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.npmmirror.com/juejin-helper/-/juejin-helper-0.1.4.tgz#921933b63cd21276dfd928f953a80fe87b454d45"
+  integrity sha512-14xMEhYgT+RhtmU13IJfMAeZwGwKwSzr+VjO5tCLtxP/MfrpEzSvmEOCKVRwITfJ3e2+NQyU//i+6jFVL9+9/Q==
   dependencies:
     jsonwebtoken "^8.5.1"
     node-fetch "^2.6.1"
+    uuid "^8.3.2"
 
 jwa@^1.4.1:
   version "1.4.1"
@@ -126,6 +127,11 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=
+
+uuid@^8.3.2:
+  version "8.3.2"
+  resolved "https://registry.npmmirror.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
+  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

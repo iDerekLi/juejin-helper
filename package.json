@@ -1,6 +1,6 @@
 {
   "name": "juejin-helper",
-  "version": "1.0.0",
+  "version": "1.4.0",
   "description": "稀土掘金助手：签到、抽奖、沾喜气、海底淘金、自动化工作流。",
   "author": "Derek Li",
   "license": "MIT",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "fast-astar": "^1.0.6",
-    "juejin-helper": "^0.1.0",
+    "juejin-helper": "^0.1.4",
     "nodemailer": "^6.7.0"
   },
   "repository": {

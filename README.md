@@ -1,7 +1,3 @@
 
 
-
-
-## 许可
-
-[MIT](./LICENSE)
+test

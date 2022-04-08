@@ -20,6 +20,7 @@
     | Name | Value |
     | --- | --- |
     | COOKIE | 掘金网站Cookie, 打开浏览器，登录 [掘金](https://juejin.cn/), 打开控制台DevTools -> Network，复制 cookie, **掘金Cookie有效期约1个月需定期更新.** |
+	| DINGDING_WEBHOOK | 钉钉机器人WEBHOOK |
     | EMAIL_USER | 发件人邮箱地址(需要开启 SMTP) |
     | EMAIL_PASS | 发件人邮箱密码(SMTP密码) |
     | EMAIL_TO | 订阅人邮箱地址(收件人). 如需多人订阅使用 `, ` 分割, 例如: `a@163.com, b@qq.com` |

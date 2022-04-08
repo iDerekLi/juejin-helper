@@ -179,6 +179,7 @@ async function run(args) {
     subject: "掘金每日签到",
     text: content
   });
+  utils.dingding(content);
 }
 
 run(process.argv.splice(2)).catch(error => {

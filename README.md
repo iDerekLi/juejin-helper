@@ -86,6 +86,26 @@ async function run() {
 run();
 ```
 
+### bugfix 游戏示例
+```javascript
+const JuejinHelper = require("juejin-helper");
+
+async function run() {
+  const juejin = new JuejinHelper();
+  await juejin.login("你的掘金Cookie");
+
+  const bugfix = juejin.bugfix();
+
+  const bugList = await bugfix.getBugList();
+
+  console.log(`您当前有: ${bugList.length}个bug未消除`);
+
+  await bugfix.bugfixBatch(bugList);
+
+  console.log('您的bug已经全部解决');
+
+```
+
 ### SDK示例
 
 ```javascript

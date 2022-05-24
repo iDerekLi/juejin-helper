@@ -1,6 +1,7 @@
 import Api from "./api";
 import Growth from "./growth";
 import SeaGold from "./seagold";
+import Bugfix from './bugfix';
 import { parseCookieTokens, generateUUID } from "./utils/index";
 import Cookie from "./cookie";
 import Sdk from "./sdk";
@@ -71,6 +72,9 @@ class JuejinHelper extends Api {
 
   numpuzz() {
     return new NumPuzz(this);
+  }
+  bugfix() {
+    return new Bugfix(this);
   }
 }
 

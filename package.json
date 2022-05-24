@@ -20,7 +20,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "test": "node test/test-growth.js",
+    "test": "node test/test-bugfix.js",
     "pretest": "npm run build"
   },
   "dependencies": {

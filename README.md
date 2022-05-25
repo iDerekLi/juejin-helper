@@ -6,11 +6,11 @@
 
 <h1 align="center">JuejinHelper-稀土掘金助手</h1>
 
-<p align="center">签到、抽奖、沾喜气、海底掘金游戏、自动化工作流。</p>
+<p align="center">签到、抽奖、沾喜气、消除Bug、海底掘金游戏、自动化工作流。</p>
 
 ## 使用
 
-自动化执行任务: 掘金每日签到, 沾喜气, 免费抽奖, 海底掘金游戏, 最后将结果报告邮件通知订阅人。\
+自动化执行任务: 掘金每日签到, 沾喜气, 免费抽奖, 消除Bug, 海底掘金游戏, 最后将结果报告邮件通知订阅人。\
 自动化运行时间: 北京时间上午06:30
 
 1. [Fork 仓库](https://github.com/iDerekLi/juejin-helper)
@@ -53,7 +53,7 @@ DevTools截图:
 [![海底掘金挑战赛](https://user-images.githubusercontent.com/24502299/151397151-0d69998a-2310-4a32-945f-c8e0035ed65d.png)](https://juejin.cn/game/haidijuejin/)
 
 ## 赞赏
-### ☕️微信赞赏！鼓励升级！
+### ☕️微信赞赏！
 <img src="https://user-images.githubusercontent.com/24502299/150144723-863ad914-3849-40df-8857-5ec5cd60cacd.JPG" alt="微信赞赏" width="300" />
 
 ## 许可

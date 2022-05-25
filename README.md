@@ -102,8 +102,8 @@ async function run() {
 
   await bugfix.bugfixBatch(bugList);
 
-  console.log('您的bug已经全部解决');
-
+  console.log("您的bug已经全部解决");
+}
 ```
 
 ### SDK示例

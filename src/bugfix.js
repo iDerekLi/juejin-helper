@@ -21,8 +21,33 @@ class Bugfix extends Api {
       return res.data;
     }
   }
+
   /**
-   * 获取Bug列表
+   * 获取竞赛信息
+   * @returns {Promise<*>}
+   */
+  async getCompetition() {
+    return this.post("/user_api/v1/bugfix/competition", {
+      // 必须加个空对象，否则接口提示少了参数
+      data: {}
+    })
+  }
+
+  /**
+   * 获取用户信息
+   * @param competition_id
+   * @returns {Promise<*>}
+   */
+  async getUser({ competition_id }) {
+    return this.post("/user_api/v1/bugfix/user", {
+      data: {
+        competition_id
+      }
+    })
+  }
+
+  /**
+   * 获取未收集的Bug
    * @returns {Promise<*>}
    *  [
    *   {
@@ -32,31 +57,36 @@ class Bugfix extends Api {
    *     is_first: boolean 是否第一次
    *   }
    * ]
-   * 
+   *
    */
-  async getBugList() {
+  async getNotCollectBugList() {
     return this.post('/user_api/v1/bugfix/not_collect', {
       // 必须加个空对象，否则接口提示少了参数
       data: {}
     })
   }
+
   /**
-   * 消除bug的接口
+   * 收集Bug
+   * @param bug_time
+   * @param bug_type
    * @returns {Promise<*>}
-   * {
-   * 
-   * }
    */
-  async handleBugfix({ bug_time, bug_type }) {
+  async collectBug({ bug_time, bug_type }) {
     return this.post("/user_api/v1/bugfix/collect", {
       data: { bug_time, bug_type }
     })
   }
 
-  async bugfixBatch(buglist = []) {
+  /**
+   * 批量收集Bug
+   * @param buglist
+   * @returns {Promise<boolean|*>}
+   */
+  async collectBugBatch(buglist = []) {
     try {
       await Promise.all(buglist.map(async bug => {
-        await this.handleBugfix(bug);
+        await this.collectBug(bug);
         await wait(randomRangeNumber(500, 1000));
       }))
       return true

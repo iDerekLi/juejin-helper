@@ -96,13 +96,13 @@ async function run() {
 
   const bugfix = juejin.bugfix();
 
-  const bugList = await bugfix.getBugList();
+  const notCollectBugList = await bugfix.getNotCollectBugList();
+  await bugfix.collectBugBatch(notCollectBugList);
+  console.log(`收集Bug ${notCollectBugList.length}`);
 
-  console.log(`您当前有: ${bugList.length}个bug未消除`);
-
-  await bugfix.bugfixBatch(bugList);
-
-  console.log("您的bug已经全部解决");
+  const competition = await bugfix.getCompetition();
+  const bugfixInfo = await bugfix.getUser(competition);
+  console.log(`未消除Bug数量 ${bugfixInfo.user_own_bug}`);
 }
 ```
 

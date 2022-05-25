@@ -19,6 +19,9 @@ class CheckIn {
   drawLotteryHistory = {};
   lotteryCount = 0;
   luckyValueProbability = 0;
+  bugStatus = 0;
+  collectBugCount = 0;
+  userOwnBug = 0;
 
   calledSdkSetting = false;
   calledTrackGrowthEvent = false;
@@ -99,6 +102,23 @@ class CheckIn {
 
     this.luckyValueProbability = getProbabilityOfWinning(this.sumPoint);
 
+    // 收集bug
+    const bugfix = juejin.bugfix();
+
+    const competition = await bugfix.getCompetition();
+    const bugfixInfo = await bugfix.getUser(competition);
+    this.userOwnBug = bugfixInfo.user_own_bug;
+
+    try {
+      const notCollectBugList = await bugfix.getNotCollectBugList();
+      await bugfix.collectBugBatch(notCollectBugList);
+      this.bugStatus = 1;
+      this.collectBugCount = notCollectBugList.length;
+      this.userOwnBug += this.collectBugCount;
+    } catch (e) {
+      this.bugStatus = 2;
+    }
+
     // 调用埋点
     const sdk = juejin.sdk();
 
@@ -155,9 +175,13 @@ ${this.todayStatus === 1 ? `签到成功 +${this.incrPoint} 矿石` :
       this.todayStatus === 2 ? "今日已完成签到" : "签到失败"}
 ${this.dipStatus === 1 ? `沾喜气 +${this.dipValue} 幸运值` :
       this.dipStatus === 2 ? "今日已经沾过喜气" : "沾喜气失败"}
+${this.bugStatus === 1 ? 
+      this.collectBugCount > 0 ? `收集Bug +${this.collectBugCount}` : "没有可收集Bug"
+      : "收集Bug失败"}
 连续签到天数 ${this.contCount}
 累计签到天数 ${this.sumCount}
 当前矿石数 ${this.sumPoint}
+当前未消除Bug数量 ${this.userOwnBug}
 当前幸运值 ${this.luckyValue}/6000
 预测All In矿石累计幸运值比率 ${(this.luckyValueProbability * 100).toFixed(2) + "%"}
 抽奖总次数 ${this.lotteryCount}

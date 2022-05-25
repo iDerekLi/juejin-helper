@@ -35,10 +35,10 @@ jsonwebtoken@^8.5.1:
     ms "^2.1.1"
     semver "^5.6.0"
 
-juejin-helper@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.npmmirror.com/juejin-helper/-/juejin-helper-1.5.0.tgz#6b12ad22f9505ca440c642350f24421909cd9a4b"
-  integrity sha512-VxFwQPzZDphV1KjzSYPj8Fhpxorh/cAXCD4F4NxX3tG5EcqrvXdK+qPmwHip3PRmqupzR9+X64zdvlGsAmzqcQ==
+juejin-helper@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.npmmirror.com/juejin-helper/-/juejin-helper-1.5.1.tgz#416dd622e18daa03fd5ab68f2fb74ec522ce4e8f"
+  integrity sha512-CoC4D0hph59eodM2aO7Brj8hURvFuI8PvrSgZQzyjQ/5BqYK2+ewcMNXxhzYWvHZ4ENMFqfwzHbOU4OelfyJ6Q==
   dependencies:
     jsonwebtoken "^8.5.1"
     node-fetch "^2.6.1"

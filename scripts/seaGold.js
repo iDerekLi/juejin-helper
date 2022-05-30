@@ -1,7 +1,7 @@
 const JuejinHelper = require("juejin-helper");
 const utils = require("./utils/utils");
 const { Grid, Astar } = require("fast-astar");
-const email = require("./utils/email");
+const pushMessage = require("./utils/pushMessage");
 const env = require("./utils/env");
 
 class SeaGold {
@@ -401,22 +401,20 @@ async function run(args) {
   const content = seaGold.toString();
 
   console.log(content);
-
-  email({
+  pushMessage({
     subject: "海底掘金游戏",
     text: content
-  });
-  utils.dingding(content);
+  })
 }
 
-run(process.argv.splice(2)).catch(error => {
-  email({
+run(process.argv.splice(2)).catch((error) => {
+  pushMessage({
     subject: "海底掘金游戏",
     html: `
-<strong>Error</strong>
-<pre>${error.message}</pre>
-<div>如果版本过低请前往升级: <a href="https://github.com/iDerekLi/juejin-helper">juejin-helper</a></div>
-`.trim()
+  <strong>Error</strong>
+  <pre>${error.message}</pre>
+  <div>如果版本过低请前往升级: <a href="https://github.com/iDerekLi/juejin-helper">juejin-helper</a></div>
+  `.trim()
   });
 
   throw error;

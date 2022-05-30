@@ -1,6 +1,6 @@
 const JuejinHelper = require("juejin-helper");
 const utils = require("./utils/utils");
-const email = require("./utils/email");
+const pushMessage = require("./utils/pushMessage");
 const env = require("./utils/env");
 
 class CheckIn {
@@ -199,18 +199,17 @@ async function run(args) {
 
   console.log(content); // 打印结果
 
-  email({
+  pushMessage({
     subject: "掘金每日签到",
     text: content
-  });
-  utils.dingding(content);
+  })
 }
 
 run(process.argv.splice(2)).catch(error => {
-  email({
+  pushMessage({
     subject: "掘金每日签到",
     html: `<strong>Error</strong><pre>${error.message}</pre>`
-  });
+  })
 
   throw error;
 });

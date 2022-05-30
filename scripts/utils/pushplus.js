@@ -26,7 +26,7 @@ async function main({ subject, text, html }) {
 }
 
 async function postMessage(message) {
-  return await fetch(userconfig.baseURL, {
+  return await fetch(userConfig.url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

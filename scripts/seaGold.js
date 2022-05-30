@@ -407,7 +407,7 @@ async function run(args) {
   })
 }
 
-export default run(process.argv.splice(2)).catch((error) => {
+module.exports = run(process.argv.splice(2)).catch((error) => {
   pushMessage({
     subject: "海底掘金游戏",
     html: `

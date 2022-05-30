@@ -205,7 +205,7 @@ async function run(args) {
   })
 }
 
-export default run(process.argv.splice(2)).catch(error => {
+module.exports = run(process.argv.splice(2)).catch(error => {
   pushMessage({
     subject: "掘金每日签到",
     html: `<strong>Error</strong><pre>${error.message}</pre>`

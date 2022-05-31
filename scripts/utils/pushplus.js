@@ -22,7 +22,10 @@ async function main({ subject, text, html }) {
     timestamp: ""
   })
     .then((res) => res.json())
-    .then((json) => console.log(json.msg));
+    .then((json) => {
+      console.log(`PushPlus推送结果: `+json.msg)
+      return json
+    });
 }
 
 async function postMessage(message) {

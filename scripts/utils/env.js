@@ -12,10 +12,12 @@ module.exports = {
   EMAIL_TO: env.EMAIL_TO,
   /**
    * 钉钉配置
+   * https://open.dingtalk.com/document/robots/custom-robot-access
    */
   DINGDING_WEBHOOK: env.DINGDING_WEBHOOK,
   /**
    * PushPlus配置
+   * http://www.pushplus.plus/doc/guide/openApi.html
    */
   PUSHPLUS_TOKEN: env.PUSHPLUS_TOKEN
 };

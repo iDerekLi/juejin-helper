@@ -3,7 +3,8 @@ const seaGold = require('./juejin-helper/scripts/seaGold')
 // const lottery = require('./juejin-helper/scripts/lottery')
 
 exports.main_handler = async () => {
-    await checkin()
-    await seaGold()
+    return await Promise.all([checkin(), seaGold()])
     // await lottery() 暂未开发
 };
+
+main()

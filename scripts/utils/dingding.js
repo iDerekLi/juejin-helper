@@ -1,20 +1,20 @@
+const fetch = require("node-fetch");
+
 const env = require("./env");
-async function main(msg) {
-  DINGDING_WEBHOOK = env.DINGDING_WEBHOOK;
-  data = {
-    msgtype: "text",
-    text: {
-      content: msg
-    }
-  };
-  fetch(DINGDING_WEBHOOK, {
+async function dingding({ subject, text, html }) {
+  return fetch(env.DINGDING_WEBHOOK, {
     headers: {
       "Content-Type": "application/json",
       Charset: "UTF-8"
     },
     method: "POST",
-    body: JSON.stringify(data)
+    body: JSON.stringify({
+      msgtype: "text",
+      text: {
+        content: `${subject}\n${text || html}`
+      }
+    })
   }).then((res) => console.log(JSON.stringify(res)));
 }
 
-module.exports = main;
+module.exports = dingding;

@@ -118,6 +118,9 @@ class SeaGold {
     const curNode = this.getNode(this.gameInfo.curPos);
     const bestNode = this.getBestNode(bmmap);
     const path = this.getRoutePath(bmmap, curNode, bestNode);
+    if (!Array.isArray(path)) {
+      throw new Error(`路径 ${JSON.stringify(path)} 无法在地图 ${JSON.stringify(this.getMaze(bmmap))} 行进.`);
+    }
     const commands = this.getCommands(path);
     if (commands.length <= 0) {
       return false;

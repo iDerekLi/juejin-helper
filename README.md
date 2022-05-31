@@ -24,7 +24,7 @@
     | EMAIL_USER | 发件人邮箱地址(需要开启 SMTP) | ❌ |
     | EMAIL_PASS | 发件人邮箱密码(SMTP密码) | ❌ |
     | EMAIL_TO | 订阅人邮箱地址(收件人). 如需多人订阅使用 `, ` 分割, 例如: `a@163.com, b@qq.com` | ❌ |
-    | PUSHPLUS_TOKEN | [Pushplus](http://www.pushplus.plus/)官网免费申请，支持微信公众号、第三方webhook、企业微信、邮箱。 | ❌ |
+    | PUSHPLUS_TOKEN | [Pushplus](http://www.pushplus.plus/) 官网免费申请，支持微信公众号、第三方webhook、企业微信、邮箱。 | ❌ |
 
 3. 仓库 -> Actions, 检查Workflows并启用。
 

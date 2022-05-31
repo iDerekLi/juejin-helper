@@ -1,7 +1,7 @@
 const api = require("./utils/juejin-api");
 const console = require("./utils/logger");
 const utils = require("./utils/utils");
-const email = require("./utils/email");
+const pushMessage = require("./utils/pushMessage");
 
 async function run(args) {
   const state = {
@@ -123,14 +123,14 @@ async function run(args) {
   recordInfo.push("===================");
   console.log(recordInfo.join("\n"));
 
-  email({
+  pushMessage({
     subject: "掘金每日签到",
     text: console.toString()
   });
 }
 
 run(process.argv.splice(2)).catch(error => {
-  email({
+  pushMessage({
     subject: "掘金每日签到",
     html: `<b>Error</b><div>${error.message}</div>`
   });

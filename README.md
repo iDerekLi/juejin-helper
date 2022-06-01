@@ -1,7 +1,7 @@
 ## 腾讯云函数部署:
 
 ```shell
-  git clone -b tx-SCF https://github.com/ZiuChen/juejin-helper.git && mv juejin-helper src && cd src/ && npm i
+  git clone https://github.com/ZiuChen/juejin-helper.git && mv juejin-helper src && cd src/ && npm i
 ```
 
 ### 函数入口:

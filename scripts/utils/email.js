@@ -6,7 +6,7 @@ async function main({ subject, text, html }) {
 
   const auth = {
     user: env.EMAIL_USER, // generated ethereal user
-    pass: env.EMAIL_PASS, // generated ethereal password
+    pass: env.EMAIL_PASS // generated ethereal password
   };
 
   if (!auth.user || !auth.pass) {
@@ -35,7 +35,7 @@ async function main({ subject, text, html }) {
       </main>
       <footer style="padding: 10px 0; border-top: 1px solid #f1f1f1; text-align: center; font-size: 12px; color: #6e6e73;">
         <span>稀土掘金助手</span> |
-        <span>Copyright © ${(new Date()).getFullYear()} Derek Li.</span>
+        <span>Copyright © ${new Date().getFullYear()} Derek Li.</span>
       </footer>
     </section>
   `.trim();
@@ -46,11 +46,13 @@ async function main({ subject, text, html }) {
     subject, // Subject line
     // text, // plain text body
     html: template, // html body
-    attachments: [{
-      filename: "logo.svg",
-      path: path.resolve(__dirname, "../../resources/logo.svg"),
-      cid: 'logo.svg' //same cid value as in the html img src
-    }]
+    attachments: [
+      {
+        filename: "logo.svg",
+        path: path.resolve(__dirname, "../../resources/logo.svg"),
+        cid: "logo.svg" //same cid value as in the html img src
+      }
+    ]
   });
 
   console.log("已通知订阅人！");

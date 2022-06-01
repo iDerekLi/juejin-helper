@@ -6,6 +6,10 @@ const env = require("./utils/env");
 
 class SeaGold {
   gameApi = null;
+  cookie = "";
+  constructor(cookie) {
+    this.cookie = cookie;
+  }
 
   nodeRules = [
     { code: 0, hasBounty: false, isWall: false, name: "空地" },
@@ -308,7 +312,7 @@ class SeaGold {
 
   async run() {
     const juejin = new JuejinHelper();
-    await juejin.login(env.COOKIE);
+    await juejin.login(this.cookie);
     this.gameApi = juejin.seagold();
 
     const loginInfo = await this.gameApi.gameLogin();
@@ -395,19 +399,20 @@ ${this.history.length ? `\n游戏记录\n${gameLives}` : ""}
 }
 
 async function run(args) {
-  const seaGold = new SeaGold();
+  for(let cookie of env.COOKIE.split(",")) {
+    const seaGold = new SeaGold(cookie.trim());
 
-  await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
+    await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
+    await seaGold.run();
+  
+    const content = seaGold.toString();
+    console.log(content);
 
-  await seaGold.run();
-
-  const content = seaGold.toString();
-
-  console.log(content);
-  pushMessage({
-    subject: "海底掘金游戏",
-    text: content
-  })
+    pushMessage({
+      subject: "海底掘金游戏",
+      text: content
+    })
+  }
 }
 
 run(process.argv.splice(2)).catch((error) => {

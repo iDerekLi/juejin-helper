@@ -5,6 +5,7 @@ const env = require("./utils/env");
 
 class CheckIn {
   username = "";
+  cookie = "";
   todayStatus = 0; // 未签到
   incrPoint = 0;
   sumPoint = 0; // 当前矿石数
@@ -27,10 +28,14 @@ class CheckIn {
   calledTrackGrowthEvent = false;
   calledTrackOnloadEvent = false;
 
+  constructor(cookie) {
+    this.cookie = cookie
+  }
+
   async run() {
     const juejin = new JuejinHelper();
     try {
-      await juejin.login(env.COOKIE);
+      await juejin.login(this.cookie);
     } catch (e) {
       console.error(e);
       throw new Error("登录失败, 请尝试更新Cookies!");
@@ -192,17 +197,20 @@ ${this.lotteryCount > 0 ? "==============\n" + drawLotteryHistory + "\n=========
 }
 
 async function run(args) {
-  const checkin = new CheckIn();
-  await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
-  await checkin.run(); // 执行
-  const content = checkin.toString();
+  for(let cookie of env.COOKIE.split(",")) {
+    const checkin = new CheckIn(cookie.trim());
 
-  console.log(content); // 打印结果
+    await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
+    await checkin.run(); // 执行
 
-  pushMessage({
-    subject: "掘金每日签到",
-    text: content
-  })
+    const content = checkin.toString();
+    console.log(content); // 打印结果
+
+    pushMessage({
+      subject: "掘金每日签到",
+      text: content
+    })
+  }
 }
 
 run(process.argv.splice(2)).catch(error => {

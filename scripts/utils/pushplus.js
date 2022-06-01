@@ -23,9 +23,9 @@ async function main({ subject, text, html }) {
   })
     .then((res) => res.json())
     .then((json) => {
-      console.log(json);
-      return json
-    })
+      console.log(`PushPlus推送结果: ` + json.msg);
+      return json;
+    });
 }
 
 async function postMessage(message) {

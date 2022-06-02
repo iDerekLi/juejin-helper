@@ -19,12 +19,12 @@
 
     | Name | Value | 是否必填 |
     | --- | --- | --- |
-    | COOKIE | 掘金网站Cookie, 打开浏览器，登录 [掘金](https://juejin.cn/), 打开控制台DevTools -> Network，复制 cookie, **掘金Cookie有效期约1个月需定期更新.** | ✅ |
+    | COOKIE | 掘金网站Cookie, 如有多个Cookie则用 `,`分隔  | ✅ |
     | DINGDING_WEBHOOK | 钉钉机器人WEBHOOK | ❌ |
     | EMAIL_USER | 发件人邮箱地址(需要开启 SMTP) | ❌ |
     | EMAIL_PASS | 发件人邮箱密码(SMTP密码) | ❌ |
     | EMAIL_TO | 订阅人邮箱地址(收件人). 如需多人订阅使用 `, ` 分割, 例如: `a@163.com, b@qq.com` | ❌ |
-    | PUSHPLUS_TOKEN | [Pushplus](http://www.pushplus.plus/) 官网免费申请，支持微信公众号、第三方webhook、企业微信、邮箱。 | ❌ |
+    | PUSHPLUS_TOKEN | [Pushplus](http://www.pushplus.plus/) 官网申请，支持微信消息推送 | ❌ |
 
 3. 仓库 -> Actions, 检查Workflows并启用。
 
@@ -52,6 +52,11 @@ DevTools截图:
 或点击👇这个海报帮您直达海底掘金挑战赛
 
 [![海底掘金挑战赛](https://user-images.githubusercontent.com/24502299/151397151-0d69998a-2310-4a32-945f-c8e0035ed65d.png)](https://juejin.cn/game/haidijuejin/)
+
+## 贡献
+
+这个项目的存在要感谢所有做出贡献的人。 请先阅读 [[Contribute](CONTRIBUTING.md)]。  
+您可以将任何想法作为 [拉取请求](https://github.com/iDerekLi/juejin-helper/pulls) 或 [GitHub问题](https://github.com/iDerekLi/juejin-helper/issues) 提交。
 
 ## 赞赏
 ### ☕️微信赞赏！

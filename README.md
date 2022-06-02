@@ -19,7 +19,9 @@
 
     | Name | Value | 是否必填 |
     | --- | --- | --- |
-    | COOKIE | 掘金网站Cookie, 如有多个Cookie则用 `,`分隔  | ✅ |
+    | COOKIE | 掘金网站Cookie  | ✅ |
+    | COOKIE__1 | 掘金网站Cookie  | ❌ |
+    | COOKIE__2 | 掘金网站Cookie  | ❌ |
     | DINGDING_WEBHOOK | 钉钉机器人WEBHOOK | ❌ |
     | EMAIL_USER | 发件人邮箱地址(需要开启 SMTP) | ❌ |
     | EMAIL_PASS | 发件人邮箱密码(SMTP密码) | ❌ |

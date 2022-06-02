@@ -178,44 +178,45 @@ class CheckIn {
       .join("\n");
 
     return `
-      掘友: ${this.username}
-      ${
-        this.todayStatus === 1
-          ? `签到成功 +${this.incrPoint} 矿石`
-          : this.todayStatus === 2
-          ? "今日已完成签到"
-          : "签到失败"
-      }
-      ${
-        this.dipStatus === 1
-          ? `沾喜气 +${this.dipValue} 幸运值`
-          : this.dipStatus === 2
-          ? "今日已经沾过喜气"
-          : "沾喜气失败"
-      }
-      ${
-        this.bugStatus === 1
-          ? this.collectBugCount > 0
-            ? `收集Bug +${this.collectBugCount}`
-            : "没有可收集Bug"
-          : "收集Bug失败"
-      }
-      连续签到天数 ${this.contCount}
-      累计签到天数 ${this.sumCount}
-      当前矿石数 ${this.sumPoint}
-      当前未消除Bug数量 ${this.userOwnBug}
-      当前幸运值 ${this.luckyValue}/6000
-      预测All In矿石累计幸运值比率 ${(this.luckyValueProbability * 100).toFixed(2) + "%"}
-      抽奖总次数 ${this.lotteryCount}
-      免费抽奖次数 ${this.freeCount}
-      ${this.lotteryCount > 0 ? "==============\n" + drawLotteryHistory + "\n==============" : ""}
-          `.trim();
+掘友: ${this.username}
+${
+  this.todayStatus === 1
+    ? `签到成功 +${this.incrPoint} 矿石`
+    : this.todayStatus === 2
+    ? "今日已完成签到"
+    : "签到失败"
+}
+${
+  this.dipStatus === 1
+    ? `沾喜气 +${this.dipValue} 幸运值`
+    : this.dipStatus === 2
+    ? "今日已经沾过喜气"
+    : "沾喜气失败"
+}
+${
+  this.bugStatus === 1
+    ? this.collectBugCount > 0
+      ? `收集Bug +${this.collectBugCount}`
+      : "没有可收集Bug"
+    : "收集Bug失败"
+}
+连续签到天数 ${this.contCount}
+累计签到天数 ${this.sumCount}
+当前矿石数 ${this.sumPoint}
+当前未消除Bug数量 ${this.userOwnBug}
+当前幸运值 ${this.luckyValue}/6000
+预测All In矿石累计幸运值比率 ${(this.luckyValueProbability * 100).toFixed(2) + "%"}
+抽奖总次数 ${this.lotteryCount}
+免费抽奖次数 ${this.freeCount}
+${this.lotteryCount > 0 ? "==============\n" + drawLotteryHistory + "\n==============" : ""}
+`.trim();
   }
 }
 
 async function run(args) {
-  for (let cookie of env.COOKIE.split(",")) {
-    const checkin = new CheckIn(cookie.trim());
+  const cookies = utils.getUsersCookie(env);
+  for (let cookie of cookies) {
+    const checkin = new CheckIn(cookie);
 
     await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
     await checkin.run(); // 执行

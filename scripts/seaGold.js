@@ -405,7 +405,7 @@ ${this.history.length ? `\n游戏记录\n${gameLives}` : ""}
 }
 
 async function run(args) {
-  const cookies = [env.COOKIE, env.COOKIE__1, env.COOKIE__2].filter((d) => d); // 数组拼接并去除假值
+  const cookies = utils.getUsersCookie(env);
   for (let cookie of cookies) {
     const seaGold = new SeaGold(cookie);
 

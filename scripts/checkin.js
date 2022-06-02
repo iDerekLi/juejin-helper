@@ -214,9 +214,9 @@ ${this.lotteryCount > 0 ? "==============\n" + drawLotteryHistory + "\n=========
 }
 
 async function run(args) {
-  const cookies = [env.COOKIE, env.COOKIE__1, env.COOKIE__2].filter((d) => d); // 数组拼接并去除假值
+  const cookies = utils.getUsersCookie(env);
   for (let cookie of cookies) {
-    const checkin = new CheckIn(cookie.trim());
+    const checkin = new CheckIn(cookie);
 
     await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
     await checkin.run(); // 执行

@@ -395,30 +395,28 @@ class SeaGold {
 掘友: ${userInfo.name}
 今日限制矿石数 ${userInfo.todayLimitDiamond}
 ${
-      userInfo.todayDiamond < userInfo.todayLimitDiamond
-        ? `今日获取矿石数 ${userInfo.todayDiamond}`
-        : "今日获取已达上限"
-    }
+  userInfo.todayDiamond < userInfo.todayLimitDiamond
+    ? `今日获取矿石数 ${userInfo.todayDiamond}`
+    : "今日获取已达上限"
+}
 ${this.history.length ? `\n游戏记录\n${gameLives}` : ""}
 `.trim();
   }
 }
 
 async function run(args) {
-  for (let cookie of env.COOKIE.split(",")) {
-    const seaGold = new SeaGold(cookie.trim());
+  const seaGold = new SeaGold(env.COOKIE);
 
-    await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
-    await seaGold.run();
+  await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
+  await seaGold.run();
 
-    const content = seaGold.toString();
-    console.log(content);
+  const content = seaGold.toString();
+  console.log(content);
 
-    pushMessage({
-      subject: "海底掘金游戏",
-      text: content
-    });
-  }
+  pushMessage({
+    subject: "海底掘金游戏",
+    text: content
+  });
 }
 
 run(process.argv.splice(2)).catch((error) => {

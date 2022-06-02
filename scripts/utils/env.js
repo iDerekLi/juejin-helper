@@ -3,6 +3,8 @@ const env = process.env || {};
 module.exports = {
   /* 掘金Cookie */
   COOKIE: env.COOKIE,
+  COOKIE__1: env.COOKIE__1,
+  COOKIE__2: env.COOKIE__2,
   /**
    * 邮箱配置
    * user 发件人邮箱, pass, 发件人密码, to收件人

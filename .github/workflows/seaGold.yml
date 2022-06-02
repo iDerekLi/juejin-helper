@@ -13,6 +13,10 @@ jobs:
       - name: Run Project
         env:
           COOKIE: ${{ secrets.COOKIE }}
+          COOKIE_2: ${{ secrets.COOKIE_2 }}
+          COOKIE_3: ${{ secrets.COOKIE_3 }}
+          COOKIE_4: ${{ secrets.COOKIE_4 }}
+          COOKIE_5: ${{ secrets.COOKIE_5 }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}

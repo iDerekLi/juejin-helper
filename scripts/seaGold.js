@@ -405,18 +405,21 @@ ${this.history.length ? `\n游戏记录\n${gameLives}` : ""}
 }
 
 async function run(args) {
-  const seaGold = new SeaGold(env.COOKIE);
+  const cookies = [env.COOKIE, env.COOKIE__1, env.COOKIE__2].filter((d) => d); // 数组拼接并去除假值
+  for (let cookie of cookies) {
+    const seaGold = new SeaGold(cookie);
 
-  await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
-  await seaGold.run();
+    await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
+    await seaGold.run();
 
-  const content = seaGold.toString();
-  console.log(content);
+    const content = seaGold.toString();
+    console.log(content);
 
-  pushMessage({
-    subject: "海底掘金游戏",
-    text: content
-  });
+    pushMessage({
+      subject: "海底掘金游戏",
+      text: content
+    });
+  }
 }
 
 run(process.argv.splice(2)).catch((error) => {

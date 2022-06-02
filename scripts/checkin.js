@@ -214,18 +214,21 @@ ${this.lotteryCount > 0 ? "==============\n" + drawLotteryHistory + "\n=========
 }
 
 async function run(args) {
-  const checkin = new CheckIn(env.COOKIE);
+  const cookies = [env.COOKIE, env.COOKIE__1, env.COOKIE__2].filter((d) => d); // 数组拼接并去除假值
+  for (let cookie of cookies) {
+    const checkin = new CheckIn(cookie.trim());
 
-  await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
-  await checkin.run(); // 执行
+    await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
+    await checkin.run(); // 执行
 
-  const content = checkin.toString();
-  console.log(content); // 打印结果
+    const content = checkin.toString();
+    console.log(content); // 打印结果
 
-  pushMessage({
-    subject: "掘金每日签到",
-    text: content
-  });
+    pushMessage({
+      subject: "掘金每日签到",
+      text: content
+    });
+  }
 }
 
 run(process.argv.splice(2)).catch((error) => {

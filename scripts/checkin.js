@@ -227,7 +227,7 @@ async function run(args) {
 
     message += "\n----------\n" + content + "\n----------\n";
   }
-  pushMessage({
+  await pushMessage({
     subject: "掘金每日签到",
     text: message
   });

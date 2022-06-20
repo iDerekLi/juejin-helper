@@ -418,7 +418,7 @@ async function run(args) {
 
     message += "\n----------\n" + content + "\n----------\n";
   }
-  pushMessage({
+  await pushMessage({
     subject: "海底掘金游戏",
     text: message
   });

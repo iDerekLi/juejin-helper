@@ -215,6 +215,7 @@ ${this.lotteryCount > 0 ? "==============\n" + drawLotteryHistory + "\n=========
 
 async function run(args) {
   const cookies = utils.getUsersCookie(env);
+  let message = "";
   for (let cookie of cookies) {
     const checkin = new CheckIn(cookie);
 
@@ -224,11 +225,12 @@ async function run(args) {
     const content = checkin.toString();
     console.log(content); // 打印结果
 
-    pushMessage({
-      subject: "掘金每日签到",
-      text: content
-    });
+    message += "\n----------\n" + content + "\n----------\n";
   }
+  pushMessage({
+    subject: "掘金每日签到",
+    text: message
+  });
 }
 
-module.exports = run
+module.exports = run;

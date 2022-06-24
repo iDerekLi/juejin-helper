@@ -13,7 +13,7 @@ async function main({ subject, text, html }) {
   return await postMessage({
     token: userConfig.token,
     title: subject,
-    content: text ?? html,
+    content: text || html,
     topic: "",
     template: "html",
     channel: "wechat",

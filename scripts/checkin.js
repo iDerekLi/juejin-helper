@@ -228,7 +228,7 @@ async function run(args) {
     messageList.push(content);
   }
 
-  const message = messageList.join("\n----------\n");
+  const message = messageList.join(`\n${"-".repeat(15)}\n`);
   pushMessage({
     subject: "掘金每日签到",
     text: message

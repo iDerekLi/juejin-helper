@@ -2,7 +2,7 @@ name: SeaGold
 
 on:
   schedule:
-    - cron: "00 16 * * *" # 北京时间上午00:00
+    - cron: "5 16 * * " # 北京时间上午00:00
   workflow_dispatch:
 jobs:
   SeaGold:

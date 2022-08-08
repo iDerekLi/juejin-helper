@@ -76,38 +76,43 @@ instance$1.interceptors.response.use(function (response) {
 });
 
 function parseCookieTokens(cookie) {
-  const cookieTokens = {
-    aid: "",
-    uuid: "",
-    user_unique_id: "",
-    web_id: ""
-  };
-
-  const tokensReg = /^__tea_cookie_tokens_(\d+)$/;
-  for (const [key, value] of cookie.entries()) {
-    if (tokensReg.test(key)) {
-      cookieTokens.aid = key.match(tokensReg)[1];
-      const json = JSON.parse(decodeURIComponent(decodeURIComponent(value)));
-      cookieTokens.uuid = json.user_unique_id;
-      cookieTokens.user_unique_id = json.user_unique_id;
-      cookieTokens.web_id = json.web_id;
-      break;
+    var cookieTokens = {
+        aid: "",
+        uuid: "",
+        user_unique_id: "",
+        web_id: ""
+    };
+    var tokensReg = /^__tea_cookie_tokens_(\d+)$/;
+    // @ts-ignore
+    for (var _i = 0, _a = cookie.entries(); _i < _a.length; _i++) {
+        var _b = _a[_i], key = _b[0], value = _b[1];
+        if (tokensReg.test(key)) {
+            cookieTokens.aid = key.match(tokensReg)[1];
+            var json = JSON.parse(decodeURIComponent(decodeURIComponent(value)));
+            cookieTokens.uuid = json.user_unique_id;
+            cookieTokens.user_unique_id = json.user_unique_id;
+            cookieTokens.web_id = json.web_id;
+            break;
+        }
     }
-  }
-
-  return cookieTokens;
+    return cookieTokens;
 }
 
-async function wait(time = 0) {
-  return new Promise(resolve => setTimeout(resolve, time));
+function wait(time) {
+    if (time === void 0) { time = 0; }
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, new Promise(function (resolve) { return setTimeout(resolve, time); })];
+        });
+    });
 }
-
-function randomRangeNumber(start = 500, end = 1000) {
-  return (Math.random() * (end - start) + start) >> 0;
+function randomRangeNumber(start, end) {
+    if (start === void 0) { start = 500; }
+    if (end === void 0) { end = 1000; }
+    return (Math.random() * (end - start) + start) >> 0;
 }
-
 function generateUUID() {
-  return v4();
+    return v4();
 }
 
 var Cookie = /** @class */ (function () {

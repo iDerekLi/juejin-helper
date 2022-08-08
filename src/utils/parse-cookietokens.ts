@@ -1,4 +1,6 @@
-function parseCookieTokens(cookie) {
+import Cookie from "./cookie";
+
+function parseCookieTokens(cookie: Cookie) {
   const cookieTokens = {
     aid: "",
     uuid: "",
@@ -7,6 +9,7 @@ function parseCookieTokens(cookie) {
   };
 
   const tokensReg = /^__tea_cookie_tokens_(\d+)$/;
+  // @ts-ignore
   for (const [key, value] of cookie.entries()) {
     if (tokensReg.test(key)) {
       cookieTokens.aid = key.match(tokensReg)[1];

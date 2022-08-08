@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { v4 } from 'uuid';
+import jwt from 'jsonwebtoken';
 
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -454,10 +455,8 @@ var Growth = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_e) {
                 return [2 /*return*/, instance.post("/growth_api/v1/lottery_history/global_big", {
-                        data: {
-                            page_no: page_no,
-                            page_size: page_size
-                        }
+                        page_no: page_no,
+                        page_size: page_size
                     })];
             });
         });
@@ -466,9 +465,7 @@ var Growth = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, instance.post("/growth_api/v1/lottery_lucky/dip_lucky", {
-                        data: {
-                            lottery_history_id: lottery_history_id
-                        }
+                        lottery_history_id: lottery_history_id
                     })];
             });
         });
@@ -481,6 +478,129 @@ var Growth = /** @class */ (function () {
         });
     };
     return Growth;
+}());
+
+var Seagold = /** @class */ (function () {
+    function Seagold(juejin) {
+        this.juejin = juejin;
+        this.http = axios.create({
+            baseURL: "https://juejin-game.bytedance.com/game",
+            headers: {
+                referer: "https://juejin.cn/",
+                origin: "https://juejin.cn",
+                Authorization: ""
+            }
+        });
+        this.http.interceptors.request.use(function (config) {
+            if (juejin.user) {
+                // @ts-ignore
+                config.url += (config.url.indexOf("?") === -1 ? "?" : "&") + "uid=".concat(juejin.user.user_id, "&time=").concat(Date.now());
+            }
+            return config;
+        }, function (error) {
+            return Promise.reject(error);
+        });
+        this.http.interceptors.response.use(function (response) {
+            var res = response.data;
+            if (res.code !== 0) {
+                throw new Error(res.message);
+            }
+            return res.data;
+        }, function (error) {
+            return Promise.reject(error);
+        });
+    }
+    Seagold.prototype.setToken = function (token) {
+        // @ts-ignore
+        this.http.defaults.headers.Authorization = "Bearer ".concat(token);
+    };
+    Seagold.prototype.gameLogin = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _b = this.setToken;
+                        return [4 /*yield*/, this.juejin.makeToken()];
+                    case 1:
+                        _b.apply(this, [_c.sent()]);
+                        return [2 /*return*/, this.http.post("/sea-gold/user/login", {
+                                name: (_a = this.juejin.user) === null || _a === void 0 ? void 0 : _a.user_name
+                            })];
+                }
+            });
+        });
+    };
+    Seagold.prototype.gameInfo = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.http.get("/sea-gold/home/info")];
+            });
+        });
+    };
+    Seagold.prototype.gameStart = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, roleId;
+            return __generator(this, function (_b) {
+                _a = (data || {}).roleId, roleId = _a === void 0 ? 3 : _a;
+                return [2 /*return*/, this.http.post("/sea-gold/game/start", {
+                        roleId: roleId
+                    })];
+            });
+        });
+    };
+    Seagold.prototype.gameOver = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, isButton;
+            return __generator(this, function (_b) {
+                _a = (data || {}).isButton, isButton = _a === void 0 ? 1 : _a;
+                // const result = {
+                //   activity: "",
+                //   deep: 3,
+                //   gameDiamond: 34, // 当局获取
+                //   originMapData: [],
+                //   passLine: [{ x: 0, y: 0 }, { x: 0, y: 1 }],
+                //   picoDiamond: 0,
+                //   realDiamond: 34, // 真实获取
+                //   todayDiamond: 34, // 今日获取
+                //   todayLimitDiamond: 1500 // 今日最大获取
+                // };
+                return [2 /*return*/, this.http.post("/sea-gold/game/over", {
+                        isButton: isButton
+                    })];
+            });
+        });
+    };
+    Seagold.prototype.gameCommand = function (gameId, command) {
+        if (command === void 0) { command = []; }
+        return __awaiter(this, void 0, void 0, function () {
+            var privateKey, token;
+            return __generator(this, function (_a) {
+                privateKey = "-----BEGIN EC PARAMETERS-----\nBggqhkjOPQMBBw==\n-----END EC PARAMETERS-----\n-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIDB7KMVQd+eeKt7AwDMMUaT7DE3Sl0Mto3LEojnEkRiAoAoGCCqGSM49\nAwEHoUQDQgAEEkViJDU8lYJUenS6IxPlvFJtUCDNF0c/F/cX07KCweC4Q/nOKsoU\nnYJsb4O8lMqNXaI1j16OmXk9CkcQQXbzfg==\n-----END EC PRIVATE KEY-----\n";
+                token = jwt.sign({
+                    gameId: gameId,
+                    time: new Date().getTime()
+                }, privateKey, {
+                    algorithm: "ES256",
+                    expiresIn: 2592e3,
+                    header: {
+                        alg: "ES256",
+                        typ: "JWT"
+                    }
+                });
+                return [2 /*return*/, this.http.post("/sea-gold/game/command", {
+                        command: command
+                        // command: ["R", { times: 2, command: ["R"] }, "2"]
+                    }, {
+                        headers: {
+                            "x-tt-gameid": token
+                        }
+                    })];
+            });
+        });
+    };
+    return Seagold;
 }());
 
 var JuejinHelper = /** @class */ (function () {
@@ -543,7 +663,7 @@ var JuejinHelper = /** @class */ (function () {
         return new Growth(this);
     };
     JuejinHelper.prototype.seagold = function () {
-        // return new SeaGold(this);
+        return new Seagold(this);
     };
     JuejinHelper.prototype.numpuzz = function () {
         // return new NumPuzz(this);

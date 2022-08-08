@@ -3,6 +3,7 @@ import { parseCookieTokens } from "./utils/index";
 import Cookie from "./utils/cookie";
 import Sdk from "./sdk";
 import Growth from "./growth";
+import SeaGold from "./seagold";
 
 type JuejinUserProps = {
   user_id: string;
@@ -63,7 +64,7 @@ class JuejinHelper {
   }
 
   seagold() {
-    // return new SeaGold(this);
+    return new SeaGold(this);
   }
 
   numpuzz() {

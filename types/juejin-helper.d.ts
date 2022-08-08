@@ -1,4 +1,5 @@
 import * as axios from 'axios';
+import { AxiosInstance } from 'axios';
 
 declare class Cookie {
     cookie: string;
@@ -102,6 +103,22 @@ declare class Growth {
     getMyLucky(): Promise<axios.AxiosResponse<any, any>>;
 }
 
+declare class Seagold {
+    juejin: JuejinHelper;
+    http: AxiosInstance;
+    constructor(juejin: JuejinHelper);
+    setToken(token: string): void;
+    gameLogin(): Promise<axios.AxiosResponse<any, any>>;
+    gameInfo(): Promise<axios.AxiosResponse<any, any>>;
+    gameStart(data: {
+        roleId: 1 | 2 | 3;
+    }): Promise<axios.AxiosResponse<any, any>>;
+    gameOver(data: {
+        isButton: number;
+    }): Promise<axios.AxiosResponse<any, any>>;
+    gameCommand(gameId: number, command?: never[]): Promise<axios.AxiosResponse<any, any>>;
+}
+
 declare type JuejinUserProps = {
     user_id: string;
     user_name: string;
@@ -125,7 +142,7 @@ declare class JuejinHelper {
     makeToken(): Promise<string>;
     sdk(): Sdk;
     growth(): Growth;
-    seagold(): void;
+    seagold(): Seagold;
     numpuzz(): void;
     bugfix(): void;
 }

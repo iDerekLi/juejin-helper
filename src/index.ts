@@ -4,6 +4,7 @@ import Cookie from "./utils/cookie";
 import Sdk from "./sdk";
 import Growth from "./growth";
 import SeaGold from "./seagold";
+import NumPuzz from "./numpuzz";
 
 type JuejinUserProps = {
   user_id: string;
@@ -68,7 +69,7 @@ class JuejinHelper {
   }
 
   numpuzz() {
-    // return new NumPuzz(this);
+    return new NumPuzz(this);
   }
 
   bugfix() {

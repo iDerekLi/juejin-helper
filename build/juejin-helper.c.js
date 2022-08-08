@@ -606,6 +606,140 @@ var Seagold = /** @class */ (function () {
     return Seagold;
 }());
 
+/**
+ * 数字拼图
+ * 游戏地址: https://juejin.cn/game/shuzimiti/
+ */
+var NumPuzz = /** @class */ (function () {
+    function NumPuzz(juejin) {
+        this.juejin = juejin;
+        this.http = axios__default["default"].create({
+            baseURL: "https://juejin-game.bytedance.com/game",
+            headers: {
+                referer: "https://juejin.cn/",
+                origin: "https://juejin.cn",
+                Authorization: ""
+            }
+        });
+        this.http.interceptors.request.use(function (config) {
+            if (juejin.user) {
+                // @ts-ignore
+                config.url += (config.url.indexOf("?") === -1 ? "?" : "&") + "uid=".concat(juejin.user.user_id, "&time=").concat(Date.now());
+            }
+            return config;
+        }, function (error) {
+            return Promise.reject(error);
+        });
+        this.http.interceptors.response.use(function (response) {
+            var res = response.data;
+            if (res.code !== 0) {
+                throw new Error(res.message);
+            }
+            return res.data;
+        }, function (error) {
+            return Promise.reject(error);
+        });
+    }
+    NumPuzz.prototype.setToken = function (token) {
+        // @ts-ignore
+        this.http.defaults.headers.Authorization = "Bearer ".concat(token);
+    };
+    /**
+     * 游戏登录
+     * @returns {Promise<*>}
+     */
+    NumPuzz.prototype.gameLogin = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _b = this.setToken;
+                        return [4 /*yield*/, this.juejin.makeToken()];
+                    case 1:
+                        _b.apply(this, [_c.sent()]);
+                        return [2 /*return*/, this.http.post("/num-puzz/user/login", {
+                                name: (_a = this.juejin.user) === null || _a === void 0 ? void 0 : _a.user_name
+                            })];
+                }
+            });
+        });
+    };
+    /**
+     * 获取主页信息
+     * @returns {Promise<*>}
+     * bug: 0
+     * diamond: 200
+     * originality: 0
+     * showToast: false
+     */
+    NumPuzz.prototype.gameInfo = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.http.get("/num-puzz/home/info")];
+            });
+        });
+    };
+    /**
+     * 开始游戏
+     * @param level Number [1|2|3] 简单|中等|困难
+     * @returns {Promise<*>}
+     * guide: 0
+     * level: 游戏等级
+     * map: 游戏地图
+     * round: 关卡
+     * target: 目标结果
+     */
+    NumPuzz.prototype.gameStart = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, level;
+            return __generator(this, function (_b) {
+                _a = (data || {}).level, level = _a === void 0 ? 1 : _a;
+                return [2 /*return*/, this.http.post("/num-puzz/game/start", {
+                        level: level
+                    })];
+            });
+        });
+    };
+    /**
+     * 跳过游戏
+     * @description 结构同开始游戏
+     * @param level
+     * @returns {Promise<*>}
+     */
+    NumPuzz.prototype.gameSkip = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, level;
+            return __generator(this, function (_b) {
+                _a = (data || {}).level, level = _a === void 0 ? 1 : _a;
+                return [2 /*return*/, this.http.post("/num-puzz/game/skip", {
+                        level: level
+                    })];
+            });
+        });
+    };
+    /**
+     * 游戏完成
+     * @param level Array<[x, y, direction]>, direction["u", "d", "l", "r"]
+     * @param command
+     * @returns {Promise<*>}
+     */
+    NumPuzz.prototype.gameComplete = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, _b, level, _c, command;
+            return __generator(this, function (_d) {
+                _a = data || {}, _b = _a.level, level = _b === void 0 ? 1 : _b, _c = _a.command, command = _c === void 0 ? [] : _c;
+                return [2 /*return*/, this.http.post("/num-puzz/game/complete", {
+                        level: level,
+                        command: command
+                    })];
+            });
+        });
+    };
+    return NumPuzz;
+}());
+
 var JuejinHelper = /** @class */ (function () {
     function JuejinHelper() {
         this.cookie = new Cookie();
@@ -669,7 +803,7 @@ var JuejinHelper = /** @class */ (function () {
         return new Seagold(this);
     };
     JuejinHelper.prototype.numpuzz = function () {
-        // return new NumPuzz(this);
+        return new NumPuzz(this);
     };
     JuejinHelper.prototype.bugfix = function () {
         // return new Bugfix(this);

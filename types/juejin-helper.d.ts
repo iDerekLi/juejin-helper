@@ -120,6 +120,63 @@ declare class Seagold {
     gameCommand(gameId: number, command?: never[]): Promise<axios.AxiosResponse<any, any>>;
 }
 
+/**
+ * 数字拼图
+ * 游戏地址: https://juejin.cn/game/shuzimiti/
+ */
+declare class NumPuzz {
+    juejin: JuejinHelper;
+    http: AxiosInstance;
+    constructor(juejin: JuejinHelper);
+    setToken(token: string): void;
+    /**
+     * 游戏登录
+     * @returns {Promise<*>}
+     */
+    gameLogin(): Promise<axios.AxiosResponse<any, any>>;
+    /**
+     * 获取主页信息
+     * @returns {Promise<*>}
+     * bug: 0
+     * diamond: 200
+     * originality: 0
+     * showToast: false
+     */
+    gameInfo(): Promise<axios.AxiosResponse<any, any>>;
+    /**
+     * 开始游戏
+     * @param level Number [1|2|3] 简单|中等|困难
+     * @returns {Promise<*>}
+     * guide: 0
+     * level: 游戏等级
+     * map: 游戏地图
+     * round: 关卡
+     * target: 目标结果
+     */
+    gameStart(data: {
+        level: number;
+    }): Promise<axios.AxiosResponse<any, any>>;
+    /**
+     * 跳过游戏
+     * @description 结构同开始游戏
+     * @param level
+     * @returns {Promise<*>}
+     */
+    gameSkip(data: {
+        level: number;
+    }): Promise<axios.AxiosResponse<any, any>>;
+    /**
+     * 游戏完成
+     * @param level Array<[x, y, direction]>, direction["u", "d", "l", "r"]
+     * @param command
+     * @returns {Promise<*>}
+     */
+    gameComplete(data: {
+        level: number;
+        command: [number, number, "u" | "d" | "l" | "r"];
+    }): Promise<axios.AxiosResponse<any, any>>;
+}
+
 declare type JuejinUserProps = {
     user_id: string;
     user_name: string;
@@ -144,7 +201,7 @@ declare class JuejinHelper {
     sdk(): Sdk;
     growth(): Growth;
     seagold(): Seagold;
-    numpuzz(): void;
+    numpuzz(): NumPuzz;
     bugfix(): void;
 }
 

@@ -1,7 +1,8 @@
 import api from "./services/api";
 import { parseCookieTokens } from "./utils/index";
-import Sdk from "./sdk";
 import Cookie from "./utils/cookie";
+import Sdk from "./sdk";
+import Growth from "./growth";
 
 type JuejinUserProps = {
   user_id: string;
@@ -58,7 +59,7 @@ class JuejinHelper {
   }
 
   growth() {
-    // return new Growth(this);
+    return new Growth(this);
   }
 
   seagold() {

@@ -60,18 +60,18 @@ function __generator(thisArg, body) {
     }
 }
 
-var instance$1 = axios__default["default"].create({
+var instance$2 = axios__default["default"].create({
     baseURL: "https://api.juejin.cn",
     headers: {
         referer: "https://juejin.cn/"
     }
 });
-instance$1.interceptors.request.use(function (config) {
+instance$2.interceptors.request.use(function (config) {
     return config;
 }, function (error) {
     return Promise.reject(error);
 });
-instance$1.interceptors.response.use(function (response) {
+instance$2.interceptors.response.use(function (response) {
     if (response.data.err_no) {
         throw new Error(response.data.err_msg);
     }
@@ -111,7 +111,51 @@ function generateUUID() {
   return uuid.v4();
 }
 
-var instance = axios__default["default"].create({
+var Cookie = /** @class */ (function () {
+    function Cookie(cookie) {
+        if (cookie === void 0) { cookie = ""; }
+        this.cookie = "";
+        this.stack = new Map();
+        if (cookie) {
+            this.setCookieValue(cookie);
+        }
+    }
+    Cookie.prototype.setCookieValue = function (cookie) {
+        var _this = this;
+        if (cookie === void 0) { cookie = ""; }
+        this.stack.clear();
+        this.cookie = cookie;
+        cookie
+            .split("; ")
+            .map(function (string) { return string.split("="); })
+            .forEach(function (_a) {
+            var key = _a[0], value = _a[1];
+            _this.stack.set(key, value);
+        });
+    };
+    Cookie.prototype.get = function (key) {
+        return this.stack.get(key);
+    };
+    Cookie.prototype.has = function (key) {
+        return this.stack.has(key);
+    };
+    Cookie.prototype.set = function (key, value) {
+        return this.stack.set(key, value);
+    };
+    Cookie.prototype.entries = function () {
+        return this.stack.entries();
+    };
+    Cookie.prototype.clear = function () {
+        this.cookie = "";
+        this.stack.clear();
+    };
+    Cookie.prototype.toString = function () {
+        return this.cookie;
+    };
+    return Cookie;
+}());
+
+var instance$1 = axios__default["default"].create({
     baseURL: "",
     headers: {
         // "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36",
@@ -122,12 +166,12 @@ var instance = axios__default["default"].create({
         "Sec-Fetch-Site": "cross-site"
     }
 });
-instance.interceptors.request.use(function (config) {
+instance$1.interceptors.request.use(function (config) {
     return config;
 }, function (error) {
     return Promise.reject(error);
 });
-instance.interceptors.response.use(function (response) {
+instance$1.interceptors.response.use(function (response) {
     var res = response.data;
     if ("e" in res) {
         return res;
@@ -153,7 +197,7 @@ var Sdk = /** @class */ (function () {
     Sdk.prototype.slardarSDKSetting = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance.get("https://i.snssdk.com/slardar/sdk_setting?bid=juejin_web", {
+                return [2 /*return*/, instance$1.get("https://i.snssdk.com/slardar/sdk_setting?bid=juejin_web", {
                         headers: {
                             cookie: "MONITOR_WEB_ID=".concat(this.juejin.cookie.get("MONITOR_WEB_ID"))
                         }
@@ -211,7 +255,7 @@ var Sdk = /** @class */ (function () {
                         }
                     }
                 ];
-                return [2 /*return*/, instance.post("https://mcs.snssdk.com/list", {
+                return [2 /*return*/, instance$1.post("https://mcs.snssdk.com/list", {
                         headers: {
                             host: "mcs.snssdk.com"
                         },
@@ -298,48 +342,151 @@ var Sdk = /** @class */ (function () {
     return Sdk;
 }());
 
-var Cookie = /** @class */ (function () {
-    function Cookie(cookie) {
-        if (cookie === void 0) { cookie = ""; }
-        this.cookie = "";
-        this.stack = new Map();
-        if (cookie) {
-            this.setCookieValue(cookie);
-        }
+var instance = axios__default["default"].create({
+    baseURL: "https://api.juejin.cn",
+    headers: {
+        referer: "https://juejin.cn/"
     }
-    Cookie.prototype.setCookieValue = function (cookie) {
-        var _this = this;
-        if (cookie === void 0) { cookie = ""; }
-        this.stack.clear();
-        this.cookie = cookie;
-        cookie
-            .split("; ")
-            .map(function (string) { return string.split("="); })
-            .forEach(function (_a) {
-            var key = _a[0], value = _a[1];
-            _this.stack.set(key, value);
+});
+var juejin = null;
+instance.interceptors.request.use(function (config) {
+    // @ts-ignore
+    config.headers.cookie = juejin === null || juejin === void 0 ? void 0 : juejin.getCookie();
+    if (juejin.user) {
+        var tokens = juejin.getCookieTokens();
+        // @ts-ignore
+        config.url += "".concat(config.url.indexOf("?") === -1 ? "?" : "&", "aid=").concat(tokens.aid, "&uuid=").concat(tokens.uuid);
+    }
+    return config;
+}, function (error) {
+    return Promise.reject(error);
+});
+instance.interceptors.response.use(function (response) {
+    if (response.data.err_no) {
+        throw new Error(response.data.err_msg);
+    }
+    return response.data.data;
+}, function (error) {
+    return Promise.reject(error);
+});
+function setJuejin(context) {
+    juejin = context;
+}
+
+var Growth = /** @class */ (function () {
+    function Growth(juejin) {
+        setJuejin(juejin);
+    }
+    /**
+     * 获取统计签到天数
+     * @returns {Promise<*>}
+     * {
+     *   cont_count 连续签到天数
+     *   sum_count 累计签到天数
+     * }
+     */
+    Growth.prototype.getCounts = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, instance.get("/growth_api/v1/get_counts")];
+            });
         });
     };
-    Cookie.prototype.get = function (key) {
-        return this.stack.get(key);
+    /**
+     * 获取当前矿石数
+     * @returns {Promise<*>}
+     * number 当前矿石数
+     */
+    Growth.prototype.getCurrentPoint = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, instance.get("/growth_api/v1/get_cur_point")];
+            });
+        });
     };
-    Cookie.prototype.has = function (key) {
-        return this.stack.has(key);
+    /**
+     * 获取今日签到状态
+     * @returns {Promise<*>}
+     * boolean 是否签到
+     */
+    Growth.prototype.getTodayStatus = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, instance.get("/growth_api/v1/get_today_status")];
+            });
+        });
     };
-    Cookie.prototype.set = function (key, value) {
-        return this.stack.set(key, value);
+    /**
+     * 获取月签到日历
+     * @returns {Promise<*>}
+     * [
+     *   {
+     *     date: timestamp(格式1646150400)
+     *     point: number增加矿石数
+     *     status: enum(1 今日, 4 未签到, 3 已签到)
+     *   }
+     * ]
+     */
+    Growth.prototype.getByMonth = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, instance.get("/growth_api/v1/get_by_month")];
+            });
+        });
     };
-    Cookie.prototype.entries = function () {
-        return this.stack.entries();
+    Growth.prototype.getLotteryConfig = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, instance.get("/growth_api/v1/lottery_config/get")];
+            });
+        });
     };
-    Cookie.prototype.clear = function () {
-        this.cookie = "";
-        this.stack.clear();
+    Growth.prototype.drawLottery = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, instance.post("/growth_api/v1/lottery/draw")];
+            });
+        });
     };
-    Cookie.prototype.toString = function () {
-        return this.cookie;
+    Growth.prototype.checkIn = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, instance.post("/growth_api/v1/check_in")];
+            });
+        });
     };
-    return Cookie;
+    Growth.prototype.getLotteriesLuckyUsers = function (_a) {
+        var _b = _a === void 0 ? {} : _a, _c = _b.page_no, page_no = _c === void 0 ? 1 : _c, _d = _b.page_size, page_size = _d === void 0 ? 5 : _d;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_e) {
+                return [2 /*return*/, instance.post("/growth_api/v1/lottery_history/global_big", {
+                        data: {
+                            page_no: page_no,
+                            page_size: page_size
+                        }
+                    })];
+            });
+        });
+    };
+    Growth.prototype.dipLucky = function (lottery_history_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, instance.post("/growth_api/v1/lottery_lucky/dip_lucky", {
+                        data: {
+                            lottery_history_id: lottery_history_id
+                        }
+                    })];
+            });
+        });
+    };
+    Growth.prototype.getMyLucky = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, instance.post("/growth_api/v1/lottery_lucky/my_lucky")];
+            });
+        });
+    };
+    return Growth;
 }());
 
 var JuejinHelper = /** @class */ (function () {
@@ -357,7 +504,7 @@ var JuejinHelper = /** @class */ (function () {
                         this.cookie.setCookieValue(cookie);
                         this.cookieTokens = parseCookieTokens(this.cookie);
                         _a = this;
-                        return [4 /*yield*/, instance$1.get("/user_api/v1/user/get", {
+                        return [4 /*yield*/, instance$2.get("/user_api/v1/user/get", {
                                 headers: { cookie: this.getCookie() }
                             })];
                     case 1:
@@ -388,7 +535,7 @@ var JuejinHelper = /** @class */ (function () {
     JuejinHelper.prototype.makeToken = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance$1.get("/get/token", {
+                return [2 /*return*/, instance$2.get("/get/token", {
                         baseURL: "https://juejin.cn",
                         headers: { cookie: this.getCookie() }
                     })];
@@ -399,7 +546,7 @@ var JuejinHelper = /** @class */ (function () {
         return new Sdk(this);
     };
     JuejinHelper.prototype.growth = function () {
-        // return new Growth(this);
+        return new Growth(this);
     };
     JuejinHelper.prototype.seagold = function () {
         // return new SeaGold(this);

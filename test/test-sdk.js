@@ -1,4 +1,4 @@
-const JuejinHelper = require('..');
+const JuejinHelper = require("..");
 
 const mockCookie = `juejin-cookies`;
 

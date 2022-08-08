@@ -177,6 +177,57 @@ declare class NumPuzz {
     }): Promise<axios.AxiosResponse<any, any>>;
 }
 
+interface Bug {
+    bug_type: number;
+    bug_time: number;
+    bug_show_type: number;
+    is_first: boolean;
+}
+declare class Bugfix {
+    http: AxiosInstance;
+    constructor(juejin: JuejinHelper);
+    /**
+     * 获取竞赛信息
+     * @returns {Promise<*>}
+     */
+    getCompetition(): Promise<axios.AxiosResponse<any, any>>;
+    /**
+     * 获取用户信息
+     * @param competition_id
+     * @returns {Promise<*>}
+     */
+    getUser(data: {
+        competition_id: number;
+    }): Promise<axios.AxiosResponse<any, any>>;
+    /**
+     * 获取未收集的Bug
+     * @returns {Promise<*>}
+     *  [
+     *   {
+     *     bug_type: number 类型位置
+     *     bug_time: number 时间戳
+     *     bug_show_type: 1 显示类型
+     *     is_first: boolean 是否第一次
+     *   }
+     * ]
+     *
+     */
+    getNotCollectBugList(): Promise<Bug[]>;
+    /**
+     * 收集Bug
+     * @param bug_time
+     * @param bug_type
+     * @returns {Promise<*>}
+     */
+    collectBug(data: Bug): Promise<axios.AxiosResponse<any, any>>;
+    /**
+     * 批量收集Bug
+     * @param buglist
+     * @returns {Promise<boolean|*>}
+     */
+    collectBugBatch(buglist?: Bug[]): Promise<boolean | unknown>;
+}
+
 declare type JuejinUserProps = {
     user_id: string;
     user_name: string;
@@ -202,7 +253,7 @@ declare class JuejinHelper {
     growth(): Growth;
     seagold(): Seagold;
     numpuzz(): NumPuzz;
-    bugfix(): void;
+    bugfix(): Bugfix;
 }
 
 export { JuejinHelper as default };

@@ -105,6 +105,10 @@ function parseCookieTokens(cookie) {
   return cookieTokens;
 }
 
+async function wait(time = 0) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+
 function randomRangeNumber(start = 500, end = 1000) {
   return (Math.random() * (end - start) + start) >> 0;
 }
@@ -740,6 +744,146 @@ var NumPuzz = /** @class */ (function () {
     return NumPuzz;
 }());
 
+var Bugfix = /** @class */ (function () {
+    function Bugfix(juejin) {
+        this.http = axios__default["default"].create({
+            baseURL: "https://api.juejin.cn",
+            headers: {
+                referer: "https://juejin.cn/",
+                origin: "https://juejin.cn"
+            }
+        });
+        this.http.interceptors.request.use(function (config) {
+            // @ts-ignore
+            config.headers.cookie = juejin === null || juejin === void 0 ? void 0 : juejin.getCookie();
+            if (juejin.user) {
+                var tokens = juejin.getCookieTokens();
+                // @ts-ignore
+                config.url += "".concat(config.url.indexOf("?") === -1 ? "?" : "&", "aid=").concat(tokens.aid, "&uuid=").concat(tokens.uuid);
+            }
+            return config;
+        }, function (error) {
+            return Promise.reject(error);
+        });
+        this.http.interceptors.response.use(function (response) {
+            if (response.data.err_no) {
+                throw new Error(response.data.err_msg);
+            }
+            return response.data.data;
+        }, function (error) {
+            return Promise.reject(error);
+        });
+    }
+    /**
+     * 获取竞赛信息
+     * @returns {Promise<*>}
+     */
+    Bugfix.prototype.getCompetition = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.http.post("/user_api/v1/bugfix/competition", {
+                    // 必须加个空对象，否则接口提示少了参数
+                    })];
+            });
+        });
+    };
+    /**
+     * 获取用户信息
+     * @param competition_id
+     * @returns {Promise<*>}
+     */
+    Bugfix.prototype.getUser = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var competition_id;
+            return __generator(this, function (_a) {
+                competition_id = data.competition_id;
+                return [2 /*return*/, this.http.post("/user_api/v1/bugfix/user", {
+                        competition_id: competition_id
+                    })];
+            });
+        });
+    };
+    /**
+     * 获取未收集的Bug
+     * @returns {Promise<*>}
+     *  [
+     *   {
+     *     bug_type: number 类型位置
+     *     bug_time: number 时间戳
+     *     bug_show_type: 1 显示类型
+     *     is_first: boolean 是否第一次
+     *   }
+     * ]
+     *
+     */
+    Bugfix.prototype.getNotCollectBugList = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.http.post("/user_api/v1/bugfix/not_collect", {
+                    // 必须加个空对象，否则接口提示少了参数
+                    })];
+            });
+        });
+    };
+    /**
+     * 收集Bug
+     * @param bug_time
+     * @param bug_type
+     * @returns {Promise<*>}
+     */
+    Bugfix.prototype.collectBug = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var bug_time, bug_type;
+            return __generator(this, function (_a) {
+                bug_time = data.bug_time, bug_type = data.bug_type;
+                return [2 /*return*/, this.http.post("/user_api/v1/bugfix/collect", {
+                        bug_time: bug_time,
+                        bug_type: bug_type
+                    })];
+            });
+        });
+    };
+    /**
+     * 批量收集Bug
+     * @param buglist
+     * @returns {Promise<boolean|*>}
+     */
+    Bugfix.prototype.collectBugBatch = function (buglist) {
+        if (buglist === void 0) { buglist = []; }
+        return __awaiter(this, void 0, void 0, function () {
+            var error_1;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, Promise.all(buglist.map(function (bug) { return __awaiter(_this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, this.collectBug(bug)];
+                                        case 1:
+                                            _a.sent();
+                                            return [4 /*yield*/, wait(randomRangeNumber(500, 1000))];
+                                        case 2:
+                                            _a.sent();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            }); }))];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                    case 2:
+                        error_1 = _a.sent();
+                        return [2 /*return*/, error_1];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return Bugfix;
+}());
+
 var JuejinHelper = /** @class */ (function () {
     function JuejinHelper() {
         this.cookie = new Cookie();
@@ -806,7 +950,7 @@ var JuejinHelper = /** @class */ (function () {
         return new NumPuzz(this);
     };
     JuejinHelper.prototype.bugfix = function () {
-        // return new Bugfix(this);
+        return new Bugfix(this);
     };
     return JuejinHelper;
 }());

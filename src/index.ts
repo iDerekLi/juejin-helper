@@ -5,6 +5,7 @@ import Sdk from "./sdk";
 import Growth from "./growth";
 import SeaGold from "./seagold";
 import NumPuzz from "./numpuzz";
+import Bugfix from "./bugfix";
 
 type JuejinUserProps = {
   user_id: string;
@@ -73,7 +74,7 @@ class JuejinHelper {
   }
 
   bugfix() {
-    // return new Bugfix(this);
+    return new Bugfix(this);
   }
 }
 

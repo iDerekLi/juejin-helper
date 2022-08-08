@@ -55,18 +55,18 @@ function __generator(thisArg, body) {
     }
 }
 
-var instance$2 = axios.create({
+var instance$1 = axios.create({
     baseURL: "https://api.juejin.cn",
     headers: {
         referer: "https://juejin.cn/"
     }
 });
-instance$2.interceptors.request.use(function (config) {
+instance$1.interceptors.request.use(function (config) {
     return config;
 }, function (error) {
     return Promise.reject(error);
 });
-instance$2.interceptors.response.use(function (response) {
+instance$1.interceptors.response.use(function (response) {
     if (response.data.err_no) {
         throw new Error(response.data.err_msg);
     }
@@ -150,7 +150,7 @@ var Cookie = /** @class */ (function () {
     return Cookie;
 }());
 
-var instance$1 = axios.create({
+var instance = axios.create({
     baseURL: "",
     headers: {
         // "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36",
@@ -161,12 +161,12 @@ var instance$1 = axios.create({
         "Sec-Fetch-Site": "cross-site"
     }
 });
-instance$1.interceptors.request.use(function (config) {
+instance.interceptors.request.use(function (config) {
     return config;
 }, function (error) {
     return Promise.reject(error);
 });
-instance$1.interceptors.response.use(function (response) {
+instance.interceptors.response.use(function (response) {
     var res = response.data;
     if ("e" in res) {
         return res;
@@ -192,7 +192,7 @@ var Sdk = /** @class */ (function () {
     Sdk.prototype.slardarSDKSetting = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance$1.get("https://i.snssdk.com/slardar/sdk_setting?bid=juejin_web", {
+                return [2 /*return*/, instance.get("https://i.snssdk.com/slardar/sdk_setting?bid=juejin_web", {
                         headers: {
                             cookie: "MONITOR_WEB_ID=".concat(this.juejin.cookie.get("MONITOR_WEB_ID"))
                         }
@@ -250,7 +250,7 @@ var Sdk = /** @class */ (function () {
                         }
                     }
                 ];
-                return [2 /*return*/, instance$1.post("https://mcs.snssdk.com/list", {
+                return [2 /*return*/, instance.post("https://mcs.snssdk.com/list", {
                         headers: {
                             host: "mcs.snssdk.com"
                         },
@@ -337,40 +337,35 @@ var Sdk = /** @class */ (function () {
     return Sdk;
 }());
 
-var instance = axios.create({
-    baseURL: "https://api.juejin.cn",
-    headers: {
-        referer: "https://juejin.cn/"
-    }
-});
-var juejin = null;
-instance.interceptors.request.use(function (config) {
-    // @ts-ignore
-    config.headers.cookie = juejin === null || juejin === void 0 ? void 0 : juejin.getCookie();
-    if (juejin.user) {
-        var tokens = juejin.getCookieTokens();
-        // @ts-ignore
-        config.url += "".concat(config.url.indexOf("?") === -1 ? "?" : "&", "aid=").concat(tokens.aid, "&uuid=").concat(tokens.uuid);
-    }
-    return config;
-}, function (error) {
-    return Promise.reject(error);
-});
-instance.interceptors.response.use(function (response) {
-    if (response.data.err_no) {
-        throw new Error(response.data.err_msg);
-    }
-    return response.data.data;
-}, function (error) {
-    return Promise.reject(error);
-});
-function setJuejin(context) {
-    juejin = context;
-}
-
 var Growth = /** @class */ (function () {
     function Growth(juejin) {
-        setJuejin(juejin);
+        this.http = axios.create({
+            baseURL: "https://api.juejin.cn",
+            headers: {
+                referer: "https://juejin.cn/",
+                origin: "https://juejin.cn"
+            }
+        });
+        this.http.interceptors.request.use(function (config) {
+            // @ts-ignore
+            config.headers.cookie = juejin === null || juejin === void 0 ? void 0 : juejin.getCookie();
+            if (juejin.user) {
+                var tokens = juejin.getCookieTokens();
+                // @ts-ignore
+                config.url += "".concat(config.url.indexOf("?") === -1 ? "?" : "&", "aid=").concat(tokens.aid, "&uuid=").concat(tokens.uuid);
+            }
+            return config;
+        }, function (error) {
+            return Promise.reject(error);
+        });
+        this.http.interceptors.response.use(function (response) {
+            if (response.data.err_no) {
+                throw new Error(response.data.err_msg);
+            }
+            return response.data.data;
+        }, function (error) {
+            return Promise.reject(error);
+        });
     }
     /**
      * 获取统计签到天数
@@ -383,7 +378,7 @@ var Growth = /** @class */ (function () {
     Growth.prototype.getCounts = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance.get("/growth_api/v1/get_counts")];
+                return [2 /*return*/, this.http.get("/growth_api/v1/get_counts")];
             });
         });
     };
@@ -395,7 +390,7 @@ var Growth = /** @class */ (function () {
     Growth.prototype.getCurrentPoint = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance.get("/growth_api/v1/get_cur_point")];
+                return [2 /*return*/, this.http.get("/growth_api/v1/get_cur_point")];
             });
         });
     };
@@ -407,7 +402,7 @@ var Growth = /** @class */ (function () {
     Growth.prototype.getTodayStatus = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance.get("/growth_api/v1/get_today_status")];
+                return [2 /*return*/, this.http.get("/growth_api/v1/get_today_status")];
             });
         });
     };
@@ -425,36 +420,37 @@ var Growth = /** @class */ (function () {
     Growth.prototype.getByMonth = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance.get("/growth_api/v1/get_by_month")];
+                return [2 /*return*/, this.http.get("/growth_api/v1/get_by_month")];
             });
         });
     };
     Growth.prototype.getLotteryConfig = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance.get("/growth_api/v1/lottery_config/get")];
+                return [2 /*return*/, this.http.get("/growth_api/v1/lottery_config/get")];
             });
         });
     };
     Growth.prototype.drawLottery = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance.post("/growth_api/v1/lottery/draw")];
+                return [2 /*return*/, this.http.post("/growth_api/v1/lottery/draw")];
             });
         });
     };
     Growth.prototype.checkIn = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance.post("/growth_api/v1/check_in")];
+                return [2 /*return*/, this.http.post("/growth_api/v1/check_in")];
             });
         });
     };
-    Growth.prototype.getLotteriesLuckyUsers = function (_a) {
-        var _b = _a === void 0 ? {} : _a, _c = _b.page_no, page_no = _c === void 0 ? 1 : _c, _d = _b.page_size, page_size = _d === void 0 ? 5 : _d;
+    Growth.prototype.getLotteriesLuckyUsers = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_e) {
-                return [2 /*return*/, instance.post("/growth_api/v1/lottery_history/global_big", {
+            var _a, _b, page_no, _c, page_size;
+            return __generator(this, function (_d) {
+                _a = data || {}, _b = _a.page_no, page_no = _b === void 0 ? 1 : _b, _c = _a.page_size, page_size = _c === void 0 ? 5 : _c;
+                return [2 /*return*/, this.http.post("/growth_api/v1/lottery_history/global_big", {
                         page_no: page_no,
                         page_size: page_size
                     })];
@@ -464,7 +460,7 @@ var Growth = /** @class */ (function () {
     Growth.prototype.dipLucky = function (lottery_history_id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance.post("/growth_api/v1/lottery_lucky/dip_lucky", {
+                return [2 /*return*/, this.http.post("/growth_api/v1/lottery_lucky/dip_lucky", {
                         lottery_history_id: lottery_history_id
                     })];
             });
@@ -473,7 +469,7 @@ var Growth = /** @class */ (function () {
     Growth.prototype.getMyLucky = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance.post("/growth_api/v1/lottery_lucky/my_lucky")];
+                return [2 /*return*/, this.http.post("/growth_api/v1/lottery_lucky/my_lucky")];
             });
         });
     };
@@ -618,7 +614,7 @@ var JuejinHelper = /** @class */ (function () {
                         this.cookie.setCookieValue(cookie);
                         this.cookieTokens = parseCookieTokens(this.cookie);
                         _a = this;
-                        return [4 /*yield*/, instance$2.get("/user_api/v1/user/get", {
+                        return [4 /*yield*/, instance$1.get("/user_api/v1/user/get", {
                                 headers: { cookie: this.getCookie() }
                             })];
                     case 1:
@@ -649,7 +645,7 @@ var JuejinHelper = /** @class */ (function () {
     JuejinHelper.prototype.makeToken = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, instance$2.get("/get/token", {
+                return [2 /*return*/, instance$1.get("/get/token", {
                         baseURL: "https://juejin.cn",
                         headers: { cookie: this.getCookie() }
                     })];

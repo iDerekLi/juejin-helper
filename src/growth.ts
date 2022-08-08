@@ -1,9 +1,47 @@
 import JuejinHelper from "./index";
-import growth, { setJuejin } from "./services/growth";
+import axios, { AxiosInstance } from "axios";
 
 class Growth {
+  http: AxiosInstance;
+
   constructor(juejin: JuejinHelper) {
-    setJuejin(juejin);
+    this.http = axios.create({
+      baseURL: "https://api.juejin.cn",
+      headers: {
+        referer: "https://juejin.cn/",
+        origin: "https://juejin.cn"
+      }
+    });
+
+    this.http.interceptors.request.use(
+      function (config) {
+        if (!juejin) config;
+        // @ts-ignore
+        config.headers.cookie = juejin?.getCookie();
+
+        if ((juejin as JuejinHelper).user) {
+          const tokens = (juejin as JuejinHelper).getCookieTokens();
+          // @ts-ignore
+          config.url += `${config.url.indexOf("?") === -1 ? "?" : "&"}aid=${tokens.aid}&uuid=${tokens.uuid}`;
+        }
+        return config;
+      },
+      function (error) {
+        return Promise.reject(error);
+      }
+    );
+
+    this.http.interceptors.response.use(
+      function (response) {
+        if (response.data.err_no) {
+          throw new Error(response.data.err_msg);
+        }
+        return response.data.data;
+      },
+      function (error) {
+        return Promise.reject(error);
+      }
+    );
   }
 
   /**
@@ -15,7 +53,7 @@ class Growth {
    * }
    */
   async getCounts() {
-    return growth.get("/growth_api/v1/get_counts");
+    return this.http.get("/growth_api/v1/get_counts");
   }
 
   /**
@@ -24,7 +62,7 @@ class Growth {
    * number 当前矿石数
    */
   async getCurrentPoint() {
-    return growth.get("/growth_api/v1/get_cur_point");
+    return this.http.get("/growth_api/v1/get_cur_point");
   }
 
   /**
@@ -33,7 +71,7 @@ class Growth {
    * boolean 是否签到
    */
   async getTodayStatus() {
-    return growth.get("/growth_api/v1/get_today_status");
+    return this.http.get("/growth_api/v1/get_today_status");
   }
 
   /**
@@ -48,40 +86,37 @@ class Growth {
    * ]
    */
   async getByMonth() {
-    return growth.get("/growth_api/v1/get_by_month");
+    return this.http.get("/growth_api/v1/get_by_month");
   }
 
   async getLotteryConfig() {
-    return growth.get("/growth_api/v1/lottery_config/get");
+    return this.http.get("/growth_api/v1/lottery_config/get");
   }
 
   async drawLottery() {
-    return growth.post("/growth_api/v1/lottery/draw");
+    return this.http.post("/growth_api/v1/lottery/draw");
   }
 
   async checkIn() {
-    return growth.post("/growth_api/v1/check_in");
+    return this.http.post("/growth_api/v1/check_in");
   }
 
-  async getLotteriesLuckyUsers({ page_no = 1, page_size = 5 } = {}) {
-    return growth.post("/growth_api/v1/lottery_history/global_big", {
-      data: {
-        page_no: page_no,
-        page_size: page_size
-      }
+  async getLotteriesLuckyUsers(data: { page_no: number; page_size: number }) {
+    const { page_no = 1, page_size = 5 } = data || {};
+    return this.http.post("/growth_api/v1/lottery_history/global_big", {
+      page_no: page_no,
+      page_size: page_size
     });
   }
 
-  async dipLucky(lottery_history_id: any) {
-    return growth.post("/growth_api/v1/lottery_lucky/dip_lucky", {
-      data: {
-        lottery_history_id
-      }
+  async dipLucky(lottery_history_id: number) {
+    return this.http.post("/growth_api/v1/lottery_lucky/dip_lucky", {
+      lottery_history_id
     });
   }
 
   async getMyLucky() {
-    return growth.post("/growth_api/v1/lottery_lucky/my_lucky");
+    return this.http.post("/growth_api/v1/lottery_lucky/my_lucky");
   }
 }
 

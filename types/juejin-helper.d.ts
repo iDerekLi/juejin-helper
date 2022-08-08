@@ -58,6 +58,7 @@ declare class Sdk {
 }
 
 declare class Growth {
+    http: AxiosInstance;
     constructor(juejin: JuejinHelper);
     /**
      * 获取统计签到天数
@@ -95,11 +96,11 @@ declare class Growth {
     getLotteryConfig(): Promise<axios.AxiosResponse<any, any>>;
     drawLottery(): Promise<axios.AxiosResponse<any, any>>;
     checkIn(): Promise<axios.AxiosResponse<any, any>>;
-    getLotteriesLuckyUsers({ page_no, page_size }?: {
-        page_no?: number | undefined;
-        page_size?: number | undefined;
+    getLotteriesLuckyUsers(data: {
+        page_no: number;
+        page_size: number;
     }): Promise<axios.AxiosResponse<any, any>>;
-    dipLucky(lottery_history_id: any): Promise<axios.AxiosResponse<any, any>>;
+    dipLucky(lottery_history_id: number): Promise<axios.AxiosResponse<any, any>>;
     getMyLucky(): Promise<axios.AxiosResponse<any, any>>;
 }
 

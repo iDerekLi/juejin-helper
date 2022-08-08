@@ -9,7 +9,7 @@
   "module": "build/juejin-helper.esm.js",
   "types": "types/juejin-helper.d.ts",
   "scripts": {
-    "watch": "rollup -c -w",
+    "dev": "rollup -c -w",
     "build": "rollup -c"
   },
   "files": [

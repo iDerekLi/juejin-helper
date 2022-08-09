@@ -1,7 +1,4 @@
 <!--
-## 处理自动化相关逻辑
-base: `workflows` <- compare `your branch`
-
-## 处理JueJinAPI相关逻辑
-base: `package` <- compare `your branch`
+## 所有贡献请先合并至开发分支dev。
+base: `dev` <- compare `your branch`
 -->

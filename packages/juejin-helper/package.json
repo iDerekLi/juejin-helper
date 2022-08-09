@@ -8,10 +8,6 @@
   "main": "build/juejin-helper.c.js",
   "module": "build/juejin-helper.esm.js",
   "types": "types/juejin-helper.d.ts",
-  "scripts": {
-    "dev": "rollup -c -w",
-    "build": "rollup -c"
-  },
   "files": [
     "build",
     "types",

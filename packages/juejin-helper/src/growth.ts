@@ -52,7 +52,10 @@ class Growth {
    *   sum_count 累计签到天数
    * }
    */
-  async getCounts() {
+  async getCounts(): Promise<{
+    cont_count: number;
+    sum_count: number;
+  }> {
     return this.http.get("/growth_api/v1/get_counts");
   }
 
@@ -101,7 +104,13 @@ class Growth {
     return this.http.post("/growth_api/v1/check_in");
   }
 
-  async getLotteriesLuckyUsers(data: { page_no: number; page_size: number }) {
+  async getLotteriesLuckyUsers(data?: { page_no: number; page_size: number }): Promise<{
+    count: number;
+    lotteries: Array<{
+      history_id: number;
+      [prop: string]: any;
+    }>;
+  }> {
     const { page_no = 1, page_size = 5 } = data || {};
     return this.http.post("/growth_api/v1/lottery_history/global_big", {
       page_no: page_no,
@@ -109,7 +118,10 @@ class Growth {
     });
   }
 
-  async dipLucky(lottery_history_id: number) {
+  async dipLucky(lottery_history_id: number): Promise<{
+    has_dip: boolean;
+    dip_value: number;
+  }> {
     return this.http.post("/growth_api/v1/lottery_lucky/dip_lucky", {
       lottery_history_id
     });

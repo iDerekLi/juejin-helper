@@ -1,0 +1,19 @@
+{
+  "name": "workflows",
+  "version": "1.6.0",
+  "private": true,
+  "description": "稀土掘金助手：签到、抽奖、沾喜气、消除Bug、海底掘金游戏、自动化工作流。",
+  "author": "Derek Li",
+  "scripts": {
+    "checkin": "node checkin.js",
+    "seagold": "node seagold.js"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "fast-astar": "^1.0.6",
+    "nodemailer": "^6.7.0"
+  },
+  "peerDependencies": {
+    "juejin-helper": "1.6.0"
+  }
+}

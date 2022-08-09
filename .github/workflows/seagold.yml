@@ -1,0 +1,28 @@
+name: SeaGold
+
+on:
+  schedule:
+    - cron: "30 22 * * *" # 北京时间上午06:30
+  workflow_dispatch:
+jobs:
+  SeaGold:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - name: Run Project
+        env:
+          COOKIE: ${{ secrets.COOKIE }}
+          COOKIE_2: ${{ secrets.COOKIE_2 }}
+          COOKIE_3: ${{ secrets.COOKIE_3 }}
+          COOKIE_4: ${{ secrets.COOKIE_4 }}
+          COOKIE_5: ${{ secrets.COOKIE_5 }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          DINGDING_WEBHOOK: ${{ secrets.DINGDING_WEBHOOK }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+        run: |
+          cd workflows
+          yarn
+          yarn seagold

@@ -3,10 +3,7 @@
   "version": "1.6.0",
   "private": true,
   "author": "Derek Li",
-  "workspaces": [
-    "packages/*",
-    "workflows"
-  ],
+  "workspaces": ["packages/*"],
   "scripts": {
     "dev": "cross-env NODE_ENV=development rollup -cw",
     "build": "cross-env NODE_ENV=production rollup -c",

@@ -21,7 +21,7 @@ async function main({ subject, text, html }) {
     callbackUrl: "",
     timestamp: ""
   })
-    .then(res => res.json())
+    .then(res => res.data)
     .then(json => {
       console.log(`PushPlus推送结果: ` + json.msg);
       return json;

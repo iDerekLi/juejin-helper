@@ -11,7 +11,7 @@
     "build": "cross-env NODE_ENV=production rollup -c",
     "clean": "rimraf \"packages/*/{build,types}\"",
     "release:version": "lerna version --exact --force-publish",
-    "release:build": "yarn clean && yarn build",
+    "release:build": "npm run clean && npm run build",
     "release:publish": "lerna publish from-package --no-private"
   },
   "devDependencies": {
@@ -37,8 +37,5 @@
   "engines": {
     "node": ">=14.17.0",
     "npm": ">=6.14.13"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/"
   }
 }

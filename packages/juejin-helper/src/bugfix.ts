@@ -3,10 +3,20 @@ import JuejinHelper from "./index";
 import axios, { AxiosInstance } from "axios";
 
 interface Bug {
-  bug_type: number;
-  bug_time: number;
-  bug_show_type: number;
-  is_first: boolean;
+  bug_type: number; // 类型位置
+  bug_time: number; // 时间戳
+  bug_show_type: number; // 显示类型
+  is_first: boolean; // 是否第一次
+}
+
+interface Competition {
+  competition_id: number;
+  [prop: string]: any;
+}
+
+interface User {
+  user_own_bug: number;
+  [prop: string]: any;
 }
 
 class Bugfix {
@@ -54,9 +64,9 @@ class Bugfix {
 
   /**
    * 获取竞赛信息
-   * @returns {Promise<*>}
+   * @returns {Promise<Competition>}
    */
-  async getCompetition() {
+  async getCompetition(): Promise<Competition> {
     return this.http.post("/user_api/v1/bugfix/competition", {
       // 必须加个空对象，否则接口提示少了参数
     });
@@ -64,10 +74,10 @@ class Bugfix {
 
   /**
    * 获取用户信息
-   * @param competition_id
-   * @returns {Promise<*>}
+   * @param data
+   * @returns {Promise<User>}
    */
-  async getUser(data: { competition_id: number }) {
+  async getUser(data: { competition_id: number }): Promise<User> {
     const { competition_id } = data;
     return this.http.post("/user_api/v1/bugfix/user", {
       competition_id
@@ -76,16 +86,7 @@ class Bugfix {
 
   /**
    * 获取未收集的Bug
-   * @returns {Promise<*>}
-   *  [
-   *   {
-   *     bug_type: number 类型位置
-   *     bug_time: number 时间戳
-   *     bug_show_type: 1 显示类型
-   *     is_first: boolean 是否第一次
-   *   }
-   * ]
-   *
+   * @returns {Promise<Bug[]>}
    */
   async getNotCollectBugList(): Promise<Bug[]> {
     return this.http.post("/user_api/v1/bugfix/not_collect", {

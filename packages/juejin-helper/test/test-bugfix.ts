@@ -1,11 +1,11 @@
-const JuejinHelper = require("..");
+import JuejinHelper from "..";
 
 const mockCookie = `juejin-cookies`;
 
 async function run() {
   const juejin = new JuejinHelper();
   await juejin.login(mockCookie);
-  console.log(juejin.getUser().user_name);
+  console.log(juejin.getUser()?.user_name);
 
   const bugfix = juejin.bugfix();
 

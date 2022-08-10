@@ -12,7 +12,7 @@
     "clean": "rimraf \"packages/*/{build,types}\"",
     "release:version": "lerna version --exact --force-publish",
     "release:build": "yarn clean && yarn build",
-    "release:publish": "lerna publish from-package"
+    "release:publish": "lerna publish from-package --no-private"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",

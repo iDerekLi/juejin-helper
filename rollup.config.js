@@ -41,12 +41,7 @@ async function run() {
         { banner, file: path.join(basePath, main), format: "cjs" },
         { banner, file: path.join(basePath, module), format: "esm" }
       ],
-      plugins: [
-        commonjs(/*{
-          defaultIsModuleExports: true
-        }*/),
-        typescript()
-      ],
+      plugins: [commonjs(), typescript()],
       watch: {
         exclude: "node_modules"
       }

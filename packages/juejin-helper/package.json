@@ -1,6 +1,6 @@
 {
   "name": "juejin-helper",
-  "version": "1.6.1",
+  "version": "1.6.1-alpha.0",
   "description": "稀土掘金助手：签到、抽奖、沾喜气、海底淘金、BugFix、自动化工作流。",
   "author": "Derek Li",
   "license": "Apache-2.0",

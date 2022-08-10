@@ -9,7 +9,10 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development rollup -cw",
     "build": "cross-env NODE_ENV=production rollup -c",
-    "clean": "rimraf \"packages/*/{build,types}\""
+    "clean": "rimraf \"packages/*/{build,types}\"",
+    "release:version": "lerna version --exact --force-publish",
+    "release:build": "yarn clean && yarn build",
+    "release:publish": "lerna publish from-package --no-private"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",
@@ -21,6 +24,7 @@
     "eslint-config-next": "^12.1.5",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "lerna": "^5.4.0",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.77.2",

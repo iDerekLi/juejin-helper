@@ -4,7 +4,7 @@ import typescript from "rollup-plugin-typescript2";
 import dts from "rollup-plugin-dts";
 import workspacesRun from "workspaces-run";
 
-const isProduction = process.env.NODE_ENV === "production";
+// const isProduction = process.env.NODE_ENV === "production";
 
 async function run() {
   const compiled = new Date().toUTCString().replace(/GMT/g, "UTC");
@@ -52,13 +52,11 @@ async function run() {
       }
     });
 
-    if (isProduction) {
-      results.push({
-        input,
-        output: [{ banner, file: path.join(basePath, types), format: "esm" }],
-        plugins: [dts()]
-      });
-    }
+    results.push({
+      input,
+      output: [{ banner, file: path.join(basePath, types), format: "esm" }],
+      plugins: [dts()]
+    });
   });
 
   return results;

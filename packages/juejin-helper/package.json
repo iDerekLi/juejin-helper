@@ -8,6 +8,14 @@
   "main": "build/juejin-helper.c.js",
   "module": "build/juejin-helper.esm.js",
   "types": "types/juejin-helper.d.ts",
+  "scripts": {
+    "test:login": "ts-node ./test/test-login.ts",
+    "test:growth": "ts-node ./test/test-growth.ts",
+    "test:seagold": "ts-node ./test/test-seagold.ts",
+    "test:bugfix": "ts-node ./test/test-bugfix.ts",
+    "test:numpuzz": "ts-node ./test/test-numpuzz.ts",
+    "test:sdk": "ts-node ./test/test-sdk.ts"
+  },
   "files": [
     "build",
     "types",

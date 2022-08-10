@@ -9,9 +9,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development rollup -cw",
     "build": "cross-env NODE_ENV=production rollup -c",
-    "clean": "rimraf \"packages/*/{build,types}\"",
-    "test:login": "ts-node ./packages/juejin-helper/test/test-login.ts",
-    "test:growth": "ts-node ./packages/juejin-helper/test/test-growth.ts"
+    "clean": "rimraf \"packages/*/{build,types}\""
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",

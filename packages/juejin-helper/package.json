@@ -1,6 +1,6 @@
 {
   "name": "juejin-helper",
-  "version": "1.6.1",
+  "version": "1.6.0",
   "description": "稀土掘金助手：签到、抽奖、沾喜气、海底淘金、BugFix、自动化工作流。",
   "author": "Derek Li",
   "license": "Apache-2.0",
@@ -44,5 +44,5 @@
   "bugs": {
     "url": "https://github.com/iDerekLi/juejin-helper/issues"
   },
-  "gitHead": "e8a2b989b058af1c4141b52dca4022e1b405c5a5"
+  "gitHead": "1bd5f57cc0f091984cf63fd98a1ed7d22ddf8a11"
 }

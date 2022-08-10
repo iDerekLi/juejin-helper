@@ -1,6 +1,6 @@
 {
   "name": "juejin-helper-monorepo",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "private": true,
   "author": "Derek Li",
   "workspaces": [
@@ -11,7 +11,7 @@
     "build": "cross-env NODE_ENV=production rollup -c",
     "clean": "rimraf \"packages/*/{build,types}\"",
     "release:version": "lerna version --exact --force-publish",
-    "release:build": "yarn clean && yarn build",
+    "release:build": "npm run clean && npm run build",
     "release:publish": "lerna publish from-package --no-private"
   },
   "devDependencies": {

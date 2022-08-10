@@ -3,13 +3,10 @@ import axios from "axios";
 const instance = axios.create({
   baseURL: "",
   headers: {
-    // "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36",
     referer: "https://juejin.cn/",
-    origin: "https://juejin.cn",
-    "Sec-Fetch-Dest": "empty",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "cross-site"
-  }
+    origin: "https://juejin.cn"
+  },
+  transformRequest: () => {}
 });
 
 instance.interceptors.request.use(

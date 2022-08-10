@@ -1,6 +1,7 @@
 import { generateUUID, randomRangeNumber } from "./utils/index";
 import JuejinHelper from "./index";
 import snssdk from "./services/snssdk";
+import axios from "axios";
 
 interface SDKSetting {
   cookieid: string;
@@ -31,7 +32,7 @@ interface SDKEvent {
 }
 
 interface SDKListResult {
-  e: number;
+  e: 0 | -1 | -3; // 0 = ok
 }
 
 /**
@@ -48,7 +49,10 @@ class Sdk {
   }
 
   async slardarSDKSetting(): Promise<SDKSetting> {
-    return snssdk.get("https://i.snssdk.com/slardar/sdk_setting?bid=juejin_web", {
+    return snssdk.get("https://i.snssdk.com/slardar/sdk_setting", {
+      params: {
+        bid: "juejin_web"
+      },
       headers: {
         cookie: `MONITOR_WEB_ID=${this.juejin.cookie.get("MONITOR_WEB_ID")}`
       }
@@ -104,11 +108,10 @@ class Sdk {
       }
     ];
 
-    return snssdk.post("https://mcs.snssdk.com/list", {
+    return snssdk.post("https://mcs.snssdk.com/list", data, {
       headers: {
         host: "mcs.snssdk.com"
-      },
-      data
+      }
     });
   }
 

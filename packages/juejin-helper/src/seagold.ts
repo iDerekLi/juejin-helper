@@ -2,6 +2,91 @@ import axios, { AxiosInstance } from "axios";
 import JuejinHelper from "./index";
 import jwt from "jsonwebtoken";
 
+interface Position {
+  x: number;
+  y: number;
+}
+
+interface BlockData {
+  moveUp: number;
+  moveDown: number;
+  moveLeft: number;
+  moveRight: number;
+  jump: number;
+  loop: number;
+}
+
+type MapData = number[];
+
+interface GameCommandResult {
+  appendMapData: MapData;
+  blockData: BlockData;
+  curPos: Position;
+  gameDiamond: number;
+}
+
+interface GameOverResult {
+  activity: string;
+  deep: number;
+  gameDiamond: number; // 当局获取
+  originMapData: MapData;
+  passLine: Position[];
+  picoDiamond: number;
+  realDiamond: number; // 真实获取
+  todayDiamond: number; // 今日获取
+  todayLimitDiamond: number; // 今日最大获取
+}
+
+interface GameStartResult {
+  seed: number;
+  gameId: string;
+  curPos: Position;
+  mapData: MapData;
+  blockData: BlockData;
+}
+
+interface GameInfoResult {
+  activity: string;
+  gameStatus: 0 | 1;
+  userInfo: {
+    uid: string;
+    name: string;
+    todayDiamond: number;
+    todayLimitDiamond: number;
+    maxTodayDiamond: number;
+    badge: string;
+  };
+  gameInfo: {
+    gameId: string;
+    roleId: 1 | 2 | 3;
+    gameDiamond: number;
+    isNew: boolean;
+    addRate: number;
+    mapData: MapData;
+    mapDeep: number;
+    blockData: BlockData;
+    curPos: Position;
+    commandList: any[];
+    deep: number;
+    elementData: { pearl: number; jellyfish: number; pico: number; starfish: number; shell: number };
+    remainDoubleStep: number;
+    isGameOver: boolean;
+    picoNode: unknown[];
+    shopPosList: unknown[];
+    passLine: string;
+    activity: string;
+    picoDiamond: number;
+    version: string;
+  } | null;
+}
+
+interface GameLoginResult {
+  uid: string;
+  name: string;
+  isAuth: number;
+  isNew: number;
+}
+
 class Seagold {
   juejin: JuejinHelper;
   http: AxiosInstance;
@@ -50,49 +135,32 @@ class Seagold {
     this.http.defaults.headers.Authorization = `Bearer ${token}`;
   }
 
-  async gameLogin() {
+  async gameLogin(): Promise<GameLoginResult> {
     this.setToken(await this.juejin.makeToken());
     return this.http.post("/sea-gold/user/login", {
       name: this.juejin.user?.user_name
     });
   }
 
-  async gameInfo() {
+  async gameInfo(): Promise<GameInfoResult> {
     return this.http.get("/sea-gold/home/info");
   }
 
-  async gameStart(data: { roleId: 1 | 2 | 3 }) {
+  async gameStart(data?: { roleId: 1 | 2 | 3 }): Promise<GameStartResult> {
     const { roleId = 3 } = data || {};
     return this.http.post("/sea-gold/game/start", {
       roleId
     });
   }
 
-  async gameOver(data: { isButton: number }) {
+  async gameOver(data?: { isButton: number }): Promise<GameOverResult> {
     const { isButton = 1 } = data || {};
-    // const result = {
-    //   activity: "",
-    //   deep: 3,
-    //   gameDiamond: 34, // 当局获取
-    //   originMapData: [],
-    //   passLine: [{ x: 0, y: 0 }, { x: 0, y: 1 }],
-    //   picoDiamond: 0,
-    //   realDiamond: 34, // 真实获取
-    //   todayDiamond: 34, // 今日获取
-    //   todayLimitDiamond: 1500 // 今日最大获取
-    // };
     return this.http.post("/sea-gold/game/over", {
       isButton
     });
   }
 
-  async gameCommand(gameId: number, command = []) {
-    // const result = {
-    //   appendMapData: [],
-    //   blockData: { moveUp: 14, moveDown: 14, moveLeft: 2, moveRight: 5, jump: 3, loop: 3 },
-    //   curPos: { x: 0, y: 2 },
-    //   gameDiamond: 34
-    // }
+  async gameCommand(gameId: number, command = []): Promise<GameCommandResult> {
     const privateKey =
       "-----BEGIN EC PARAMETERS-----\nBggqhkjOPQMBBw==\n-----END EC PARAMETERS-----\n-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIDB7KMVQd+eeKt7AwDMMUaT7DE3Sl0Mto3LEojnEkRiAoAoGCCqGSM49\nAwEHoUQDQgAEEkViJDU8lYJUenS6IxPlvFJtUCDNF0c/F/cX07KCweC4Q/nOKsoU\nnYJsb4O8lMqNXaI1j16OmXk9CkcQQXbzfg==\n-----END EC PRIVATE KEY-----\n";
     const token = jwt.sign(

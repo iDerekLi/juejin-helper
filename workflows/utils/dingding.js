@@ -13,12 +13,11 @@ async function dingding({ subject, text, html }) {
       },
       {
         headers: {
-          "Content-Type": "application/json",
-          Charset: "UTF-8"
+          "Content-Type": "application/json"
         }
       }
     )
-    .then(res => console.log(JSON.stringify(res)));
+    .then(res => console.log(JSON.stringify(res.data)));
 }
 
 module.exports = dingding;

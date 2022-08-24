@@ -24,5 +24,10 @@ module.exports = {
    * PushPlus配置
    * http://www.pushplus.plus/doc/guide/openApi.html
    */
-  PUSHPLUS_TOKEN: env.PUSHPLUS_TOKEN
+  PUSHPLUS_TOKEN: env.PUSHPLUS_TOKEN,
+  /**
+   * 企业微信机器人配置
+   * https://developer.work.weixin.qq.com/document/path/91770
+   */
+  WEIXIN_WEBHOOK: env.WEIXIN_WEBHOOK
 };

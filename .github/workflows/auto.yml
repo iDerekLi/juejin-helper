@@ -2,7 +2,7 @@ name: Auto
 
 on:
   schedule:
-    - cron: "30 8 * * *" # 北京时间上午08:30
+    - cron: "30 1 * * *" # 北京时间上午09:30 这个是UTC时间
   workflow_dispatch:
 
 env:

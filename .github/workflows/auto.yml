@@ -2,7 +2,7 @@ name: Auto
 
 on:
   schedule:
-    - cron: "30 2 * * *" # 北京时间上10:30 这个是UTC时间，北京时间就是加2小时
+    - cron: "00 23 * * *" # 这个是UTC时间，北京时间就是加8小时
   workflow_dispatch:
 
 env:

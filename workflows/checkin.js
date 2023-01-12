@@ -165,7 +165,7 @@ class CheckIn {
     console.log(`OnLoad事件埋点: ${this.calledTrackOnloadEvent ? "调用成功" : "调用失败"}`);
     console.log("-------------------------");
 
-    console.log("------浏览器模拟访问-------");
+    console.log("------模拟访问-------");
     try {
       await browser.visitJuejinPage("/user/center/signin", this.cookie);
       console.log("掘金每日签到：页面访问成功");

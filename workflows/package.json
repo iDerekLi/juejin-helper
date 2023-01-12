@@ -1,6 +1,6 @@
 {
   "name": "workflows",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "private": true,
   "description": "稀土掘金助手：签到、抽奖、沾喜气、消除Bug、海底掘金游戏、自动化工作流。",
   "author": "Derek Li",
@@ -9,9 +9,10 @@
     "seagold": "node seagold.js"
   },
   "dependencies": {
-    "juejin-helper": "^1.6.1",
     "axios": "^0.27.2",
     "fast-astar": "^1.0.6",
-    "nodemailer": "^6.7.0"
+    "juejin-helper": "^1.6.1",
+    "nodemailer": "^6.7.0",
+    "puppeteer": "^19.5.2"
   }
 }

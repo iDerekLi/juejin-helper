@@ -2,6 +2,7 @@ const JuejinHelper = require("juejin-helper");
 const utils = require("./utils/utils");
 const pushMessage = require("./utils/pushMessage");
 const env = require("./utils/env");
+const browser = require("./utils/browser");
 
 class CheckIn {
   username = "";
@@ -27,6 +28,8 @@ class CheckIn {
   calledSdkSetting = false;
   calledTrackGrowthEvent = false;
   calledTrackOnloadEvent = false;
+
+  pageSnapshot = null;
 
   constructor(cookie) {
     this.cookie = cookie;
@@ -160,6 +163,21 @@ class CheckIn {
     console.log(`SDK状态: ${this.calledSdkSetting ? "加载成功" : "加载失败"}`);
     console.log(`成长API事件埋点: ${this.calledTrackGrowthEvent ? "调用成功" : "调用失败"}`);
     console.log(`OnLoad事件埋点: ${this.calledTrackOnloadEvent ? "调用成功" : "调用失败"}`);
+    console.log("-------------------------");
+
+    console.log("------模拟访问-------");
+    try {
+      await browser.visitJuejinPage("/", this.cookie);
+      console.log("掘金首页：页面访问成功");
+    } catch (e) {
+      console.log("掘金首页：页面访问失败");
+    }
+    try {
+      await browser.visitJuejinPage("/user/center/signin", this.cookie);
+      console.log("掘金每日签到：页面访问成功");
+    } catch (e) {
+      console.log("掘金每日签到：页面访问失败");
+    }
     console.log("-------------------------");
 
     await juejin.logout();

@@ -167,6 +167,12 @@ class CheckIn {
 
     console.log("------模拟访问-------");
     try {
+      await browser.visitJuejinPage("/", this.cookie);
+      console.log("掘金首页：页面访问成功");
+    } catch (e) {
+      console.log("掘金首页：页面访问失败");
+    }
+    try {
       await browser.visitJuejinPage("/user/center/signin", this.cookie);
       console.log("掘金每日签到：页面访问成功");
     } catch (e) {

@@ -2,7 +2,6 @@ const JuejinHelper = require("juejin-helper");
 const utils = require("./utils/utils");
 const pushMessage = require("./utils/pushMessage");
 const env = require("./utils/env");
-const browser = require("./utils/browser");
 
 class CheckIn {
   username = "";
@@ -167,16 +166,25 @@ class CheckIn {
 
     console.log("------模拟访问-------");
     try {
-      await browser.visitJuejinPage("/", this.cookie);
-      console.log("掘金首页：页面访问成功");
-    } catch (e) {
-      console.log("掘金首页：页面访问失败");
-    }
-    try {
-      await browser.visitJuejinPage("/user/center/signin", this.cookie);
-      console.log("掘金每日签到：页面访问成功");
-    } catch (e) {
-      console.log("掘金每日签到：页面访问失败");
+      const browser = juejin.browser();
+      await browser.open();
+      try {
+        await browser.visitPage("/");
+        console.log("掘金首页：页面访问成功");
+      } catch (e) {
+        console.log("掘金首页：页面访问失败");
+      }
+      await utils.wait(utils.randomRangeNumber(2000, 5000));
+      try {
+        await browser.visitPage("/user/center/signin");
+        console.log("掘金每日签到：页面访问成功");
+      } catch (e) {
+        console.log("掘金每日签到：页面访问失败");
+      }
+      await utils.wait(utils.randomRangeNumber(2000, 5000));
+      await browser.close();
+    } catch {
+      console.log("浏览器API异常");
     }
     console.log("-------------------------");
 

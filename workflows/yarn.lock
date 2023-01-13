@@ -358,13 +358,14 @@ jsonwebtoken@^8.5.1:
     ms "^2.1.1"
     semver "^5.6.0"
 
-juejin-helper@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.npmmirror.com/juejin-helper/-/juejin-helper-1.6.1.tgz#4abe25cfad763d4e16c199f0450c01ed866a7254"
-  integrity sha512-twF0qbKZy6wyQhfCxx6/oUvwurD5DnXkXv57lctDH6g62iloaOdUJFzMN7TIfeSkeO3qdXtpWaO/7QE6krbjxg==
+juejin-helper@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.npmjs.org/juejin-helper/-/juejin-helper-1.7.1.tgz#cc4678ef06f31d459ac8b5d1e9823ccb7f45517c"
+  integrity sha512-lAdJGj1/EvOnJbU6koEvVsDFm8lWheBUr/ODne/WfrIBjeAmA6ufVrOJre1ET8vKpvXPRqJePDS5ndHA9lcXOg==
   dependencies:
     axios "^0.27.2"
     jsonwebtoken "^8.5.1"
+    puppeteer "^19.5.2"
     uuid "^8.3.2"
 
 jwa@^1.4.1:

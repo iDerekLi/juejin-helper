@@ -124,6 +124,39 @@ async function run() {
 run();
 ```
 
+### Browser 浏览器访问示例
+```javascript
+const JuejinHelper = require("juejin-helper");
+
+async function run() {
+  const juejin = new JuejinHelper();
+  await juejin.login("你的掘金Cookie");
+
+  const browser = juejin.browser();
+
+  await browser.open();
+
+  try {
+    await browser.visitPage("/");
+    console.log("掘金首页：页面访问成功");
+  } catch (e) {
+    console.log("掘金首页：页面访问失败");
+  }
+
+  try {
+    await browser.visitPage("/user/center/signin");
+    console.log("掘金每日签到：页面访问成功");
+  } catch (e) {
+    console.log("掘金每日签到：页面访问失败");
+  }
+
+  // const page = await browser.visitPage("/");
+  // const screenshotBuffer = await page.screenshot(); // 获取页面快照
+
+  await browser.close();
+}
+```
+
 ## 问题
 
 ### 如何获取Cookie

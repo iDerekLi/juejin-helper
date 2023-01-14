@@ -1,6 +1,6 @@
+import notification from "./utils/notification-kit";
 const JuejinHelper = require("juejin-helper");
 const utils = require("./utils/utils");
-const pushMessage = require("./utils/pushMessage");
 const env = require("./utils/env");
 
 class Task {
@@ -327,16 +327,18 @@ async function run(args) {
   }
 
   const message = messageList.join(`\n${"-".repeat(15)}\n`);
-  pushMessage({
-    subject: "掘金每日签到",
-    text: message
+  notification.pushMessage({
+    title: "掘金每日签到",
+    content: message,
+    msgtype: "text"
   });
 }
 
 run(process.argv.splice(2)).catch(error => {
-  pushMessage({
-    subject: "掘金每日签到",
-    html: `<strong>Error</strong><pre>${error.message}</pre>`
+  notification.pushMessage({
+    title: "掘金每日签到",
+    content: `<strong>Error</strong><pre>${error.message}</pre>`,
+    msgtype: "html"
   });
 
   throw error;

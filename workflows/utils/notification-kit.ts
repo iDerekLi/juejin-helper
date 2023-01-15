@@ -109,6 +109,8 @@ export class NotificationKit {
    */
   async pushplus(options: PushPlusOptions) {
     const token: string | unknown = env.PUSHPLUS_TOKEN;
+    console.log("pushplus", token);
+
     if (token) {
       throw new Error("未配置PushPlus Token。");
     }
@@ -138,6 +140,7 @@ export class NotificationKit {
    */
   async dingtalkWebhook(options: DingTalkOptions) {
     const url: string | unknown = env.DINGDING_WEBHOOK;
+    console.log("钉钉", url);
     if (url) {
       throw new Error("未配置钉钉Webhook。");
     }
@@ -157,6 +160,7 @@ export class NotificationKit {
    */
   async wecomWebhook(options: WeComOptions) {
     const url: string | unknown = env.WEIXIN_WEBHOOK;
+    console.log("微信", url);
     if (url) {
       throw new Error("未配置企业微信Webhook。");
     }

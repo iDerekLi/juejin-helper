@@ -1,7 +1,7 @@
+import notification from "./utils/notification-kit";
 const JuejinHelper = require("juejin-helper");
 const utils = require("./utils/utils");
 const { Grid, Astar } = require("fast-astar");
-const pushMessage = require("./utils/pushMessage");
 const env = require("./utils/env");
 
 class Seagold {
@@ -414,20 +414,18 @@ async function run(args) {
   }
 
   const message = messageList.join(`\n${"-".repeat(15)}\n`);
-  pushMessage({
-    subject: "海底掘金游戏",
-    text: message
+  notification.pushMessage({
+    title: "海底掘金游戏",
+    content: message,
+    msgtype: "text"
   });
 }
 
 run(process.argv.splice(2)).catch(error => {
-  pushMessage({
-    subject: "海底掘金游戏",
-    html: `
-<strong>Error</strong>
-<pre>${error.message}</pre>
-<div>如果版本过低请前往升级: <a href="https://github.com/iDerekLi/juejin-helper">juejin-helper</a></div>
-`.trim()
+  notification.pushMessage({
+    title: "海底掘金游戏",
+    content: `<strong>Error</strong><pre>${error.message}</pre>`,
+    msgtype: "html"
   });
 
   throw error;

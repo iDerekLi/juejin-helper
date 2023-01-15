@@ -2,6 +2,7 @@ import path from "path";
 import nodemailer from "nodemailer";
 import axios from "axios";
 import env from "./env";
+import pkg from "../package.json";
 
 interface NotificationOptions {
   title: string;
@@ -42,15 +43,45 @@ export class NotificationKit {
     });
 
     const template = `
+<style>
+  .jj-header {
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  .jj-update-tip {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 12px;
+    background: #fff4e5;
+    color: #663c00;
+    text-decoration: none;
+  }
+  .jj-main {
+    padding: 10px;
+  }
+  .jj-footer {
+    padding: 10px 0;
+    border-top: 1px solid #f1f1f1;
+    text-align: center;
+    font-size: 12px;
+    color: #6e6e73;
+  }
+</style>
 <section>
-  <header style="padding: 10px 0; border-bottom: 1px solid #f1f1f1;">
+  <header class="jj-header">
     <img src="cid:logo.svg" width="120" height="24" alt="稀土掘金" />
   </header>
-  <main style="padding: 10px;">
+  ${
+    this.newVersion.has
+      ? `<a class="jj-update-tip" href="${this.newVersion.url}" target="_blank"><span>稀土掘金助手 ${this.newVersion.name} 现在可用 ›</span></a>`
+      : ""
+  }
+  <main class="jj-main">
     ${options.msgtype === "html" ? options.content : `<pre style="margin: 0;">${options.content}</pre>`}
   </main>
-  <footer style="padding: 10px 0; border-top: 1px solid #f1f1f1; text-align: center; font-size: 12px; color: #6e6e73;">
-    <span>稀土掘金助手</span> |
+  <footer class="jj-footer">
+    <span>稀土掘金助手v${pkg.version}</span> |
     <span>Copyright © ${new Date().getFullYear()} Derek Li.</span>
   </footer>
 </section>
@@ -142,6 +173,21 @@ export class NotificationKit {
     return this.wecomWebhook(options);
   }
 
+  newVersion = {
+    has: false,
+    name: pkg.version,
+    url: pkg.homepage
+  };
+
+  async checkupdate() {
+    try {
+      const result = await axios.get(pkg.releases_url);
+      const data = result.data[0];
+      this.newVersion.has = pkg.version < data.tag_name.replace(/^v/, "");
+      this.newVersion.name = data.tag_name;
+    } catch (e) {}
+  }
+
   async pushMessage(options: NotificationOptions) {
     const trycatch = async (name: string, fn: Function) => {
       try {
@@ -152,10 +198,15 @@ export class NotificationKit {
       }
     };
 
+    await this.checkupdate();
+    if (this.newVersion.has) {
+      console.log(`稀土掘金助手 ${this.newVersion.name} 现在可用`);
+    }
+
     await trycatch("邮件", this.email.bind(this));
-    await trycatch("PushPlus", this.pushplus.bind(this));
     await trycatch("钉钉", this.dingtalkWebhook.bind(this));
     await trycatch("微信", this.wecomWebhook.bind(this));
+    await trycatch("PushPlus", this.pushplus.bind(this));
   }
 }
 

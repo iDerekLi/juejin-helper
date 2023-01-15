@@ -27,7 +27,7 @@ export class NotificationKit {
       pass: env.EMAIL_PASS // generated ethereal password
     };
 
-    if (!auth.user || !auth.pass) {
+    if (!auth.user || !auth.pass || auth.user === "" || auth.pass === "") {
       throw new Error("邮箱功能不可用, 请先配置邮箱用户和密码。");
     }
 
@@ -109,7 +109,7 @@ export class NotificationKit {
    */
   async pushplus(options: PushPlusOptions) {
     const token: string | unknown = env.PUSHPLUS_TOKEN;
-    if (token) {
+    if (!token || token === "") {
       throw new Error("未配置PushPlus Token。");
     }
 
@@ -138,7 +138,7 @@ export class NotificationKit {
    */
   async dingtalkWebhook(options: DingTalkOptions) {
     const url: string | unknown = env.DINGDING_WEBHOOK;
-    if (url) {
+    if (!url || url === "") {
       throw new Error("未配置钉钉Webhook。");
     }
 
@@ -148,7 +148,6 @@ export class NotificationKit {
         content: `${options.title}\n${options.content}`
       }
     });
-    // .then(res => console.log(JSON.stringify(res.data)));
   }
 
   /**
@@ -157,7 +156,7 @@ export class NotificationKit {
    */
   async wecomWebhook(options: WeComOptions) {
     const url: string | unknown = env.WEIXIN_WEBHOOK;
-    if (url) {
+    if (!url || url === "") {
       throw new Error("未配置企业微信Webhook。");
     }
 

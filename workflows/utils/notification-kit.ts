@@ -108,8 +108,8 @@ export class NotificationKit {
    * @param options
    */
   async pushplus(options: PushPlusOptions) {
-    const token: string | undefined = env.PUSHPLUS_TOKEN;
-    if (typeof token !== "string") {
+    const token: string | unknown = env.PUSHPLUS_TOKEN;
+    if (token) {
       throw new Error("未配置PushPlus Token。");
     }
 
@@ -137,12 +137,12 @@ export class NotificationKit {
    * @param options
    */
   async dingtalkWebhook(options: DingTalkOptions) {
-    const url: string | undefined = env.DINGDING_WEBHOOK;
-    if (typeof url !== "string") {
+    const url: string | unknown = env.DINGDING_WEBHOOK;
+    if (url) {
       throw new Error("未配置钉钉Webhook。");
     }
 
-    return axios.post(url, {
+    return axios.post(url as string, {
       msgtype: "text",
       text: {
         content: `${options.title}\n${options.content}`
@@ -156,12 +156,12 @@ export class NotificationKit {
    * @param options
    */
   async wecomWebhook(options: WeComOptions) {
-    const url: string | undefined = env.WEIXIN_WEBHOOK;
-    if (typeof url !== "string") {
+    const url: string | unknown = env.WEIXIN_WEBHOOK;
+    if (url) {
       throw new Error("未配置企业微信Webhook。");
     }
 
-    return axios.post(url, {
+    return axios.post(url as string, {
       msgtype: "text",
       text: {
         content: `${options.title}\n${options.content}`

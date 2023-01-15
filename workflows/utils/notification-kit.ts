@@ -109,8 +109,6 @@ export class NotificationKit {
    */
   async pushplus(options: PushPlusOptions) {
     const token: string | unknown = env.PUSHPLUS_TOKEN;
-    console.log("pushplus", !token || token === "", typeof token);
-
     if (!token || token === "") {
       throw new Error("未配置PushPlus Token。");
     }
@@ -140,27 +138,16 @@ export class NotificationKit {
    */
   async dingtalkWebhook(options: DingTalkOptions) {
     const url: string | unknown = env.DINGDING_WEBHOOK;
-    console.log("钉钉", !url || url === "", typeof url);
     if (!url || url === "") {
       throw new Error("未配置钉钉Webhook。");
     }
 
-    return axios
-      .post(
-        url as string,
-        {
-          msgtype: "text",
-          text: {
-            content: `${options.title}\n${options.content}`
-          }
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(res => JSON.stringify(res.data));
+    return axios.post(url as string, {
+      msgtype: "text",
+      text: {
+        content: `${options.title}\n${options.content}`
+      }
+    });
   }
 
   /**
@@ -169,7 +156,6 @@ export class NotificationKit {
    */
   async wecomWebhook(options: WeComOptions) {
     const url: string | unknown = env.WEIXIN_WEBHOOK;
-    console.log("微信", !url || url === "", typeof url);
     if (!url || url === "") {
       throw new Error("未配置企业微信Webhook。");
     }

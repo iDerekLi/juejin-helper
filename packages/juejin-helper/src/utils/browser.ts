@@ -27,7 +27,8 @@ export default class JuejinBrowser {
   async visitPage(path: string = "", options = {}): Promise<Page> {
     const opts = Object.assign(
       {
-        viewport: { width: 414, height: 820 }
+        viewport: { width: 414, height: 820 },
+        timeout: 30000
       },
       options
     );
@@ -36,6 +37,7 @@ export default class JuejinBrowser {
     const page = await browser.newPage();
 
     await page.setViewport(opts.viewport);
+    page.setDefaultTimeout(opts.timeout);
 
     const cookiesString = this.juejin.cookie.toString();
     const cookiesArray = cookiesString.split(/;\W+/).map(item => item.split("="));

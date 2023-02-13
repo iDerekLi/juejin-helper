@@ -435,10 +435,10 @@ jsonwebtoken@^8.5.1:
     ms "^2.1.1"
     semver "^5.6.0"
 
-juejin-helper@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.npmjs.org/juejin-helper/-/juejin-helper-1.7.1.tgz#cc4678ef06f31d459ac8b5d1e9823ccb7f45517c"
-  integrity sha512-lAdJGj1/EvOnJbU6koEvVsDFm8lWheBUr/ODne/WfrIBjeAmA6ufVrOJre1ET8vKpvXPRqJePDS5ndHA9lcXOg==
+juejin-helper@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.npmjs.org/juejin-helper/-/juejin-helper-1.7.2.tgz#902a27102389f650c2cd91210571592215edfc1e"
+  integrity sha512-9zS2vwoAcfk/zeUM5s0qisdekv3pq3MffTdfvFjQuO898249humSF1tFW+pliU9hkrFTnXxXNsORlEZfWAP24Q==
   dependencies:
     axios "^0.27.2"
     jsonwebtoken "^8.5.1"

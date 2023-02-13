@@ -1,6 +1,6 @@
 {
   "name": "workflows",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "private": true,
   "description": "稀土掘金助手：签到、抽奖、沾喜气、消除Bug、海底掘金游戏、自动化工作流。",
   "author": "Derek Li",
@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "fast-astar": "^1.0.6",
-    "juejin-helper": "^1.7.1",
+    "juejin-helper": "^1.7.2",
     "nodemailer": "^6.7.0",
     "typescript": "^4.7.4"
   },

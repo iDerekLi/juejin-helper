@@ -28,7 +28,7 @@ export class NotificationKit {
     };
 
     if (!auth.user || !auth.pass || auth.user === "" || auth.pass === "") {
-      throw new Error("邮箱功能不可用, 请先配置邮箱用户和密码。");
+      throw new Error("未配置邮箱。");
     }
 
     const transporter = nodemailer.createTransport({

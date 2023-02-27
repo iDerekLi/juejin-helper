@@ -1,6 +1,6 @@
 {
   "name": "juejin-helper",
-  "version": "1.6.1",
+  "version": "1.7.2",
   "description": "稀土掘金助手：签到、抽奖、沾喜气、海底淘金、BugFix、自动化工作流。",
   "author": "Derek Li",
   "license": "Apache-2.0",
@@ -14,7 +14,8 @@
     "test:seagold": "ts-node ./test/test-seagold.ts",
     "test:bugfix": "ts-node ./test/test-bugfix.ts",
     "test:numpuzz": "ts-node ./test/test-numpuzz.ts",
-    "test:sdk": "ts-node ./test/test-sdk.ts"
+    "test:sdk": "ts-node ./test/test-sdk.ts",
+    "test:browser": "ts-node ./test/test-browser.ts"
   },
   "files": [
     "build",
@@ -30,6 +31,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "jsonwebtoken": "^8.5.1",
+    "puppeteer": "^19.5.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -44,5 +46,5 @@
   "bugs": {
     "url": "https://github.com/iDerekLi/juejin-helper/issues"
   },
-  "gitHead": "b0dce421194cb1d81d1ee113db710dec00172316"
+  "gitHead": "00d4e093b02321d5a8ab45e0c07778195660dc73"
 }

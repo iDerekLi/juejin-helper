@@ -29,14 +29,14 @@ jobs:
           cd workflows
           yarn
           yarn checkin
-  SeaGold:
-    needs: CheckIn
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-      - name: Run Project
-        run: |
-          cd workflows
-          yarn
-          yarn seagold
+#  SeaGold:
+#    needs: CheckIn
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions/setup-node@v2
+#      - name: Run Project
+#        run: |
+#          cd workflows
+#          yarn
+#          yarn seagold

@@ -6,6 +6,7 @@ import Growth from "./growth";
 import SeaGold from "./seagold";
 import NumPuzz from "./numpuzz";
 import Bugfix from "./bugfix";
+import JuejinBrowser from "./utils/browser";
 
 type JuejinUserProps = {
   user_id: string;
@@ -75,6 +76,10 @@ class JuejinHelper {
 
   bugfix() {
     return new Bugfix(this);
+  }
+
+  browser() {
+    return new JuejinBrowser(this);
   }
 }
 

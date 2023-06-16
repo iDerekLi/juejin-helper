@@ -262,6 +262,8 @@ class CheckIn {
     await this.bugfixTask.run();
     await juejin.logout();
     console.log("-------------------------");
+
+    return this.growthTask.todayStatus
   }
 
   toString() {
@@ -314,11 +316,12 @@ ${this.lotteriesTask.lotteryCount > 0 ? "==============\n" + drawLotteryHistory 
 async function run(args) {
   const cookies = utils.getUsersCookie(env);
   let messageList = [];
+  let todayStatus = 0
   for (let cookie of cookies) {
     const checkin = new CheckIn(cookie);
 
     await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
-    await checkin.run(); // 执行
+    todayStatus = await checkin.run(); // 执行
 
     const content = checkin.toString();
     console.log(content); // 打印结果
@@ -328,7 +331,7 @@ async function run(args) {
 
   const message = messageList.join(`\n${"-".repeat(15)}\n`);
   notification.pushMessage({
-    title: `掘金每日签到[${this.growthTask.todayStatus == 0 ? 'fail' : 'success'}]`,
+    title: `掘金每日签到[${todayStatus == 0 ? 'fail' : 'success'}]`,
     content: message,
     msgtype: "text"
   });

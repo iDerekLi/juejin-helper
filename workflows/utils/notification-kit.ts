@@ -145,7 +145,6 @@ export class NotificationKit {
     const config = {
       title: options.title,
       desp: options.content,
-      short: "签到成功",
       channel: "9",
     };
 

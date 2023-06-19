@@ -17,6 +17,7 @@ env:
   DINGDING_WEBHOOK: ${{ secrets.DINGDING_WEBHOOK }}
   PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
   WEIXIN_WEBHOOK: ${{ secrets.WEIXIN_WEBHOOK }}
+  SERVERPUSHKEY: ${{ secrets.SERVERPUSHKEY }}
 
 jobs:
   CheckIn:

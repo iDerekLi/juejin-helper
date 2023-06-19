@@ -1,6 +1,8 @@
 name: Auto
 
 on:
+  push:
+    branches: ['main']
   schedule:
     - cron: "30 22 * * *" # 北京时间上午06:30
   workflow_dispatch:

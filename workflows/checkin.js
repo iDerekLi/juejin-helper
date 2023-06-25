@@ -330,7 +330,7 @@ async function run(args) {
 
   const message = messageList.join(`\n${"-".repeat(15)}\n`);
   notification.pushMessage({
-    title: "掘金每日签到",
+    title: `掘金每日签到${this.growthTask.sumPoint}`,
     content: message,
     msgtype: "text"
   });

@@ -343,11 +343,11 @@ async function run(args) {
   }
 
   const message = messageList.join(`\n${"-".repeat(15)}\n`);
-  const sum = sumPointList.join(`|`);
-  const incr = incrPointList.join(`|`);
+  const sum = sumPointList[0];
+  const incr = incrPointList[0];
   
   notification.pushMessage({
-    title: `+ ${incr} => ${sum}`,
+    title: `矿石：+ ${incr} => ${sum}`,
     content: message,
     msgtype: "text"
   });

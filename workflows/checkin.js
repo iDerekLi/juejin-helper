@@ -329,7 +329,17 @@ async function run(args) {
   }
 
   const message = messageList.join(`\n${"-".repeat(15)}\n`);
-  this.growthTask = new GrowthTask(new JuejinHelper());
+  const juejin = new JuejinHelper();
+  try {
+    await juejin.login(this.cookie);
+  } catch (e) {
+    console.error(e.message);
+    throw new Error("登录失败, 请尝试更新Cookies!");
+  }
+
+  this.username = juejin.getUser().user_name;
+
+  this.growthTask = new GrowthTask(juejin);
   notification.pushMessage({
     title: `掘金每日签到${this.growthTask.sumPoint}`,
     content: message,

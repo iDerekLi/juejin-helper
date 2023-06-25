@@ -329,6 +329,7 @@ async function run(args) {
   }
 
   const message = messageList.join(`\n${"-".repeat(15)}\n`);
+  this.growthTask = new GrowthTask(new JuejinHelper());
   notification.pushMessage({
     title: `掘金每日签到${this.growthTask.sumPoint}`,
     content: message,

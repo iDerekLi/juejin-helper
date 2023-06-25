@@ -347,7 +347,7 @@ async function run(args) {
   const incr = incrPointList.join(`|`);
   
   notification.pushMessage({
-    title: `矿石：+ ${incr} => ${sum}`,
+    title: `+ ${incr} => ${sum}`,
     content: message,
     msgtype: "text"
   });

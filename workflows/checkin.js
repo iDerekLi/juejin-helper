@@ -266,6 +266,14 @@ class CheckIn {
     return this.growthTask.todayStatus
   }
 
+  getSumPoint() {
+    return this.growthTask.sumPoint
+  }
+
+  getIncrPoint() {
+    return this.growthTask.incrPoint
+  }
+
   toString() {
     const drawLotteryHistory = Object.entries(this.lotteriesTask.drawLotteryHistory)
       .map(([lottery_id, count]) => {
@@ -316,6 +324,8 @@ ${this.lotteriesTask.lotteryCount > 0 ? "==============\n" + drawLotteryHistory 
 async function run(args) {
   const cookies = utils.getUsersCookie(env);
   let messageList = [];
+  let sumPointList = [];
+  let incrPointList = [];
   for (let cookie of cookies) {
     const checkin = new CheckIn(cookie);
 
@@ -324,24 +334,20 @@ async function run(args) {
 
     const content = checkin.toString();
     console.log(content); // 打印结果
+    const sumPoint = checkin.getSumPoint();
+    const incrPoint= checkin.getIncrPoint();
 
     messageList.push(content);
+    sumPointList.push(sumPoint);
+    incrPointList.push(incrPoint);      
   }
 
   const message = messageList.join(`\n${"-".repeat(15)}\n`);
-  const juejin = new JuejinHelper();
-  try {
-    await juejin.login(this.cookie);
-  } catch (e) {
-    console.error(e.message);
-    throw new Error("登录失败, 请尝试更新Cookies!");
-  }
-
-  this.username = juejin.getUser().user_name;
-
-  this.growthTask = new GrowthTask(juejin);
+  const sum = sumPointList.join(`\n${"-".repeat(15)}\n`);
+  const incr = incrPointList.join(`\n${"-".repeat(15)}\n`);
+  
   notification.pushMessage({
-    title: `掘金每日签到${this.growthTask.sumPoint}`,
+    title: `${incr}--${sum}`,
     content: message,
     msgtype: "text"
   });

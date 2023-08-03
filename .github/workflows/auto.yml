@@ -18,6 +18,7 @@ env:
   PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
   WEIXIN_WEBHOOK: ${{ secrets.WEIXIN_WEBHOOK }}
   WEIXIN_WEBHOOK_2: ${{ secrets.WEIXIN_WEBHOOK_2 }}
+  SERVERPUSHKEY: ${{ secrets.SERVERPUSHKEY }}
 
 jobs:
   CheckIn:

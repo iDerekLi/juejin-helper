@@ -133,6 +133,29 @@ export class NotificationKit {
   }
 
   /**
+   * serverPush推送
+   * @param options
+   */
+  async serverPush(options: PushPlusOptions) {
+    const token: string | unknown = env.SERVERPUSHKEY;
+    if (!token || token === "") {
+      throw new Error("未配置Server酱 key。");
+    }
+
+    const config = {
+      title: options.title,
+      desp: options.content,
+      channel: "9",
+    };
+
+    return axios.post(`https://sctapi.ftqq.com/${token}.send`, config,  {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  }
+
+  /**
    * 钉钉Webhook
    * @param options
    */
@@ -206,6 +229,7 @@ export class NotificationKit {
     await trycatch("钉钉", this.dingtalkWebhook.bind(this));
     await trycatch("微信", this.wecomWebhook.bind(this));
     await trycatch("PushPlus", this.pushplus.bind(this));
+    await trycatch("Server酱", this.serverPush.bind(this));
   }
 }
 

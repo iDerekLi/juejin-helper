@@ -36,6 +36,7 @@
     | EMAIL_TO | 订阅人邮箱地址(收件人). 如需多人订阅使用 `, ` 分割, 例如: `a@163.com, b@qq.com` | 否 |
     | DINGDING_WEBHOOK | 钉钉机器人WEBHOOK | 否 |
     | PUSHPLUS_TOKEN | [Pushplus](http://www.pushplus.plus/) 官网申请，支持微信消息推送 | 否 |
+    | SERVERPUSHKEY | [Server酱](https://sct.ftqq.com//) 官网申请，支持微信消息推送 | 否 |
    |   WEIXIN_WEBHOOK | 企业微信机器人WEBHOOK | 否 |
 
 4. 仓库 -> Actions, 检查Workflows并启用。

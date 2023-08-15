@@ -1,5 +1,8 @@
 # Juejin Workflows 掘金工作流
 
+## 通知
+🔈 海底掘金游戏官方已下线 `juejin-helper >= 1.7.3`
+
 ## 开始使用
 
 下载项目 或 [ clone the repo:](https://github.com/iDerekLi/juejin-helper)

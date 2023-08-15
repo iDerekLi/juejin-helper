@@ -8,6 +8,9 @@
 
 <p align="center">签到、抽奖、沾喜气、消除Bug、海底掘金游戏、自动化工作流。</p>
 
+## 通知
+🔈 海底掘金游戏官方已下线 `juejin-helper >= 1.7.3`
+
 ## 如何使用?
 使用自动化工作流有两种方式：快速使用(在线) 和 私有化部署(本地)
 
@@ -33,6 +36,7 @@
     | EMAIL_TO | 订阅人邮箱地址(收件人). 如需多人订阅使用 `, ` 分割, 例如: `a@163.com, b@qq.com` | 否 |
     | DINGDING_WEBHOOK | 钉钉机器人WEBHOOK | 否 |
     | PUSHPLUS_TOKEN | [Pushplus](http://www.pushplus.plus/) 官网申请，支持微信消息推送 | 否 |
+    | SERVERPUSHKEY | [Server酱](https://sct.ftqq.com//) 官网申请，支持微信消息推送 | 否 |
    |   WEIXIN_WEBHOOK | 企业微信机器人WEBHOOK | 否 |
 
 4. 仓库 -> Actions, 检查Workflows并启用。

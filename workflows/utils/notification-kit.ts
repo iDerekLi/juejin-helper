@@ -15,6 +15,7 @@ interface DingTalkOptions extends NotificationOptions {}
 interface PushPlusOptions extends NotificationOptions {}
 interface WeComOptions extends NotificationOptions {}
 interface WeiXinOptions extends WeComOptions {}
+interface FeiShuOptions extends NotificationOptions {}
 
 export class NotificationKit {
   /**
@@ -145,10 +146,10 @@ export class NotificationKit {
     const config = {
       title: options.title,
       desp: options.content,
-      channel: "9",
+      channel: "9"
     };
 
-    return axios.post(`https://sctapi.ftqq.com/${token}.send`, config,  {
+    return axios.post(`https://sctapi.ftqq.com/${token}.send`, config, {
       headers: {
         "Content-Type": "application/json"
       }
@@ -169,6 +170,37 @@ export class NotificationKit {
       msgtype: "text",
       text: {
         content: `${options.title}\n${options.content}`
+      }
+    });
+  }
+
+  /**
+   * 飞书Webhook
+   * @param options
+   */
+  async feishuWebhook(options: FeiShuOptions) {
+    const url: string | unknown = env.FEISHU_WEBHOOK;
+    if (!url || url === "") {
+      throw new Error("未配置飞书Webhook。");
+    }
+
+    return axios.post(url as string, {
+      msg_type: "interactive",
+      card: {
+        elements: [
+          {
+            tag: "markdown",
+            content: options.content,
+            text_align: "left"
+          }
+        ],
+        header: {
+          template: "blue",
+          title: {
+            content: options.title,
+            tag: "plain_text"
+          }
+        }
       }
     });
   }
@@ -230,6 +262,7 @@ export class NotificationKit {
     await trycatch("微信", this.wecomWebhook.bind(this));
     await trycatch("PushPlus", this.pushplus.bind(this));
     await trycatch("Server酱", this.serverPush.bind(this));
+    await trycatch("飞书", this.feishuWebhook.bind(this));
   }
 }
 

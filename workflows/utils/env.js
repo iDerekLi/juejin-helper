@@ -35,4 +35,8 @@ module.exports = {
    * https://sct.ftqq.com/sendkey
    */
   SERVERPUSHKEY: env.SERVERPUSHKEY,
+  /**
+   * 飞书配置
+   */
+  FEISHU_WEBHOOK: env.FEISHU_WEBHOOK
 };

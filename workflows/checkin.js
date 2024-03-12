@@ -49,24 +49,25 @@ class GrowthTask extends Task {
 class DipLuckyTask extends Task {
   taskName = "沾喜气";
 
-  dipStatus = 0;
+  dipStatus = -1;
   dipValue = 0;
   luckyValue = 0;
 
   async run() {
     const growth = this.juejin.growth();
 
-    const luckyusersResult = await growth.getLotteriesLuckyUsers();
-    if (luckyusersResult.count > 0) {
-      const no1LuckyUser = luckyusersResult.lotteries[0];
-      const dipLuckyResult = await growth.dipLucky(no1LuckyUser.history_id);
-      if (dipLuckyResult.has_dip) {
-        this.dipStatus = 2;
-      } else {
-        this.dipStatus = 1;
-        this.dipValue = dipLuckyResult.dip_value;
-      }
-    }
+    // 掘金沾喜气功能以停用！
+    // const luckyusersResult = await growth.getLotteriesLuckyUsers();
+    // if (luckyusersResult.count > 0) {
+    //   const no1LuckyUser = luckyusersResult.lotteries[0];
+    //   const dipLuckyResult = await growth.dipLucky(no1LuckyUser.history_id);
+    //   if (dipLuckyResult.has_dip) {
+    //     this.dipStatus = 2;
+    //   } else {
+    //     this.dipStatus = 1;
+    //     this.dipValue = dipLuckyResult.dip_value;
+    //   }
+    // }
 
     const luckyResult = await growth.getMyLucky();
     this.luckyValue = luckyResult.total_value;
@@ -76,7 +77,7 @@ class DipLuckyTask extends Task {
 class BugfixTask extends Task {
   taskName = "Bugfix";
 
-  bugStatus = 0;
+  bugStatus = -1;
   collectBugCount = 0;
   userOwnBug = 0;
 
@@ -87,15 +88,16 @@ class BugfixTask extends Task {
     const bugfixInfo = await bugfix.getUser(competition);
     this.userOwnBug = bugfixInfo.user_own_bug;
 
-    try {
-      const notCollectBugList = await bugfix.getNotCollectBugList();
-      await bugfix.collectBugBatch(notCollectBugList);
-      this.bugStatus = 1;
-      this.collectBugCount = notCollectBugList.length;
-      this.userOwnBug += this.collectBugCount;
-    } catch (e) {
-      this.bugStatus = 2;
-    }
+    // 掘金Bugfix功能已停用。
+    // try {
+    //   const notCollectBugList = await bugfix.getNotCollectBugList();
+    //   await bugfix.collectBugBatch(notCollectBugList);
+    //   this.bugStatus = 1;
+    //   this.collectBugCount = notCollectBugList.length;
+    //   this.userOwnBug += this.collectBugCount;
+    // } catch (e) {
+    //   this.bugStatus = 2;
+    // }
   }
 }
 
@@ -263,7 +265,7 @@ class CheckIn {
     await juejin.logout();
     console.log("-------------------------");
 
-    return this.growthTask.todayStatus
+    return this.growthTask.todayStatus;
   }
 
   toString() {
@@ -285,20 +287,21 @@ ${
     1: `签到成功 +${this.growthTask.incrPoint} 矿石`,
     2: "今日已完成签到"
   }[this.growthTask.todayStatus]
-}
-${
-  {
-    0: "沾喜气失败",
-    1: `沾喜气 +${this.dipLuckyTask.dipValue} 幸运值`,
-    2: "今日已经沾过喜气"
-  }[this.dipLuckyTask.dipStatus]
-}
-${
-  this.bugfixTask.bugStatus === 1
-    ? this.bugfixTask.collectBugCount > 0
-      ? `收集Bug +${this.bugfixTask.collectBugCount}`
-      : "没有可收集Bug"
-    : "收集Bug失败"
+  // ${
+  //   {
+  //     "-1": "沾喜气已停用",
+  //     0: "沾喜气失败",
+  //     1: `沾喜气 +${this.dipLuckyTask.dipValue} 幸运值`,
+  //     2: "今日已经沾过喜气"
+  //   }[this.dipLuckyTask.dipStatus]
+  // }
+  // ${
+  //   this.bugfixTask.bugStatus === 1
+  //     ? this.bugfixTask.collectBugCount > 0
+  //       ? `收集Bug +${this.bugfixTask.collectBugCount}`
+  //       : "没有可收集Bug"
+  //     : "收集Bug失败"
+  // }
 }
 连续签到天数 ${this.growthTask.contCount}
 累计签到天数 ${this.growthTask.sumCount}

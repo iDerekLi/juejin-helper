@@ -56,7 +56,7 @@ class DipLuckyTask extends Task {
   async run() {
     const growth = this.juejin.growth();
 
-    // 掘金沾喜气功能以停用！
+    // 掘金沾喜气功能已停用！
     // const luckyusersResult = await growth.getLotteriesLuckyUsers();
     // if (luckyusersResult.count > 0) {
     //   const no1LuckyUser = luckyusersResult.lotteries[0];
@@ -239,8 +239,8 @@ class CheckIn {
     try {
       await juejin.login(this.cookie);
     } catch (e) {
-      console.error(e.message);
-      throw new Error("登录失败, 请尝试更新Cookies!");
+      console.error("登录失败, 请尝试更新Cookies! " + e.message);
+      return -1;
     }
 
     this.username = juejin.getUser().user_name;
@@ -269,6 +269,9 @@ class CheckIn {
   }
 
   toString() {
+    if (!this.username) {
+      return "登录失败，请检查Cookies是否正确！";
+    }
     const drawLotteryHistory = Object.entries(this.lotteriesTask.drawLotteryHistory)
       .map(([lottery_id, count]) => {
         const lotteryItem = this.lotteriesTask.lottery.find(item => item.lottery_id === lottery_id);
@@ -319,32 +322,38 @@ ${this.lotteriesTask.lotteryCount > 0 ? "==============\n" + drawLotteryHistory 
 async function run(args) {
   const cookies = utils.getUsersCookie(env);
   let messageList = [];
+  let hasError = false;
+
   for (let cookie of cookies) {
     const checkin = new CheckIn(cookie);
 
-    await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
-    await checkin.run(); // 执行
+    await utils.wait(utils.randomRangeNumber(1000, 5000));
+    const status = await checkin.run();
 
     const content = checkin.toString();
-    console.log(content); // 打印结果
+    console.log(content);
+
+    if (status === -1) {
+      hasError = true;
+    }
 
     messageList.push(content);
   }
 
   const message = messageList.join(`\n${"-".repeat(15)}\n`);
+
   notification.pushMessage({
     title: "掘金每日签到",
-    content: message,
-    msgtype: "text"
+    content: hasError ? `<strong>登录失败提醒</strong><pre>${message}</pre>` : message,
+    msgtype: hasError ? "html" : "text"
   });
 }
 
+// 移除 catch 块中的 throw error
 run(process.argv.splice(2)).catch(error => {
   notification.pushMessage({
     title: "掘金每日签到",
     content: `<strong>Error</strong><pre>${error.message}</pre>`,
     msgtype: "html"
   });
-
-  throw error;
 });

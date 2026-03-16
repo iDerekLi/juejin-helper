@@ -3,7 +3,7 @@
     <img src="./resources/logo.svg" alt="稀土掘金" width="260" />
   </a>
 </section>
-
+<p>触发action</p>
 <h1 align="center">JuejinHelper-稀土掘金助手</h1>
 
 <p align="center">签到、抽奖、沾喜气、消除Bug、海底掘金游戏、自动化工作流。</p>

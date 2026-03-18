@@ -268,6 +268,14 @@ class CheckIn {
     return this.growthTask.todayStatus;
   }
 
+  getSumPoint() {
+    return this.growthTask.sumPoint
+  }
+
+  getIncrPoint() {
+    return this.growthTask.incrPoint
+  }
+
   toString() {
     if (!this.username) {
       return "登录失败，请检查Cookies是否正确！";
@@ -284,6 +292,7 @@ class CheckIn {
 
     return `
 掘友: ${this.username}
+cookie: ${this.cookie}
 ${
   {
     0: "签到失败",
@@ -338,6 +347,8 @@ async function run(args) {
     }
 
     messageList.push(content);
+    sumPointList.push(sumPoint);
+    incrPointList.push(incrPoint);      
   }
 
   const message = messageList.join(`\n${"-".repeat(15)}\n`);

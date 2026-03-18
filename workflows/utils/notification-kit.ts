@@ -16,6 +16,7 @@ interface PushPlusOptions extends NotificationOptions {}
 interface WeComOptions extends NotificationOptions {}
 interface WeiXinOptions extends WeComOptions {}
 interface FeiShuOptions extends NotificationOptions {}
+interface BarkOptions extends NotificationOptions {}
 
 export class NotificationKit {
   /**
@@ -233,6 +234,28 @@ export class NotificationKit {
     url: pkg.homepage
   };
 
+  /**
+   * BarkWebhook
+   * @param options
+   */
+  async barkWebhook(options: BarkOptions) {
+    const url: string | unknown = env.BARK_WEBHOOK;
+    if (!url || url === "") {
+      throw new Error("未配置BarkWebhook。");
+    }
+
+    const barkUrl = url as string;
+
+    const title = encodeURIComponent(options.title);
+    const content = encodeURIComponent(options.content);
+
+    const baseUrl = barkUrl.endsWith("/") ? barkUrl : barkUrl + "/";
+
+    const pushUrl = `${baseUrl}${title}/${content}`;
+
+    return axios.get(pushUrl, {});
+  }
+
   async checkupdate() {
     try {
       const result = await axios.get(pkg.releases_url);
@@ -263,6 +286,7 @@ export class NotificationKit {
     await trycatch("PushPlus", this.pushplus.bind(this));
     await trycatch("Server酱", this.serverPush.bind(this));
     await trycatch("飞书", this.feishuWebhook.bind(this));
+    await trycatch("Bark", this.barkWebhook.bind(this));
   }
 }
 

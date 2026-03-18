@@ -2,6 +2,7 @@
 node_modules
 build
 types
+.history
 
 # local env files
 .env.local

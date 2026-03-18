@@ -38,5 +38,9 @@ module.exports = {
   /**
    * 飞书配置
    */
-  FEISHU_WEBHOOK: env.FEISHU_WEBHOOK
+  FEISHU_WEBHOOK: env.FEISHU_WEBHOOK,
+  /**
+   * Bark配置
+   */
+  BARK_WEBHOOK: env.BARK_WEBHOOK
 };

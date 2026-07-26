@@ -31,6 +31,21 @@ jobs:
           cd workflows
           yarn
           yarn checkin
+  RetryCheckIn:
+    needs: CheckIn
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+    steps:
+      - name: Delay for 1 hour
+        run: sleep 300
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - name: Retry CheckIn
+        run: |
+          cd workflows
+          yarn
+          yarn checkin
 
 #  SeaGold:
 #    needs: CheckIn
